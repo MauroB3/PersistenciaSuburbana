@@ -32,6 +32,7 @@ public class DataServiceImp implements DataService {
         Especie especie2 = new Especie(2, "Especie 2", bicho2);
         especie2.setPeso(50);
         especie2.setAltura(120);
+        especie2.setCantidadBichos(3);
         List<Especie> list = new ArrayList<>();
         list.add(especie1);
         list.add(especie2);
