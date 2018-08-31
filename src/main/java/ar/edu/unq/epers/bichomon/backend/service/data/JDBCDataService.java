@@ -1,6 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.service.data;
-package ar.edu.unq.epers.bichomon.backend.dao;
 
+import ar.edu.unq.epers.bichomon.backend.dao.ConnectionBlock;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,9 @@ import java.sql.SQLException;
 public class JDBCDataService implements DataService {
 
     @Override
-    public void eliminarDatos(){
+    public void deleteAll() {
+        
+
 
     }
 
