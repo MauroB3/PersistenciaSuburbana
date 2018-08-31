@@ -118,6 +118,15 @@ public class JDBCEspecieDAO implements EspecieDAO {
         });
     }
 
+public void deleteAll() {
+    this.executeWithConnection(conn -> {
+        PreparedStatement ps = conn.prepareStatement("TRUNCATE TABLE especie");
+        ps.execute();
+        ps.close();
+        return null;
+    });
+}
+
 
     /**
      * Ejecuta un bloque de codigo contra una conexion.
