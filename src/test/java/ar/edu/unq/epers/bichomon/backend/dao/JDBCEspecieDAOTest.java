@@ -71,6 +71,16 @@ public class JDBCEspecieDAOTest {
     }
 
     @Test
+    public void recuperarTodasEnOrdenAlfabetico() {
+        dao.guardar(red);
+        dao.guardar(amarillo);
+
+        List<Especie> especies = dao.recuperarTodos();
+        assertEquals(especies.get(0).getNombre(), amarillo.getNombre());
+        assertEquals(especies.get(1).getNombre(), red.getNombre());
+    }
+
+    @Test
     public void actualizarEspecie() {
         dao.guardar(red);
 
@@ -86,8 +96,6 @@ public class JDBCEspecieDAOTest {
 
         Especie otraEspecie = dao.recuperar("Rojomon");
         assertEquals(otraEspecie.getCantidadBichos(), especie1Actualizada.getCantidadBichos());
-
-
     }
 
 }

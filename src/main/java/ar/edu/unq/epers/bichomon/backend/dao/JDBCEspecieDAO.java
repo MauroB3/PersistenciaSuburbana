@@ -7,8 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Una implementacion de {@link EspecieDAO} que persiste
@@ -120,6 +119,9 @@ public class JDBCEspecieDAO implements EspecieDAO {
             }
 
             ps.close();
+
+            list.sort((Especie o1, Especie o2)->o1.getNombre().compareTo(o2.getNombre()));
+
             return list;
         });
     }
