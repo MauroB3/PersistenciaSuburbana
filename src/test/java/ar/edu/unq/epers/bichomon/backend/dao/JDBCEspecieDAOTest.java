@@ -19,29 +19,26 @@ import java.util.List;
 public class JDBCEspecieDAOTest {
 
     private JDBCEspecieDAO dao = new JDBCEspecieDAO();
-    private Especie especie1;
-    private Especie especie2;
+    private Especie red = new Especie();
+    private Especie amarillo = new Especie();
 
     @Before
     public void crearEspecies() {
-        especie1 = new Especie();
-        especie2 = new Especie();
+        red.setNombre("Rojomon");
+        red.setTipo(TipoBicho.FUEGO);
+        red.setAltura(180);
+        red.setPeso(75);
+        red.setCantidadBichos(10);
+        red.setEnergiaIncial(100);
+        red.setUrlFoto("/image/rojomon.jpg");
 
-        TipoBicho tipo1 = TipoBicho.FUEGO;
-        especie1.setNombre("Especie 1");
-        especie1.setId(1);
-        especie1.setTipo(tipo1);
-        especie1.setPeso(30);
-        especie1.setAltura(40);
-        especie1.setCantidadBichos(7);
-
-        TipoBicho tipo2 = TipoBicho.AGUA;
-        especie2.setNombre("Especie 2");
-        especie2.setId(2);
-        especie2.setTipo(tipo2);
-        especie2.setPeso(60);
-        especie2.setAltura(80);
-        especie2.setCantidadBichos(2);
+        amarillo.setNombre("Amarillomon");
+        amarillo.setTipo(TipoBicho.ELECTRICIDAD);
+        amarillo.setAltura(170);
+        amarillo.setPeso(69);
+        amarillo.setCantidadBichos(5);
+        amarillo.setEnergiaIncial(300);
+        amarillo.setUrlFoto("/image/amarillomon.png");
     }
 
     @After
@@ -51,21 +48,22 @@ public class JDBCEspecieDAOTest {
 
     @Test
     public void guardarYRecuperar() {
-        dao.guardar(especie1);
+        dao.guardar(red);
 
-        Especie otraEspecie = dao.recuperar(especie1.getNombre());
-        assertEquals(otraEspecie.getNombre(), especie1.getNombre());
-        assertEquals(otraEspecie.getId(), especie1.getId());
-        assertEquals(otraEspecie.getTipo(), especie1.getTipo());
-        assertEquals(otraEspecie.getPeso(), especie1.getPeso());
-        assertEquals(otraEspecie.getAltura(), especie1.getAltura());
-        assertEquals(otraEspecie.getCantidadBichos(), especie1.getCantidadBichos());
+        Especie otraEspecie = dao.recuperar(red.getNombre());
+        assertEquals(otraEspecie.getNombre(), red.getNombre());
+        assertEquals(otraEspecie.getTipo(), red.getTipo());
+        assertEquals(otraEspecie.getPeso(), red.getPeso());
+        assertEquals(otraEspecie.getAltura(), red.getAltura());
+        assertEquals(otraEspecie.getCantidadBichos(), red.getCantidadBichos());
+        assertEquals(otraEspecie.getEnergiaInicial(), red.getEnergiaInicial());
+        assertEquals(otraEspecie.getUrlFoto(), red.getUrlFoto());
     }
 
     @Test
     public void recuperarTodasLasEspecies() {
-        dao.guardar(especie1);
-        dao.guardar(especie2);
+        dao.guardar(red);
+        dao.guardar(amarillo);
 
         List<Especie> especies = dao.recuperarTodos();
 
@@ -74,20 +72,19 @@ public class JDBCEspecieDAOTest {
 
     @Test
     public void actualizarEspecie() {
-        dao.guardar(especie1);
+        dao.guardar(red);
 
         TipoBicho tipo1 = TipoBicho.FUEGO;
-        Especie especie1Actualizada = new Especie();
-        especie1Actualizada.setNombre("Especie 1");
-        especie1Actualizada.setId(1);
-        especie1Actualizada.setTipo(tipo1);
-        especie1Actualizada.setPeso(30);
-        especie1Actualizada.setAltura(40);
+        Especie especie1Actualizada = new Especie(1, "Rojomon", TipoBicho.FUEGO);
+        especie1Actualizada.setPeso(75);
+        especie1Actualizada.setAltura(180);
         especie1Actualizada.setCantidadBichos(10);
+        especie1Actualizada.setEnergiaIncial(100);
+        especie1Actualizada.setUrlFoto("/image/rojomon.jpg");
 
         dao.actualizar(especie1Actualizada);
 
-        Especie otraEspecie = dao.recuperar("Especie 1");
+        Especie otraEspecie = dao.recuperar("Rojomon");
         assertEquals(otraEspecie.getCantidadBichos(), especie1Actualizada.getCantidadBichos());
 
 

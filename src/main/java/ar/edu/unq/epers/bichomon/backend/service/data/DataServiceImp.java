@@ -23,19 +23,30 @@ public class DataServiceImp implements DataService {
 
     @Override
     public void crearSetDatosIniciales() {
-        TipoBicho bicho1 = TipoBicho.FUEGO;
-        TipoBicho bicho2 = TipoBicho.AGUA;
-        Especie especie1 = new Especie(1, "Especie 1", bicho1);
-        especie1.setPeso(25);
-        especie1.setAltura(80);
-        especie1.setCantidadBichos(5);
-        Especie especie2 = new Especie(2, "Especie 2", bicho2);
-        especie2.setPeso(50);
-        especie2.setAltura(120);
-        especie2.setCantidadBichos(3);
         List<Especie> list = new ArrayList<>();
-        list.add(especie1);
-        list.add(especie2);
+
+        Especie red = new Especie();
+        Especie amarillo = new Especie();
+
+        red.setId(1);
+        red.setNombre("Rojomon");
+        red.setTipo(TipoBicho.FUEGO);
+        red.setAltura(180);
+        red.setPeso(75);
+        red.setCantidadBichos(10);
+        red.setEnergiaIncial(100);
+        red.setUrlFoto("/image/rojomon.jpg");
+        list.add(red);
+
+        amarillo.setId(2);
+        amarillo.setNombre("Amarillomon");
+        amarillo.setTipo(TipoBicho.ELECTRICIDAD);
+        amarillo.setAltura(170);
+        amarillo.setPeso(69);
+        amarillo.setCantidadBichos(5);
+        amarillo.setEnergiaIncial(300);
+        amarillo.setUrlFoto("/image/amarillomon.png");
+        list.add(amarillo);
 
         for(Especie especie: list) {
             this.dao.guardar(especie);

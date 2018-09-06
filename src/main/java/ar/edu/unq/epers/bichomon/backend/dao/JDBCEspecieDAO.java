@@ -23,13 +23,14 @@ public class JDBCEspecieDAO implements EspecieDAO {
     @Override
     public void guardar(Especie especie) {
         this.executeWithConnection(conn -> {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO especie (id, nombre, peso, altura, tipo, cantidad) VALUES (?,?,?,?,?,?)");
-            ps.setInt(1, especie.getId());
-            ps.setString(2, especie.getNombre());
-            ps.setInt(3, especie.getPeso());
-            ps.setInt(4, especie.getAltura());
-            ps.setString(5, especie.getTipo().toString());
-            ps.setInt(6, especie.getCantidadBichos());
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO especie (nombre, peso, altura, tipo, cantidad, energia, imagen) VALUES (?,?,?,?,?,?,?)");
+            ps.setString(1, especie.getNombre());
+            ps.setInt(2, especie.getPeso());
+            ps.setInt(3, especie.getAltura());
+            ps.setString(4, especie.getTipo().toString());
+            ps.setInt(5, especie.getCantidadBichos());
+            ps.setInt(6, especie.getEnergiaInicial());
+            ps.setString(7, especie.getUrlFoto());
             //Falta persistir tipo (TipoBicho)
             ps.execute();
 
@@ -45,12 +46,13 @@ public class JDBCEspecieDAO implements EspecieDAO {
     @Override
     public void actualizar(Especie especie) {
         this.executeWithConnection(conn -> {
-            PreparedStatement ps = conn.prepareStatement("UPDATE especie set id=?, peso=?, altura=?, tipo=?, cantidad=? where nombre=especie.nombre");
-            ps.setInt(1, especie.getId());
-            ps.setInt(2, especie.getPeso());
-            ps.setInt(3, especie.getAltura());
-            ps.setString(4, especie.getTipo().toString());
-            ps.setInt(5, especie.getCantidadBichos());
+            PreparedStatement ps = conn.prepareStatement("UPDATE especie set peso=?, altura=?, tipo=?, cantidad=?, energia=?, imagen=? where nombre=especie.nombre");
+            ps.setInt(1, especie.getPeso());
+            ps.setInt(2, especie.getAltura());
+            ps.setString(3, especie.getTipo().toString());
+            ps.setInt(4, especie.getCantidadBichos());
+            ps.setInt(5, especie.getEnergiaInicial());
+            ps.setString(6, especie.getUrlFoto());
 
             ps.execute();
             ps.close();
@@ -62,7 +64,7 @@ public class JDBCEspecieDAO implements EspecieDAO {
     @Override
     public Especie recuperar(String nombre) {
         return this.executeWithConnection(conn -> {
-            PreparedStatement ps = conn.prepareStatement("SELECT id, nombre, peso, altura, tipo, cantidad FROM especie WHERE nombre = ?");
+            PreparedStatement ps = conn.prepareStatement("SELECT id, nombre, peso, altura, tipo, cantidad, energia, imagen FROM especie WHERE nombre = ?");
             ps.setString(1, nombre);
 
             ResultSet resultSet = ps.executeQuery();
@@ -83,6 +85,8 @@ public class JDBCEspecieDAO implements EspecieDAO {
                 especie.setAltura(resultSet.getInt("altura"));
                 especie.setTipo(TipoBicho.valueOf(resultSet.getString("tipo")));
                 especie.setCantidadBichos(resultSet.getInt("cantidad"));
+                especie.setEnergiaIncial(resultSet.getInt("energia"));
+                especie.setUrlFoto(resultSet.getString("imagen"));
 
             }
 
@@ -93,12 +97,12 @@ public class JDBCEspecieDAO implements EspecieDAO {
 
     @Override
     public List<Especie> recuperarTodos() {
+        List<Especie> list = new ArrayList<>();
         return this.executeWithConnection(conn -> {
-            PreparedStatement ps = conn.prepareStatement("SELECT id, nombre, peso, altura, tipo, cantidad FROM especie");
+            PreparedStatement ps = conn.prepareStatement("SELECT id, nombre, peso, altura, tipo, cantidad, energia, imagen FROM especie");
 
             ResultSet resultSet = ps.executeQuery();
 
-            List<Especie> list = new ArrayList<>();
 
             while (resultSet.next()) {
                 Especie especie = new Especie();
@@ -109,6 +113,8 @@ public class JDBCEspecieDAO implements EspecieDAO {
                 especie.setAltura(resultSet.getInt("altura"));
                 especie.setTipo(TipoBicho.valueOf(resultSet.getString("tipo")));
                 especie.setCantidadBichos(resultSet.getInt("cantidad"));
+                especie.setEnergiaIncial(resultSet.getInt("energia"));
+                especie.setUrlFoto(resultSet.getString("imagen"));
 
                 list.add(especie);
             }
