@@ -13,7 +13,7 @@ public interface DataService {
 	 *  Se espera que tras ejecutarse esto se elimine toda la información persistida
 	 *  en la base de datos, de manera de poder comenzar el siguiente tests desde cero.
 	 */
-	void eliminarDatos();
+	void deleteAll();
 	
 	/**
 	 * Crea un set de datos iniciales (de momento solo objetos {@link Especie}) para
