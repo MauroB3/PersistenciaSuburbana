@@ -21,6 +21,7 @@ public class JDBCEspecieDAOTest {
     private JDBCEspecieDAO dao = new JDBCEspecieDAO();
     private Especie red = new Especie();
     private Especie amarillo = new Especie();
+    private Especie green = new Especie();
 
     @Before
     public void crearEspecies() {
@@ -39,6 +40,14 @@ public class JDBCEspecieDAOTest {
         amarillo.setCantidadBichos(5);
         amarillo.setEnergiaIncial(300);
         amarillo.setUrlFoto("/image/amarillomon.png");
+
+        green.setNombre("Verdemon");
+        green.setTipo(TipoBicho.PLANTA);
+        green.setAltura(150);
+        green.setPeso(55);
+        green.setCantidadBichos(3);
+        green.setEnergiaIncial(6000);
+        green.setUrlFoto("/image/verdemon.jpg");
     }
 
     @After
@@ -72,12 +81,14 @@ public class JDBCEspecieDAOTest {
 
     @Test
     public void recuperarTodasEnOrdenAlfabetico() {
+        dao.guardar(green);
         dao.guardar(red);
         dao.guardar(amarillo);
 
         List<Especie> especies = dao.recuperarTodos();
         assertEquals(especies.get(0).getNombre(), amarillo.getNombre());
         assertEquals(especies.get(1).getNombre(), red.getNombre());
+        assertEquals(especies.get(2).getNombre(), green.getNombre());
     }
 
     @Test

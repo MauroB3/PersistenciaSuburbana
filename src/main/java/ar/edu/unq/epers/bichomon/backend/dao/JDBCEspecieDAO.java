@@ -30,7 +30,6 @@ public class JDBCEspecieDAO implements EspecieDAO {
             ps.setInt(5, especie.getCantidadBichos());
             ps.setInt(6, especie.getEnergiaInicial());
             ps.setString(7, especie.getUrlFoto());
-            //Falta persistir tipo (TipoBicho)
             ps.execute();
 
             if (ps.getUpdateCount() != 1) {

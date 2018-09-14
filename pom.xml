@@ -32,12 +32,18 @@
 			<version>4.12</version>
 		</dependency>
 
-		<!-- Dependencias de mysql -->
+		<!-- Dependencias de backend -->
 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.12</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.2.Final</version>
 		</dependency>
 
 		<!-- Dependencias de frontend -->
