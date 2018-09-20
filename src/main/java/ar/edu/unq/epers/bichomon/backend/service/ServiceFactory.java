@@ -1,12 +1,10 @@
 package ar.edu.unq.epers.bichomon.backend.service;
 
-import ar.edu.unq.epers.bichomon.backend.dao.JDBCEspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImp;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
-import ar.edu.unq.epers.bichomon.frontend.mock.EspecieDAOMock;
-
+import ar.edu.unq.epers.bichomon.backend.dao.*;
 /**
  * Esta clase es un singleton, el cual sera utilizado por equipo de frontend
  * para hacerse con implementaciones a los servicios.
@@ -23,7 +21,7 @@ public class ServiceFactory {
 	 * @return un objeto que implementa {@link EspecieService}
 	 */
 	public EspecieService getEspecieService() {
-		return new EspecieServiceImpl(new JDBCEspecieDAO());
+		return new EspecieServiceImpl(new EspecieDAO());//Antes se le daba por parametro un JDBCEspecieDAO
 	}
 	
 	/**

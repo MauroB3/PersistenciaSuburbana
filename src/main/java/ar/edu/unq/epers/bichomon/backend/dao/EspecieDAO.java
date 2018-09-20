@@ -5,14 +5,14 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 
 import java.util.List;
 
-public interface EspecieDAO {
+public class EspecieDAO {
 	
-	void guardar(Especie especie);
+	public void guardar(Especie especie){}
 
-	void actualizar(Especie especie);
+	public void actualizar(Especie especie){}
 
-	Especie recuperar(String nombreEspecie);
+	public Especie recuperar(String nombreEspecie){return null;}
 
-	List<Especie> recuperarTodos();
+	public List<Especie> recuperarTodos(){return null;}
 
 }

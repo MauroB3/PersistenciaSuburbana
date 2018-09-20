@@ -15,8 +15,8 @@ import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
  * Esta es una implementacion mock de {@link EspecieDAO}
  * 
  */
-public class EspecieDAOMock implements EspecieDAO {
-
+public class EspecieDAOMock {
+	/*
 	private static Map<String, Especie> DATA = new HashMap<>();
 	
 	static {
@@ -96,5 +96,5 @@ public class EspecieDAOMock implements EspecieDAO {
 	@Override
 	public void actualizar(Especie especie) {
 	}
-
+	*/
 }

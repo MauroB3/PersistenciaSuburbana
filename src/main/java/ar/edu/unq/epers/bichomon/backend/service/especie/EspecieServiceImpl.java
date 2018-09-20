@@ -2,7 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.service.especie;
 
 import java.util.List;
 
-import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 
@@ -18,7 +18,7 @@ public class EspecieServiceImpl implements EspecieService {
 
 	@Override
 	public void crearEspecie(Especie especie){
-		especieDAO.guardar(especie);
+		this.especieDAO.guardar(especie);
 	}
 	
 
@@ -41,7 +41,7 @@ public class EspecieServiceImpl implements EspecieService {
 	@Override
 	public Bicho crearBicho(String nombreEspecie, String nombreBicho){
 		Especie especie = especieDAO.recuperar(nombreEspecie);
-		Bicho bicho = especie.crearBicho(nombreBicho);
+		Bicho bicho = especie.crearBicho();
 		especieDAO.actualizar(especie);
 		return bicho;
 	}

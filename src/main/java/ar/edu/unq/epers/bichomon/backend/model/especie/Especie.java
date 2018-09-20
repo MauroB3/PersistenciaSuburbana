@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.model.especie;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 
 /**
  * Representa una {@link Especie} de bicho.
@@ -15,21 +16,80 @@ public class Especie {
 	private int peso;
 	private TipoBicho tipo;
 
-	private int energiaInicial;
+	private Especie especieRaiz;
+
+	private int nroEvolucion;
+
+	private int energiaInicial; //Es necesaria ?
 	
 	private String urlFoto;
 	
 	private int cantidadBichos;
+
+	//Agregado Nuevo
+	private Condicion condicionDeEvolucion;
 	
 	public Especie(){
 	}
-	
-	public Especie(int id, String nombre, TipoBicho tipo) {
-	    this.id = id;
-		this.nombre = nombre;
-		this.tipo = tipo;
+
+	/**
+	 * Este constructor se usa para crear una especie raiz
+	 * ---------------------------------------------------
+	 * @param id = id de la especie
+	 * @param nombre = nombre de la especie
+	 * @param tipo = tipo de la especie (ver enumerador "TipoBicho")
+	 * @param altura = altura de todos los bichos de esa especie
+	 * @param peso = peso de todos los bichos de esa especie
+	 * @param energiaInicial = energia con la que inician todos los bichos de esa especie
+	 */
+
+	public Especie(int id, String nombre, TipoBicho tipo, Condicion condicionDeEvolucion, int altura, int peso, int energiaInicial){
+		this.setEspecieRaiz(this);
+		this.setId(id);
+		this.setNombre(nombre);
+		this.setTipo(tipo);
+		this.setCondicionDeEvolucion(condicionDeEvolucion);
+		this.setNroEvolucion(1);
+		this.setAltura(altura);
+		this.setPeso(peso);
+		this.setEnergiaIncial(energiaInicial);
+		EvolutionHandler.getInstance().agregarEspecie(this);
 	}
-	
+
+	/**
+	 * Este constructor se usa para crear una evolucion una especie
+	 * ------------------------------------------------------------
+	 * @param especie = la especie raiz de la especie a crear
+	 * @param nroEvolucion = numero de evolucion de la especie [1..n] siendo 1 el mas debil y n el mas fuerte
+	 * @param id = id de la especie
+	 * @param nombre = nombre de la especie
+	 * @param altura = altura de todos los bichos de esa especie
+	 * @param peso = peso de todos los bichos de esa especie
+	 * @param energiaInicial = energia con la que inician todos los bichos de esa especie
+	 */
+
+	public Especie(Especie especie, int nroEvolucion,Condicion condicionDeEvolucion, int id, String nombre, int altura, int peso, int energiaInicial) {
+		this.setEspecieRaiz(especie);
+		this.setNroEvolucion(nroEvolucion);
+		this.setCondicionDeEvolucion(condicionDeEvolucion);
+		this.setId(id);
+		this.setNombre(nombre);
+		this.setTipo(especie.getTipo());
+		this.setAltura(altura);
+		this.setPeso(peso);
+		this.setEnergiaIncial(energiaInicial);
+		EvolutionHandler.getInstance().agregarEspecie(this);
+	}
+
+
+	public Condicion getCondicionDeEvolucion(){
+		return condicionDeEvolucion;
+	}
+
+	public void setCondicionDeEvolucion(Condicion condicionDeEvolucion) {
+		this.condicionDeEvolucion = condicionDeEvolucion;
+	}
+
 	/**
 	 * @return el nombre de la especie (por ejemplo: Perromon)
 	 */
@@ -110,9 +170,36 @@ public class Especie {
 		this.id = id;
 	}
 
-	public Bicho crearBicho(String nombreBicho){
+	public Bicho crearBicho(){
 		this.cantidadBichos++;
-		return new Bicho(this, nombreBicho);
+		return new Bicho(this);
 	}
-	
+
+	public Especie getEspecieRaiz(){
+			return especieRaiz;
+	}
+
+	public void setEspecieRaiz(Especie especie){
+		this.especieRaiz = especie;
+	}
+
+	public int getNroEvolucion(){
+		return nroEvolucion;
+	}
+
+	public void setNroEvolucion(int nroEvolucion){
+		this.nroEvolucion = nroEvolucion;
+	}
+
+	public boolean puedeEvolucionar(Bicho bicho){
+		return this.condicionDeEvolucion.cumpleConLaCondicion(bicho);
+	}
+
+	public Especie buscarSiguienteEvolucion(){
+		return EvolutionHandler.getInstance().buscarSiguienteEvolucion(this);
+	}
+
+	public boolean esSiguienteEvolucion(Especie especie) {
+		return this.especieRaiz == especie.getEspecieRaiz() && this.nroEvolucion == especie.getNroEvolucion() + 1;
+	}
 }
