@@ -6,6 +6,7 @@ import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+
 import java.util.List;
 
 public class HibernateEspecieDAO implements EspecieDAO {
@@ -79,4 +80,14 @@ public class HibernateEspecieDAO implements EspecieDAO {
         int retult = query.executeUpdate();
     }
 
+    public Especie especieLider() {
+        Session session = Runner.getCurrentSession();
+
+        String hql = "select e from Campeon c join c.bicho as b join b.especie as e group by e order by count(b) desc";
+
+        Query<Especie> query = session.createQuery(hql, Especie.class);
+        query.setMaxResults(1);
+        return query.getSingleResult();
+
+    }
 }

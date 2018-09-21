@@ -61,17 +61,24 @@ public class HibernateCampeonDAO implements CampeonDAO {
     public List<Campeon> recuperarCampeonesActuales() {
         Session session = Runner.getCurrentSession();
 
-        String hql = "from Campeon campeon where campeon.fechaFin is null order by date(fechaInicio) desc";
+        String hql = "from Campeon campeon where campeon.fechaFin is null order by date(fechaInicio) asc";
 
         Query<Campeon> query = session.createQuery(hql, Campeon.class);
 
         List<Campeon> lista = query.getResultList();
 
-        for(Campeon c : lista) {
-            System.out.println("Campeon " + c.getId() + ": fechaInicio = " + c.getFechaInicio());
-        }
-
         return lista;
+    }
+
+
+    public List<Campeon> recuperarCampeonesNoActuales() {
+        Session session = Runner.getCurrentSession();
+
+        String hql = "from Campeon c where c.fechaFin is not null order by date(c.fechaFin) - date(c.fechaInicio) desc";
+
+        Query<Campeon> query = session.createQuery(hql, Campeon.class);
+
+        return query.getResultList();
     }
 
 

@@ -4,6 +4,9 @@ import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDAO;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 public class HibernateEntrenadorDAO implements EntrenadorDAO {
 
@@ -23,6 +26,16 @@ public class HibernateEntrenadorDAO implements EntrenadorDAO {
     public void actualizar(Entrenador entrenador) {
         Session session = Runner.getCurrentSession();
         session.update(entrenador);
+    }
+
+    public List<Entrenador> recuperarTodos() {
+        Session session = Runner.getCurrentSession();
+
+        String hql = "from Entrenador e";
+
+        Query<Entrenador> query = session.createQuery(hql, Entrenador.class);
+
+        return query.getResultList();
     }
 
 }

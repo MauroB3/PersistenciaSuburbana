@@ -3,6 +3,8 @@ package ar.edu.unq.epers.bichomon.backend.model.entrenador;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
@@ -20,6 +22,19 @@ public class Entrenador {
     @OneToOne(cascade = CascadeType.ALL)
     private Ubicacion ubicacion;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entrenador that = (Entrenador) o;
+        return Objects.equals(Nombre, that.Nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Nombre);
+    }
+
     private int exp = 0; //Siempr empieza en 0 de experiencia
 
     @Transient
@@ -27,7 +42,7 @@ public class Entrenador {
 
     private LocalDate ulimaCaptura;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Bicho> bichos = new ArrayList<>();
 
     public Entrenador(){
@@ -92,12 +107,24 @@ public class Entrenador {
         return bichos.size();
     }
 
+    public void agregarBicho(Bicho bicho) {
+        this.bichos.add(bicho);
+    }
+
     public int getExperiencia(){
         return exp;
     }
 
     public void setUlimaCaptura(LocalDate fecha){
         this.ulimaCaptura = fecha;
+    }
+
+    public int getPoderTotal() {
+        int poderTotal = 0;
+        for(Bicho bicho : bichos) {
+            poderTotal += bicho.getEnergia();
+        }
+        return poderTotal;
     }
 
 }

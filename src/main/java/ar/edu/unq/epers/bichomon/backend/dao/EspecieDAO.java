@@ -24,4 +24,7 @@ public interface EspecieDAO {
 	void incrementarPopularidad(String nombreEspecie);
 
 	void decrementarPopularidad(String nombreEspecie);
+
+	public Especie especieLider();
+
 }
