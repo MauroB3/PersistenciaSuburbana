@@ -3,10 +3,10 @@ package ar.edu.unq.epers.bichomon.backend.model.bicho;
 public class Ataque {
 
     private Bicho atacante;
-    private int daño;
+    private double daño;
     private Bicho atacado;
 
-    public Ataque(Bicho atacado, int daño, Bicho atacante){
+    public Ataque(Bicho atacado, double daño, Bicho atacante){
         this.setAtacado(atacado);
         this.setDaño(daño);
         this.setAtacante(atacante);
@@ -20,7 +20,7 @@ public class Ataque {
         this.atacante = bicho;
     }
 
-    public void setDaño(int daño){
+    public void setDaño(double daño){
         this.daño = daño;
     }
 
@@ -32,7 +32,7 @@ public class Ataque {
         return atacado;
     }
 
-    public int getDaño(){
+    public double getDaño(){
         return daño;
     }
 

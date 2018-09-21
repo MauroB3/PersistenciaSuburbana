@@ -99,7 +99,6 @@ public class BichoTest {
 
         when(ataque.getAtacado()).thenReturn(otroBicho);
         when(ataque.getAtacante()).thenReturn(bicho);
-        when(ataque.getDaño()).thenReturn(7);
 
         assertEquals(ataque.getAtacado(),bicho.atacar(otroBicho).getAtacado());
         assertEquals(ataque.getAtacante(),bicho.atacar(otroBicho).getAtacante());
