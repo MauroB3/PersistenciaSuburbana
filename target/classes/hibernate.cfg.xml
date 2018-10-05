@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- Database connection settings -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/epers_ejemplo_hibernate</property>
+		<property name="connection.username">root</property>
+<<<<<<< HEAD
+		<property name="connection.password">1k3R1</property>
+=======
+		<property name="connection.password">root</property>
+>>>>>>> b4f6880b18ea3a330f9d4af8618c17279033aec9
+
+		<!-- SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+
+		<!-- Disable the second-level cache -->
+		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">true</property>
+		
+		<property name="hibernate.hbm2ddl.auto">create-drop</property>
+
+<<<<<<< HEAD
+		<!-- <mapping class="ar.edu.unq.unidad3.wop.modelo.Personaje" />
+		<mapping class="ar.edu.unq.unidad3.wop.modelo.Item" /> !-->
+=======
+		<!--<mapping class="ar.edu.unq.unidad3.wop.modelo.Personaje" />
+		<mapping class="ar.edu.unq.unidad3.wop.modelo.Item" /> -->
+>>>>>>> b4f6880b18ea3a330f9d4af8618c17279033aec9
+	
+	</session-factory>
+</hibernate-configuration>

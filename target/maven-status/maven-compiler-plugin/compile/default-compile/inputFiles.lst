@@ -1,0 +1,16 @@
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/dao/ConnectionBlock.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/service/data/DataServiceImp.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/service/data/DataService.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/frontend/app/JsonObjectMapperProvider.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/dao/JDBCEspecieDAO.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/service/especie/EspecieServiceImpl.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/model/especie/Especie.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/frontend/mock/EspecieDAOMock.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/dao/EspecieDAO.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/model/especie/TipoBicho.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/service/especie/EspecieNoExistente.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/frontend/api/EspecieServiceREST.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/service/ServiceFactory.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/service/especie/EspecieService.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/backend/model/bicho/Bicho.java
+/home/kerister/Documentos/UNQ/Persistencia/Proyectos/Practica 1/src/main/java/ar/edu/unq/epers/bichomon/frontend/app/BichomonWebApp.java
