@@ -2,12 +2,17 @@ package ar.edu.unq.epers.bichomon.backend.model.ubicacion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 
+import javax.persistence.Entity;
 import java.time.LocalDate;
 
+@Entity
 public class Campeon {
 
+
     private Bicho bicho;
+
     private LocalDate fechaInicio;
+
     private LocalDate fechaFin;
 
     public Campeon(Bicho unBicho, LocalDate fechaInicial) {
