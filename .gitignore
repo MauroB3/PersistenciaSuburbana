@@ -4,5 +4,3 @@
 /target
 .idea/
 bichomon-go.iml
-src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/
-.gitignore

@@ -17,7 +17,7 @@ import java.util.List;
 
 
 public class JDBCEspecieDAOTest {
-
+/*
     private JDBCEspecieDAO dao = new JDBCEspecieDAO();
     private Especie red = new Especie();
     private Especie amarillo = new Especie();
@@ -108,5 +108,5 @@ public class JDBCEspecieDAOTest {
         Especie otraEspecie = dao.recuperar("Rojomon");
         assertEquals(otraEspecie.getCantidadBichos(), especie1Actualizada.getCantidadBichos());
     }
-
+*/
 }
