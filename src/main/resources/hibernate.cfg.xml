@@ -22,11 +22,5 @@
 		
 		<property name="hibernate.hbm2ddl.auto">create-drop</property>
 
-		<!-- <mapping class="ar.edu.unq.unidad3.wop.modelo.Personaje" />
-		<mapping class="ar.edu.unq.unidad3.wop.modelo.Item" /> !-->
-
-		<!--<mapping class="ar.edu.unq.unidad3.wop.modelo.Personaje" />
-		<mapping class="ar.edu.unq.unidad3.wop.modelo.Item" /> -->
-
 	</session-factory>
 </hibernate-configuration>
