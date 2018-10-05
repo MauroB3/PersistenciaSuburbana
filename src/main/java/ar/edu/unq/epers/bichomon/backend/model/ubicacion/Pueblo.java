@@ -18,24 +18,45 @@ public class Pueblo extends Ubicacion {
     private int siguienteProbabilidadInicial = 0;
 
     @Column
-    private int factorPoblacion = 0;
+    private int poblacion = 0;
+
+    private int dividendoFactorPoblacion = 100;
 
     @Override
     public int getFactorPoblacion() {
-        return this.factorPoblacion;
+        return (dividendoFactorPoblacion / poblacion);
+    }
+
+    public void setDividendoFactorPoblacion(int dividendoFactorPoblacion) {
+        this.dividendoFactorPoblacion = dividendoFactorPoblacion;
     }
 
     public void sumarPoblacion() {
-        this.factorPoblacion += 1;
+        poblacion += 1;
     }
 
     public void restarPoblacion() {
-        this.factorPoblacion -= 1;
+        poblacion -= 1;
     }
 
+    public int getPoblacion() { return poblacion; }
+
+    //No se puede agregar una especie con probabilidad 0
     public void agregarEspecie(Especie especie, int probabilidad) {
         especiesQueHabitan.add(new EspeciePosible(especie, siguienteProbabilidadInicial, siguienteProbabilidadInicial + probabilidad - 1));
         siguienteProbabilidadInicial += probabilidad;
+    }
+
+    public void eliminarEspecie(Especie especie) {
+        for(EspeciePosible esp : especiesQueHabitan) {
+            if(esp.getEspecie() == especie) {
+                especiesQueHabitan.remove(esp);
+            }
+        }
+    }
+
+    public ArrayList<EspeciePosible> getEspeciesQueHabitan() {
+        return especiesQueHabitan;
     }
 
     @Override

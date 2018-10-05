@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a569f49f-7e22-4abe-bff6-8c4c427f82fa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Pueblo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Pueblo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/DojoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/DojoTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,7 +33,7 @@
           <entry key="DataServiceImpTest" value="4" />
           <entry key="fxml" value="1" />
           <entry key="iml" value="1" />
-          <entry key="java" value="115" />
+          <entry key="java" value="116" />
           <entry key="js" value="1" />
           <entry key="md" value="2" />
           <entry key="png" value="1" />
@@ -47,7 +48,7 @@
           <entry key="DBN-SQL" value="4" />
           <entry key="IDEA_MODULE" value="1" />
           <entry key="Image" value="1" />
-          <entry key="JAVA" value="118" />
+          <entry key="JAVA" value="119" />
           <entry key="JavaScript" value="1" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="SQL" value="1" />
@@ -57,7 +58,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="18" />
-          <entry key="java" value="16411" />
+          <entry key="java" value="17668" />
           <entry key="sql" value="182" />
           <entry key="txt" value="13" />
           <entry key="xml" value="75" />
@@ -66,7 +67,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="DBN-SQL" value="72" />
-          <entry key="JAVA" value="16411" />
+          <entry key="JAVA" value="17668" />
           <entry key="PLAIN_TEXT" value="31" />
           <entry key="SQL" value="110" />
           <entry key="XML" value="75" />
@@ -79,8 +80,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Ubicacion.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="25" column="45" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="45" />
+            <state relative-caret-position="273">
+              <caret line="33" column="92" lean-forward="true" selection-start-line="33" selection-start-column="92" selection-end-line="33" selection-end-column="92" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#906#907#0" expanded="true" />
@@ -105,7 +106,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/GuarderiaTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
+            <state relative-caret-position="483">
               <caret line="57" column="24" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -116,13 +117,35 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Pueblo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
+            <state relative-caret-position="347">
+              <caret line="51" column="32" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#632#633#0" expanded="true" />
+                <element signature="e#672#673#0" expanded="true" />
+                <element signature="e#1600#1601#0" expanded="true" />
+                <element signature="e#1641#1642#0" expanded="true" />
+                <element signature="e#1688#1689#0" expanded="true" />
+                <element signature="e#1715#1716#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/PuebloTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="55" column="22" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#335#336#0" expanded="true" />
+                <element signature="e#373#374#0" expanded="true" />
+                <element signature="e#829#830#0" expanded="true" />
+                <element signature="e#857#858#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -131,8 +154,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/DojoTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="415">
-              <caret line="61" column="47" selection-start-line="61" selection-start-column="47" selection-end-line="61" selection-end-column="47" />
+            <state relative-caret-position="102">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -184,12 +207,13 @@
         <option value="$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/service/ServiceFactory.java" />
         <option value="$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Campeon.java" />
         <option value="$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/EspeciePosibleTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/DojoTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Ubicacion.java" />
         <option value="$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Dojo.java" />
         <option value="$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Guarderia.java" />
         <option value="$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/GuarderiaTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/DojoTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Pueblo.java" />
+        <option value="$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/PuebloTest.java" />
       </list>
     </option>
   </component>
@@ -601,7 +625,7 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538780762040" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538782895965" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Elementos de Ing. de Soft./cucumber/bdd_spread_sheet" />
@@ -638,29 +662,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.GuarderiaTest">
+  <component name="RunManager" selected="JUnit.PuebloTest">
     <configuration name="DataServiceImpTest" type="JUnit" factoryName="JUnit">
       <module name="bichomon-go" />
       <option name="PACKAGE_NAME" value="ar.edu.unq.epers.bichomon.backend.service.data" />
       <option name="MAIN_CLASS_NAME" value="ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpTest" />
       <option name="METHOD_NAME" value="" />
       <option name="PARAMETERS" value="" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DataServiceImpTest.verificarBorradoDeDatos" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="bichomon-go" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ar.edu.unq.epers.bichomon.backend.service.data.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="ar.edu.unq.epers.bichomon.backend.service.data" />
-      <option name="MAIN_CLASS_NAME" value="ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImpTest" />
-      <option name="METHOD_NAME" value="verificarBorradoDeDatos" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -721,6 +729,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PuebloTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="bichomon-go" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ar.edu.unq.epers.bichomon.backend.model.ubicacion.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ar.edu.unq.epers.bichomon.backend.model.ubicacion" />
+      <option name="MAIN_CLASS_NAME" value="ar.edu.unq.epers.bichomon.backend.model.ubicacion.PuebloTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JarApplication" factoryName="JAR Application">
       <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
       <method v="2" />
@@ -753,19 +775,19 @@
     <list>
       <item itemvalue="JUnit.DataServiceImpTest" />
       <item itemvalue="Maven.Unnamed" />
-      <item itemvalue="JUnit.DataServiceImpTest.verificarBorradoDeDatos" />
       <item itemvalue="JUnit.JDBCEspecieDAOTest" />
       <item itemvalue="JUnit.EspecieTest" />
       <item itemvalue="JUnit.DojoTest" />
       <item itemvalue="JUnit.GuarderiaTest" />
+      <item itemvalue="JUnit.PuebloTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PuebloTest" />
         <item itemvalue="JUnit.GuarderiaTest" />
         <item itemvalue="JUnit.DojoTest" />
         <item itemvalue="JUnit.EspecieTest" />
         <item itemvalue="JUnit.JDBCEspecieDAOTest" />
-        <item itemvalue="JUnit.DataServiceImpTest.verificarBorradoDeDatos" />
       </list>
     </recent_temporary>
   </component>
@@ -783,24 +805,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="GuarderiaTest - 2018.10.05 at 19h 48m 21s.xml">
-      <configuration name="GuarderiaTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="GuarderiaTest - 2018.10.05 at 19h 49m 12s.xml">
-      <configuration name="GuarderiaTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="GuarderiaTest - 2018.10.05 at 19h 50m 07s.xml">
-      <configuration name="GuarderiaTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="GuarderiaTest - 2018.10.05 at 19h 50m 24s.xml">
-      <configuration name="GuarderiaTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="GuarderiaTest - 2018.10.05 at 19h 51m 35s.xml">
-      <configuration name="GuarderiaTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="GuarderiaTest - 2018.10.05 at 19h 52m 03s.xml">
-      <configuration name="GuarderiaTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="GuarderiaTest - 2018.10.05 at 19h 52m 48s.xml">
       <configuration name="GuarderiaTest" configurationId="JUnit" />
     </history-entry>
@@ -812,6 +816,24 @@
     </history-entry>
     <history-entry file="GuarderiaTest - 2018.10.05 at 19h 54m 36s.xml">
       <configuration name="GuarderiaTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PuebloTest - 2018.10.05 at 20h 23m 52s.xml">
+      <configuration name="PuebloTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PuebloTest - 2018.10.05 at 20h 33m 30s.xml">
+      <configuration name="PuebloTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PuebloTest - 2018.10.05 at 20h 36m 29s.xml">
+      <configuration name="PuebloTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PuebloTest - 2018.10.05 at 20h 39m 03s.xml">
+      <configuration name="PuebloTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PuebloTest - 2018.10.05 at 20h 41m 21s.xml">
+      <configuration name="PuebloTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PuebloTest - 2018.10.05 at 20h 41m 32s.xml">
+      <configuration name="PuebloTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -830,7 +852,7 @@
       <window_info id="Project Explorer" order="0" weight="0.32959402" />
       <window_info id="Job Explorer" order="1" weight="0.32959402" />
       <window_info id="DB Browser" order="2" weight="0.32959402" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" visible="true" weight="0.24679486" />
+      <window_info content_ui="combo" id="Project" order="3" visible="true" weight="0.24679486" />
       <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="6" />
@@ -843,13 +865,13 @@
       <window_info anchor="bottom" id="DB Execution Console" order="3" sideWeight="0.49786323" weight="0.32900432" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" sideWeight="0.49786323" weight="0.32900432" />
-      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.73878205" weight="0.32467532" />
+      <window_info active="true" anchor="bottom" id="Run" order="6" sideWeight="0.7382479" visible="true" weight="0.32467532" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="10" sideWeight="0.49839744" weight="0.32900432" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.5480769" visible="true" weight="0.31060606" />
-      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.45192307" side_tool="true" visible="true" weight="0.31060606" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.5480769" weight="0.31060606" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.26175213" side_tool="true" visible="true" weight="0.32467532" />
       <window_info anchor="bottom" id="Version Control" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1162,32 +1184,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Ubicacion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="25" column="45" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#906#907#0" expanded="true" />
-            <element signature="e#930#931#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Dojo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
           <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/DojoTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="61" column="47" selection-start-line="61" selection-start-column="47" selection-end-line="61" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1204,9 +1204,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/DojoTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Ubicacion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="33" column="92" lean-forward="true" selection-start-line="33" selection-start-column="92" selection-end-line="33" selection-end-column="92" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#906#907#0" expanded="true" />
+            <element signature="e#930#931#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/GuarderiaTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
+        <state relative-caret-position="483">
           <caret line="57" column="24" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1218,10 +1240,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/Pueblo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
+        <state relative-caret-position="347">
+          <caret line="51" column="32" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#632#633#0" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="e#1600#1601#0" expanded="true" />
+            <element signature="e#1641#1642#0" expanded="true" />
+            <element signature="e#1688#1689#0" expanded="true" />
+            <element signature="e#1715#1716#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/ar/edu/unq/epers/bichomon/backend/model/ubicacion/PuebloTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="55" column="22" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#335#336#0" expanded="true" />
+            <element signature="e#373#374#0" expanded="true" />
+            <element signature="e#829#830#0" expanded="true" />
+            <element signature="e#857#858#0" expanded="true" />
           </folding>
         </state>
       </provider>

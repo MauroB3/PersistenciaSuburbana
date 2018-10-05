@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 public class DojoTest {
 
     private Dojo dojo;
+
     @Mock
     private Entrenador entrenador;
 
