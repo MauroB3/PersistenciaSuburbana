@@ -1,1 +1,7 @@
- src/main/java/ar/edu/unq/epers/bichomon/backend/model/entrenador/Entrenador.java
+.classpath
+.settings
+.project
+/target
+.idea/
+bichomon-go.iml
+src/main/java/ar/edu/unq/epers/bichomon/backend/model/entrenador/Entrenador.java
