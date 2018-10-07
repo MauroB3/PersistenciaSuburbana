@@ -16,13 +16,16 @@ import javax.persistence.Transient;
 @Entity
 public class Especie {
 
-	@Id
 	private Integer id;
+ 	@Id
+	@Column(name="nombew")
 	private String nombre;
 	private int altura;
 	private int peso;
+
 	private TipoBicho tipo;
 
+	@Transient
 	private Especie especieRaiz;
 
 	private int nroEvolucion;

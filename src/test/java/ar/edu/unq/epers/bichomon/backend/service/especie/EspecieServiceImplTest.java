@@ -38,9 +38,11 @@ public class EspecieServiceImplTest {
     @Test
     public void testCrearEspecieYGetEspecie() {
         Especie pikachu = new Especie(1,"Pikachu", TipoBicho.ELECTRICIDAD, condicion,55,99,100);
+        Especie charmander = new Especie(2, "Charmander", TipoBicho.FUEGO, condicion, 55, 187, 150);
         this.service.crearEspecie(pikachu);
 
-        assertEquals(pikachu.getNombre(), service.getEspecie(pikachu.getNombre()).getNombre());
+        //assertEquals(pikachu.getId(), service.getEspecie(pikachu.getNombre()).getId());
+        assertEquals(charmander.getAltura(), service.getEspecie("Pikachu").getAltura());
     }
 
     @Test
