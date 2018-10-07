@@ -3,8 +3,10 @@ package ar.edu.unq.epers.bichomon.backend.model.especie;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * Representa una {@link Especie} de bicho.
@@ -26,12 +28,12 @@ public class Especie {
 	private int nroEvolucion;
 
 	private int energiaInicial; //Es necesaria ?
-	
+
 	private String urlFoto;
-	
+
 	private int cantidadBichos;
 
-	//Agregado Nuevo
+	@Transient
 	private Condicion condicionDeEvolucion;
 	
 	public Especie(){
@@ -40,7 +42,6 @@ public class Especie {
 	/**
 	 * Este constructor se usa para crear una especie raiz
 	 * ---------------------------------------------------
-	 * @param id = id de la especie
 	 * @param nombre = nombre de la especie
 	 * @param tipo = tipo de la especie (ver enumerador "TipoBicho")
 	 * @param altura = altura de todos los bichos de esa especie
@@ -66,14 +67,13 @@ public class Especie {
 	 * ------------------------------------------------------------
 	 * @param especie = la especie raiz de la especie a crear
 	 * @param nroEvolucion = numero de evolucion de la especie [1..n] siendo 1 el mas debil y n el mas fuerte
-	 * @param id = id de la especie
 	 * @param nombre = nombre de la especie
 	 * @param altura = altura de todos los bichos de esa especie
 	 * @param peso = peso de todos los bichos de esa especie
 	 * @param energiaInicial = energia con la que inician todos los bichos de esa especie
 	 */
 
-	public Especie(Especie especie, int nroEvolucion,Condicion condicionDeEvolucion, int id, String nombre, int altura, int peso, int energiaInicial) {
+	public Especie(Especie especie, int nroEvolucion,Condicion condicionDeEvolucion,int id, String nombre, int altura, int peso, int energiaInicial) {
 		this.setEspecieRaiz(especie);
 		this.setNroEvolucion(nroEvolucion);
 		this.setCondicionDeEvolucion(condicionDeEvolucion);

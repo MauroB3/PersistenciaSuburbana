@@ -27,7 +27,7 @@ public class DataServiceImp implements DataService {
         Especie red = new Especie();
         Especie amarillo = new Especie();
 
-        red.setId(1);
+        //red.setId(1);
         red.setNombre("Rojomon");
         red.setTipo(TipoBicho.FUEGO);
         red.setAltura(180);
@@ -37,7 +37,7 @@ public class DataServiceImp implements DataService {
         red.setUrlFoto("/image/rojomon.jpg");
         list.add(red);
 
-        amarillo.setId(2);
+        //amarillo.setId(2);
         amarillo.setNombre("Amarillomon");
         amarillo.setTipo(TipoBicho.ELECTRICIDAD);
         amarillo.setAltura(170);

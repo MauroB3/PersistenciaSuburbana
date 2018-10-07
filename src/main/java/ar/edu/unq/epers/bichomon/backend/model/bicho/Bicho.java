@@ -87,4 +87,12 @@ public class Bicho {
 		return new Ataque(bicho, this.energia * Math.random() * 1,this);
 	}
 
+	/** TESTEAR**/
+	public void IncrementarEnergia(){
+		this.energia += (Math.random() * 5) + 1;
+	}
+
+	public int getID() {
+		return id;
+	}
 }

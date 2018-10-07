@@ -5,11 +5,13 @@ import java.util.List;
 import ar.edu.unq.epers.bichomon.backend.dao.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
 
 public class EspecieServiceImpl implements EspecieService {
 
 	private EspecieDAO especieDAO;
+
 
 	public EspecieServiceImpl(EspecieDAO dao){
 		this.especieDAO = dao;
@@ -18,32 +20,41 @@ public class EspecieServiceImpl implements EspecieService {
 
 	@Override
 	public void crearEspecie(Especie especie){
-		this.especieDAO.guardar(especie);
+		Runner.runInSession( () -> {
+			this.especieDAO.guardar(especie);
+			return null;
+		});
 	}
 	
 
 	@Override
 	public Especie getEspecie(String nombreEspecie){
-		Especie especie = especieDAO.recuperar(nombreEspecie);
-		if(especie == null){
-			throw new EspecieNoExistente(nombreEspecie);
-		}
-		return especie;
+		return Runner.runInSession( () -> {
+			Especie especie = especieDAO.recuperar(nombreEspecie);
+			if(especie == null){
+				throw new EspecieNoExistente(nombreEspecie);
+			}
+			return especie;
+		});
 	}
 
 
 	@Override
 	public List<Especie> getAllEspecies(){
-		return especieDAO.recuperarTodos();
+		return Runner.runInSession( () -> {
+			return especieDAO.recuperarTodos();
+		});
 	}
 
 
 	@Override
 	public Bicho crearBicho(String nombreEspecie, String nombreBicho){
-		Especie especie = especieDAO.recuperar(nombreEspecie);
-		Bicho bicho = especie.crearBicho();
-		especieDAO.actualizar(especie);
-		return bicho;
+		return Runner.runInSession( () -> {
+			Especie especie = especieDAO.recuperar(nombreEspecie);
+			Bicho bicho = especie.crearBicho();
+			especieDAO.actualizar(especie);
+			return bicho;
+		});
 	}
 
 }

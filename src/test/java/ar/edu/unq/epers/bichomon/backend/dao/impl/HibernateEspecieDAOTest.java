@@ -10,6 +10,9 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
+import ar.edu.unq.epers.bichomon.backend.model.bicho.*;
+import ar.edu.unq.epers.bichomon.backend.service.runner.*;
 
 import ar.edu.unq.epers.bichomon.backend.service.data.*;
 import ar.edu.unq.epers.bichomon.backend.dao.*;
@@ -51,9 +54,21 @@ public class HibernateEspecieDAOTest {
         green.setUrlFoto("/image/verdemon.jpg");
     }
 
+    /*
     @After
     public void borrarDatos() {
         dao.deleteAll();
+    }
+    */
+
+    @After
+    public void cleanup() {
+        //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
+        //que ser creada.
+        //
+        //Al tener hibernate configurado con esto <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
+        SessionFactoryProvider.destroy();
     }
 
     @Test
