@@ -1,9 +1,10 @@
-package ar.edu.unq.epers.bichomon.backend.dao;
+package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 import org.junit.After;
@@ -16,9 +17,9 @@ import ar.edu.unq.epers.bichomon.backend.dao.*;
 import java.util.List;
 
 
-public class JDBCEspecieDAOTest {
-/*
-    private JDBCEspecieDAO dao = new JDBCEspecieDAO();
+public class HibernateEspecieDAOTest {
+
+    private HibernateEspecieDAO dao = new HibernateEspecieDAO();
     private Especie red = new Especie();
     private Especie amarillo = new Especie();
     private Especie green = new Especie();
@@ -91,12 +92,13 @@ public class JDBCEspecieDAOTest {
         assertEquals(especies.get(2).getNombre(), green.getNombre());
     }
 
+    /*
     @Test
     public void actualizarEspecie() {
         dao.guardar(red);
 
         TipoBicho tipo1 = TipoBicho.FUEGO;
-        Especie especie1Actualizada = new Especie(1, "Rojomon", TipoBicho.FUEGO);
+        Especie especie1Actualizada = new Especie("Rojomon", TipoBicho.FUEGO);
         especie1Actualizada.setPeso(75);
         especie1Actualizada.setAltura(180);
         especie1Actualizada.setCantidadBichos(10);
@@ -108,5 +110,5 @@ public class JDBCEspecieDAOTest {
         Especie otraEspecie = dao.recuperar("Rojomon");
         assertEquals(otraEspecie.getCantidadBichos(), especie1Actualizada.getCantidadBichos());
     }
-*/
+    */
 }

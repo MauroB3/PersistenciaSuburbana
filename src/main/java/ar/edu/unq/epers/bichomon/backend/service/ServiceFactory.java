@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.service;
 
 
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataService;
 import ar.edu.unq.epers.bichomon.backend.service.data.DataServiceImp;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
@@ -24,7 +25,7 @@ public class ServiceFactory {
 	*/
 
 	public EspecieService getEspecieService() {
-		return new EspecieServiceImpl(new EspecieDAO());//Antes se le daba por parametro un JDBCEspecieDAO
+		return new EspecieServiceImpl(new HibernateEspecieDAO());//Antes se le daba por parametro un JDBCEspecieDAO
 	};
 	
 	/**

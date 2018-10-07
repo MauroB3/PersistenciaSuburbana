@@ -3,13 +3,18 @@ package ar.edu.unq.epers.bichomon.backend.model.especie;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * Representa una {@link Especie} de bicho.
  * 
  * @author Charly Backend
  */
+@Entity
 public class Especie {
 
+	@Id
 	private Integer id;
 	private String nombre;
 	private int altura;

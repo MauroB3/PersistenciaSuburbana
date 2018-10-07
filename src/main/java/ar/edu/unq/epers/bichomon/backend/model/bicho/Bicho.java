@@ -86,4 +86,5 @@ public class Bicho {
 	public Ataque atacar(Bicho bicho) {
 		return new Ataque(bicho, this.energia * Math.random() * 1,this);
 	}
+
 }
