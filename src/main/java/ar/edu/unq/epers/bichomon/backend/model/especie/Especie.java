@@ -18,7 +18,7 @@ public class Especie {
 
 	private Integer id;
  	@Id
-	@Column(name="nombew")
+	@Column(name="nombre", length=190)
 	private String nombre;
 	private int altura;
 	private int peso;
