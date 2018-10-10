@@ -9,7 +9,7 @@
 		<property name="connection.url">jdbc:mysql://localhost:3306/epers_ejemplo_hibernate?serverTimezone=UTC</property>
 		<!-- jdbc:mysql://localhost:3306/bichomon?serverTimezone=UTC&user=root&password=root" -->
 		<property name="connection.username">root</property>
-		<property name="connection.password">root</property>
+		<property name="connection.password">1k3R1</property>
 
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
@@ -20,10 +20,15 @@
 		<!-- Echo all executed SQL to stdout -->
 		<property name="show_sql">true</property>
 		
-		<property name="hibernate.hbm2ddl.auto">create-drop</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
 
 		<mapping class="ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho" />
 		<mapping class="ar.edu.unq.epers.bichomon.backend.model.especie.Especie" />
+		<mapping class="ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo" />
+		<mapping class="ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia" />
+		<mapping class="ar.edu.unq.epers.bichomon.backend.model.ubicacion.Pueblo" />
+		<mapping class="ar.edu.unq.epers.bichomon.backend.model.ubicacion.Campeon" />
+		<mapping class="ar.edu.unq.epers.bichomon.backend.model.ubicacion.EspeciePosible" />
 
 	</session-factory>
 </hibernate-configuration>

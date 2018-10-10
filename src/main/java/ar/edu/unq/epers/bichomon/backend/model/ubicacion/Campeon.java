@@ -2,13 +2,17 @@ package ar.edu.unq.epers.bichomon.backend.model.ubicacion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 public class Campeon {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
+    @OneToOne
     private Bicho bicho;
 
     private LocalDate fechaInicio;

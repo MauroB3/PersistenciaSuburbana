@@ -10,12 +10,24 @@ import javax.persistence.*;
 public abstract class Ubicacion {
 
     @Id
-    @Column(name = "Nombre", nullable = false, unique = true)
+    @Column(name = "Nombre", nullable = false, unique = true, length=190)
     private String Nombre;
+
+    private int poblacion = 0;
 
     public String getNombre() {
         return Nombre;
     }
+
+    public void sumarPoblacion() {
+        poblacion += 1;
+    }
+
+    public void restarPoblacion() {
+        poblacion -= 1;
+    }
+
+    public int getPoblacion() { return poblacion; }
 
     public void setNombre(String nombre) {
         Nombre = nombre;
