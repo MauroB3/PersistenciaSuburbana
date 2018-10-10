@@ -4,11 +4,15 @@ import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 
+@Entity
 public class Guarderia extends Ubicacion {
 
+    @Transient
     @OneToMany
     private ArrayList<Bicho> bichosAbandonados = new ArrayList<>();
 

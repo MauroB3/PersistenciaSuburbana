@@ -4,42 +4,32 @@ import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
 
-
+@Entity
 public class Pueblo extends Ubicacion {
 
     @Column
-    private ArrayList<EspeciePosible> especiesQueHabitan = new ArrayList<>();
+    @OneToMany(mappedBy="pueblo", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<EspeciePosible> especiesQueHabitan = new HashSet<>();
 
-    @Column
     private int siguienteProbabilidadInicial = 0;
-
-    @Column
-    private int poblacion = 0;
 
     private int dividendoFactorPoblacion = 100;
 
     @Override
     public int getFactorPoblacion() {
-        return (dividendoFactorPoblacion / poblacion);
+        return (dividendoFactorPoblacion / super.getPoblacion());
     }
 
     public void setDividendoFactorPoblacion(int dividendoFactorPoblacion) {
         this.dividendoFactorPoblacion = dividendoFactorPoblacion;
     }
 
-    public void sumarPoblacion() {
-        poblacion += 1;
-    }
 
-    public void restarPoblacion() {
-        poblacion -= 1;
-    }
-
-    public int getPoblacion() { return poblacion; }
 
     //No se puede agregar una especie con probabilidad 0
     public void agregarEspecie(Especie especie, int probabilidad) {
@@ -47,15 +37,18 @@ public class Pueblo extends Ubicacion {
         siguienteProbabilidadInicial += probabilidad;
     }
 
+    // La especie debe existir en especiesQueHabitan
     public void eliminarEspecie(Especie especie) {
+        EspeciePosible especieAEliminar = null;
         for(EspeciePosible esp : especiesQueHabitan) {
             if(esp.getEspecie() == especie) {
-                especiesQueHabitan.remove(esp);
+                especieAEliminar = esp;
             }
         }
+        especiesQueHabitan.remove(especieAEliminar);
     }
 
-    public ArrayList<EspeciePosible> getEspeciesQueHabitan() {
+    public Set<EspeciePosible> getEspeciesQueHabitan() {
         return especiesQueHabitan;
     }
 
