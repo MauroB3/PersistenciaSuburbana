@@ -13,6 +13,7 @@ public class Campeon {
     private int id;
 
     @OneToOne
+    @JoinColumn(name = "id_bicho")
     private Bicho bicho;
 
     private LocalDate fechaInicio;
@@ -20,8 +21,12 @@ public class Campeon {
     private LocalDate fechaFin;
 
     @OneToOne
-    @JoinColumn(name = "id_bicho")
+    @JoinColumn(name = "nombre_dojo")
     private Dojo dojo;
+
+    public Campeon() {
+
+    }
 
     public Campeon(Bicho unBicho, LocalDate fechaInicial, Dojo unDojo) {
         fechaInicio = fechaInicial;

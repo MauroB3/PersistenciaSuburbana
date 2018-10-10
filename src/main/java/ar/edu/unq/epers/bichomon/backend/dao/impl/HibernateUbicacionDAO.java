@@ -21,7 +21,7 @@ public class HibernateUbicacionDAO implements UbicacionDAO {
 
     public void actualizar(Ubicacion ubicacion) {
         Session session = Runner.getCurrentSession();
-        session.save(ubicacion);
+        session.update(ubicacion);
     }
 
     public void eliminar(Ubicacion ubicacion) {
@@ -62,10 +62,12 @@ public class HibernateUbicacionDAO implements UbicacionDAO {
 
         Query<Campeon> query = session.createQuery(hql, Campeon.class);
 
-        Campeon campeonHistorico = query.getSingleResult();
+        List<Campeon> campeones = query.getResultList();
+        Campeon campeonHistorico = campeones.get(0);
 
-        for(Campeon campeon : query.getResultList()) {
-            if(DAYS.between(campeonHistorico.getFechaInicio(), campeonHistorico.getFechaFin()) < DAYS.between(campeon.getFechaInicio(), campeon.getFechaFin())) {
+        for(Campeon campeon : campeones) {
+            if(campeon.getFechaFin() != null
+                && DAYS.between(campeonHistorico.getFechaInicio(), campeonHistorico.getFechaFin()) < DAYS.between(campeon.getFechaInicio(), campeon.getFechaFin())) {
                 campeonHistorico = campeon;
             }
         }

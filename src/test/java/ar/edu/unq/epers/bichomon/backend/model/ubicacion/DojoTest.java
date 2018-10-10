@@ -7,6 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.time.LocalDate;
+
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
@@ -33,7 +36,7 @@ public class DojoTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         dojo = new Dojo();
-        dojo.setCampeon(bicho1);
+        dojo.setCampeon(bicho1, LocalDate.now());
         when(bicho1.getEspecie()).thenReturn(especieBicho);
         when(especieBicho.getEspecieRaiz()).thenReturn(especieRaiz);
         when(entrenador.factorNivel()).thenReturn(1f);
@@ -42,13 +45,13 @@ public class DojoTest {
 
     @Test
     public void testGetYSetCampeonActual() {
-        dojo.setCampeon(bicho1);
+        dojo.setCampeon(bicho1, LocalDate.now());
         assertEquals(dojo.getCampeon(), bicho1);
     }
 
     @Test
     public void testGetYSetCampeonNuevo() {
-        dojo.setCampeon(bicho2);
+        dojo.setCampeon(bicho2, LocalDate.now());
         assertEquals(dojo.getCampeon(), bicho2);
     }
 
@@ -59,7 +62,7 @@ public class DojoTest {
 
     @Test
     public void testBusqueda() {
-        dojo.setCampeon(bicho1);
+        dojo.setCampeon(bicho1, LocalDate.now());
         Especie especie = dojo.bichoEncontrado(entrenador).getEspecie();
         assertEquals(especie, especieRaiz);
     }
