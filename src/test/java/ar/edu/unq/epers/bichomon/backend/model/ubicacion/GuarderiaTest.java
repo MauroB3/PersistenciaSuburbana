@@ -32,8 +32,8 @@ public class GuarderiaTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        when(entrenador1.factorNivel()).thenReturn(1);
-        when(entrenador1.factorTiempo()).thenReturn(1);
+        when(entrenador1.factorNivel()).thenReturn(1f);
+        when(entrenador1.factorTiempo()).thenReturn(1f);
         when(bicho1.getEntrenador()).thenReturn(entrenador1);
         when(bicho2.getEntrenador()).thenReturn(entrenador2);
         when(bicho3.getEntrenador()).thenReturn(entrenador2);

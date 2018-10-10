@@ -12,7 +12,7 @@ public class BasadoEnNivel extends Condicion {
 
     @Override
     public Boolean cumpleConLaCondicion(Bicho bicho) {
-        return bicho.getEntrenador().getNivel().nivel() > condicionNivel;
+        return bicho.getEntrenador().getNivel() > condicionNivel;
     }
 
     public int getCondicionNivel(){

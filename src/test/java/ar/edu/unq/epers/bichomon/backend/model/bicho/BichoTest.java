@@ -3,6 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.model.bicho;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
+import ar.edu.unq.epers.bichomon.backend.model.duelo.Ataque;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import org.junit.Before;
@@ -35,6 +36,7 @@ public class BichoTest {
     public void setUp() throws Exception{
         MockitoAnnotations.initMocks(this);
         bicho = new Bicho(especieAgua);
+        otroBicho = new Bicho(especieAgua);
 
 
     }
@@ -97,10 +99,19 @@ public class BichoTest {
     @Test
     public void testAtacar(){
 
-        when(ataque.getAtacado()).thenReturn(otroBicho);
-        when(ataque.getAtacante()).thenReturn(bicho);
+        when(ataque.atacado()).thenReturn(0);
+        when(ataque.atacante()).thenReturn(0);
 
-        assertEquals(ataque.getAtacado(),bicho.atacar(otroBicho).getAtacado());
-        assertEquals(ataque.getAtacante(),bicho.atacar(otroBicho).getAtacante());
+        assertEquals(ataque.atacado(),bicho.atacar(otroBicho).atacado());
+        assertEquals(ataque.atacante(),bicho.atacar(otroBicho).atacante());
+    }
+
+    @Test
+    public void testIncrementarEnergia(){
+        int energiaInicial = bicho.getEnergia();
+        bicho.incrementarEnergia();
+
+        assertTrue(bicho.getEnergia() > energiaInicial);
+
     }
 }

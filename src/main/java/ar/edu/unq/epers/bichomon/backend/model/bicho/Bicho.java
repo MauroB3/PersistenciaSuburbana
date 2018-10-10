@@ -1,5 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model.bicho;
 
+import ar.edu.unq.epers.bichomon.backend.model.duelo.Ataque;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 
@@ -84,11 +85,10 @@ public class Bicho {
 	}
 
 	public Ataque atacar(Bicho bicho) {
-		return new Ataque(bicho, this.energia * Math.random() * 1,this);
+		return new Ataque(bicho.getID(),this.getEnergia() * ((Math.random() * 1) + 0.5f), this.getID());
 	}
 
-	/** TESTEAR**/
-	public void IncrementarEnergia(){
+	public void incrementarEnergia(){
 		this.energia += (Math.random() * 5) + 1;
 	}
 

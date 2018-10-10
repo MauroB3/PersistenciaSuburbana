@@ -1,4 +1,6 @@
-package ar.edu.unq.epers.bichomon.backend.model.entrenador;
+package ar.edu.unq.epers.bichomon.backend.model.nivel;
+
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Nivel;
 
 import java.util.List;
 
@@ -6,6 +8,10 @@ public class NivelManager {
 
     private List<Nivel> niveles;
     private int factorNivel;
+
+    public NivelManager(){
+
+    }
 
     public NivelManager(List<Nivel> niveles, int factorNivel){
         this.factorNivel = factorNivel;
@@ -27,10 +33,6 @@ public class NivelManager {
 
     public int getNivel(int experiencia){
         int nivel = 0;
-    private NivelManager(){
-
-    }
-
         for(Nivel level : niveles) {
             if (this.between(level.getExpInicial(), experiencia, level.getExpFinal())){
                 nivel = level.getNivel();
