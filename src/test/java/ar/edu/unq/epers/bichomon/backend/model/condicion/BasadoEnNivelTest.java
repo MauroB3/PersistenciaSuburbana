@@ -2,7 +2,6 @@ package ar.edu.unq.epers.bichomon.backend.model.condicion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.*;
-import ar.edu.unq.epers.bichomon.backend.model.nivel.Nivel;
 import org.junit.Test;
 import org.junit.Before;
 import org.mockito.Mock;
@@ -18,9 +17,6 @@ public class BasadoEnNivelTest {
     private Entrenador entrenador;
 
     @Mock
-    private Nivel nivel;
-
-    @Mock
     private Bicho bicho;
 
     @Before
@@ -29,7 +25,7 @@ public class BasadoEnNivelTest {
         condicion = new BasadoEnNivel(5);
 
         when(bicho.getEntrenador()).thenReturn(entrenador);
-        when(entrenador.getNivel()).thenReturn(nivel);
+        when(entrenador.getNivel()).thenReturn(10);
     }
 
     @Test
@@ -39,14 +35,12 @@ public class BasadoEnNivelTest {
 
     @Test
     public void testCumpleConLaCondicionTrue(){
-        when(nivel.nivel()).thenReturn(7);
-
         assertTrue(condicion.cumpleConLaCondicion(bicho));
     }
 
     @Test
     public void testCumpleConLaCondicionFalse(){
-        when(nivel.nivel()).thenReturn(4);
+        when(entrenador.getNivel()).thenReturn(4);
 
         assertFalse(condicion.cumpleConLaCondicion(bicho));
     }

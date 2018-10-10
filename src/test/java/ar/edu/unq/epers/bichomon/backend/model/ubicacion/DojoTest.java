@@ -36,8 +36,8 @@ public class DojoTest {
         dojo.setCampeon(bicho1);
         when(bicho1.getEspecie()).thenReturn(especieBicho);
         when(especieBicho.getEspecieRaiz()).thenReturn(especieRaiz);
-        when(entrenador.factorNivel()).thenReturn(1);
-        when(entrenador.factorTiempo()).thenReturn(1);
+        when(entrenador.factorNivel()).thenReturn(1f);
+        when(entrenador.factorTiempo()).thenReturn(1f);
     }
 
     @Test

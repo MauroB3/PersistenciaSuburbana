@@ -95,6 +95,7 @@ public class EspecieServiceImplTest {
         assertEquals(60,service.getEspecie("Pikachu").getAltura(),0);
     }
 
+    /*
     @Test
     public void actualizarNombre(){
         Especie especie = service.getEspecie("Pikachu");
@@ -105,4 +106,5 @@ public class EspecieServiceImplTest {
         System.out.println(" " + service.getEspecie("Pikachu").getEspecieRaiz());
 
     }
+    */
 }

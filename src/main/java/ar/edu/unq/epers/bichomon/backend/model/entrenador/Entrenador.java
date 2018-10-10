@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 
 import javax.persistence.Entity;
@@ -43,6 +44,9 @@ public class Entrenador {
     public float factorNivel(){
         return this.nivel.factorNivel() / this.getNivel();
     }
+
+    /** TERMINAR */
+    public float factorTiempo(){ return 0;}
 
     public int getNivel(){return nivel.getNivel(this.exp);}
 
