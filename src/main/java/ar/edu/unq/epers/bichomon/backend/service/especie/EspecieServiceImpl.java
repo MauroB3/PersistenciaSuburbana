@@ -48,13 +48,33 @@ public class EspecieServiceImpl implements EspecieService {
 
 
 	@Override
-	public Bicho crearBicho(String nombreEspecie, String nombreBicho){
+	public Bicho crearBicho(String nombreEspecie){
 		return Runner.runInSession( () -> {
 			Especie especie = especieDAO.recuperar(nombreEspecie);
 			Bicho bicho = especie.crearBicho();
 			especieDAO.actualizar(especie);
 			return bicho;
 		});
+	}
+
+	public void actualizar(Especie especie){
+		Runner.runInSession(() -> {
+			especieDAO.actualizar(especie);
+			return null;
+		});
+	}
+
+	@Override
+	public List<Especie> populares(){
+		return Runner.runInSession(() -> {
+			return null;
+
+		});
+	}
+
+	@Override
+	public List<Especie> impopulares(){
+		return null;
 	}
 
 }

@@ -24,9 +24,10 @@ import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
  * 
  * @author Steve Frontend
  */
+
 @Path("especie")
 public class EspecieServiceREST implements EspecieService {
-	
+
 	private final EspecieService decorado;
 
 	public EspecieServiceREST() {
@@ -59,8 +60,18 @@ public class EspecieServiceREST implements EspecieService {
 	@POST
 	@Path("{nombreEspecie}/{nombreBicho}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Bicho crearBicho(@PathParam("nombreEspecie") String nombreEspecie, @PathParam("nombreBicho") String nombreBicho) {
-		return this.decorado.crearBicho(nombreEspecie, nombreBicho);
+	public Bicho crearBicho(@PathParam("nombreEspecie") String nombreEspecie) {
+		return this.decorado.crearBicho(nombreEspecie);
 	}
 
+	@Override
+	public List<Especie> impopulares(){
+	    return null;
+    }
+
+    @Override
+    public List<Especie> populares(){
+	    return null;
+    }
 }
+

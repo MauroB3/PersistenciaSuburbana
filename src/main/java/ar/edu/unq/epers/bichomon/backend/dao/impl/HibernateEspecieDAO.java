@@ -16,7 +16,8 @@ public class HibernateEspecieDAO implements EspecieDAO {
     }
 
     public void actualizar(Especie especie){
-
+        Session session = Runner.getCurrentSession();
+        session.update(especie);
     }
 
     public void deleteAll(){
@@ -35,7 +36,7 @@ public class HibernateEspecieDAO implements EspecieDAO {
     public List<Especie> recuperarTodos(){
         Session session = Runner.getCurrentSession();
 
-        String hql = "from Especie i";
+        String hql = "from Especie";
 
         Query<Especie> query = session.createQuery(hql, Especie.class);
         return query.getResultList();

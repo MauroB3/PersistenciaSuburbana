@@ -1,57 +1,49 @@
 package ar.edu.unq.epers.bichomon.backend.model.entrenador;
-import ar.edu.unq.epers.bichomon.backend.model.bicho.*;
-import ar.edu.unq.epers.bichomon.backend.model.nivel.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Entrenador {
-    /*
+
     private String nombre;
-    private Ubicacion ubicacionActual;
-    private int experiencia;
-    private Nivel nivel;
-    private ArrayList<Bicho> bichosCapturados = new ArrayList<Bicho>();
+    private Ubicacion ubicacion;
+    private int exp;
+    private NivelManager nivel;
+    private LocalDate ulimaCaptura;
+    private List<Bicho> bichos;
 
-    public entrenador(){}
-
-
-    public Bicho buscar(){
-        Bicho bicho = ubicacionActual.buscar();
-        bichosCapturados.add(bicho);
-        return bicho;
-        //Modificar en caso de que la busqueda no sea exitosa.
+    public Entrenador(String nombre, int exp, NivelManager nivel, Ubicacion ubicacion){
+        this.nombre = nombre;
+        this.exp = exp;
+        this.nivel = nivel;
+        this.ubicacion = ubicacion;
+        this.bichos = new ArrayList<Bicho>();
     }
 
-
-    public void retarADuelo(){
-        ubicacionActual.duelo();
-        //Completar, hay que contemplar el caso en el que devuelva una exception.
+    public String nombre(){
+        return this.nombre;
     }
 
-    public Boolean puedeCapturarbicho(){
-        return bichosCapturados.size() < this.capacidadMaxima();
+    public Ubicacion ubicacion(){
+        return this.ubicacion;
     }
 
-    private int capacidadMaxima(){
-        return nivel.capacidadMaxima();
+    public boolean puedeCapturarBicho(){return this.capacidadMaxima() < bichos.size();}
+
+    public void retarADuelo(){}
+
+    public int capacidadMaxima(){ return nivel.capacidadMaximaDeBichos(this.exp);}
+
+    public float factorNivel(){
+        return this.nivel.factorNivel() / this.getNivel();
     }
 
-*/
-    private Nivel nivel;
+    public int getNivel(){return nivel.getNivel(this.exp);}
 
-    public Nivel getNivel(){
-        return this.nivel;
-    }
-
-    public Entrenador(){
-
-    }
-
-    public int factorTiempo() {
-        return 1;
-    }
-
-    public int factorNivel() {
-        return 1;
-    }
 }
