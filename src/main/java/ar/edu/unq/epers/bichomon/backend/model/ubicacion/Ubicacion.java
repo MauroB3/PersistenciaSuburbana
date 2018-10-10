@@ -43,7 +43,7 @@ public abstract class Ubicacion {
     }
 
     private Boolean busquedaExitosa(Entrenador entrenador) {
-        return (entrenador.factorTiempo() * entrenador.factorNivel() * getFactorPoblacion() * (double) (Math.random() * 1) > 0.5);
+        return (entrenador.factorTiempo() * entrenador.factorNivel() * getFactorPoblacion() * (float) (Math.random() * 1) > 0.5);
     }
 
     public int getFactorPoblacion() {

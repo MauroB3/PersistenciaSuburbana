@@ -20,14 +20,14 @@ public class Dojo extends Ubicacion {
         return this.campeon;
     }
 
-    public void setCampeon(Bicho bicho) {
+    public void setCampeon(Bicho bicho, LocalDate fechaInicio) {
         if (campeon != null && campeon.getBicho() != bicho) {
             Campeon campeonAnterior = campeon;
-            campeonAnterior.setFechaFin(LocalDate.now());
-            campeon = new Campeon(bicho, LocalDate.now());
+            campeonAnterior.setFechaFin(fechaInicio);
+            campeon = new Campeon(bicho, fechaInicio, this);
         }
         else {
-            campeon = new Campeon(bicho, LocalDate.now());
+            campeon = new Campeon(bicho, fechaInicio, this);
         }
 
     }
