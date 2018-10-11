@@ -1,14 +1,15 @@
 package ar.edu.unq.epers.bichomon.backend.service.mapa;
 
 import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateCampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
+import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
 import org.junit.*;
@@ -24,6 +25,9 @@ public class MapaServiceTest {
     private UbicacionServiceImp ubicacionService;
     private BichoDAO bichoDAO;
     private BichoService bichoService;
+    private HibernateCampeonDAO campeonDAO;
+    private CampeonService campeonService;
+
     private Dojo dojo;
 
     private Especie especie1 = new Especie("Pikachu");
@@ -41,10 +45,12 @@ public class MapaServiceTest {
     @Before
     public void setUp() {
         ubicacionDAO = new HibernateUbicacionDAO();
-        mapaService = new MapaService(ubicacionDAO);
         ubicacionService = new UbicacionServiceImp(ubicacionDAO);
         bichoDAO = new HibernateBichoDAO();
         bichoService = new BichoService(bichoDAO);
+        campeonDAO = new HibernateCampeonDAO();
+        campeonService = new CampeonService(campeonDAO);
+        mapaService = new MapaService(ubicacionDAO, campeonDAO);
 
         dojo = new Dojo();
         dojo.setNombre("un dojo");
@@ -62,7 +68,6 @@ public class MapaServiceTest {
     }
     */
 
-
     @Test
     public void mover() {
 
@@ -79,7 +84,7 @@ public class MapaServiceTest {
     public void campeon() {
         bichoService.crearBicho(bicho1);
         ubicacionService.crearUbicacion(dojo);
-        dojo.setCampeon(bicho1, fechaInicio1);
+        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho1, fechaInicio1));
         ubicacionService.actualizarUbicacion(dojo);
         assertEquals("Pikachu", mapaService.campeon("Un dojo").getBicho().getEspecie().getNombre());
     }
@@ -90,15 +95,12 @@ public class MapaServiceTest {
         bichoService.crearBicho(bicho2);
         bichoService.crearBicho(bicho3);
         ubicacionService.crearUbicacion(dojo);
-        dojo.setCampeon(bicho1, fechaInicio1);
-        dojo.getCampeon().setFechaFin(fechaInicio2);
+        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho1, fechaInicio1));
         ubicacionService.actualizarUbicacion(dojo);
-        dojo.setCampeon(bicho2, fechaInicio2);
-        dojo.getCampeon().setFechaFin(fechaInicio3);
+        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho2, fechaInicio2));
         ubicacionService.actualizarUbicacion(dojo);
-        dojo.setCampeon(bicho3, fechaInicio3);
+        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho3, fechaInicio3));
         ubicacionService.actualizarUbicacion(dojo);
         assertEquals("Pikachu", mapaService.campeonHistorico("Un dojo").getEspecie().getNombre());
-
     }
 }

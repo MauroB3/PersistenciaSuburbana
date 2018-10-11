@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.service.ubicacion;
 
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDAO;
+import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieNoExistente;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
@@ -44,6 +45,4 @@ public class UbicacionServiceImp {
             return ubicacionDAO.recuperarTodos();
         });
     }
-
-
 }

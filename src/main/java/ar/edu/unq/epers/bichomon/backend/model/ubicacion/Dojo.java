@@ -1,12 +1,12 @@
 package ar.edu.unq.epers.bichomon.backend.model.ubicacion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 @Entity
 public class Dojo extends Ubicacion {
@@ -18,15 +18,25 @@ public class Dojo extends Ubicacion {
         return this.campeon;
     }
 
-    public void setCampeon(Bicho bicho, LocalDate fechaInicio) {
-        if (campeon != null && campeon.getBicho() != bicho) {
-            campeon.setFechaFin(fechaInicio);
+    public Campeon actualizarYRetornarCampeon(Bicho bicho, LocalDate fechaInicio) {
+        if(campeon == null) {
             campeon = new Campeon(bicho, fechaInicio, this);
+            System.out.println("------ CAMPEON NUEVO: " + campeon.getId());
+            return campeon;
+        }
+        else if(campeon.getBicho().getID() != bicho.getID()) {
+            Campeon campeonAnterior = campeon;
+            campeonAnterior.setFechaFin(fechaInicio);
+            System.out.println("------ CAMPEON ANTERIOR: " + campeon.getId());
+            campeon = new Campeon(bicho, fechaInicio, this);
+            System.out.println("------------ CAMPEON DESPUES DE CAMBIARLO: " + campeonAnterior.getId());
+
+            return campeonAnterior;
+            //Retorno campeon anterior para que el service (que es quien utiliza esta funcion) actualice el campeon anterior en la BBDD.
         }
         else {
-            campeon = new Campeon(bicho, fechaInicio, this);
+            return campeon;
         }
-
     }
 
     @Override
