@@ -6,6 +6,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
+
 public class HibernateBichoDAO implements BichoDAO {
 
     @Override
@@ -26,7 +27,4 @@ public class HibernateBichoDAO implements BichoDAO {
         Session session = Runner.getCurrentSession();
         return session.get(Bicho.class,id);
     }
-
-
-
 }
