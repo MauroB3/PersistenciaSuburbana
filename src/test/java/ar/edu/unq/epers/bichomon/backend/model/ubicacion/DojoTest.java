@@ -32,6 +32,9 @@ public class DojoTest {
     @Mock
     private Especie especieRaiz;
 
+    /*
+
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -66,4 +69,7 @@ public class DojoTest {
         Especie especie = dojo.bichoEncontrado(entrenador).getEspecie();
         assertEquals(especie, especieRaiz);
     }
+
+    */
+
 }
