@@ -21,6 +21,10 @@ public class EspeciePosible {
 
     private int probFinal;
 
+    public EspeciePosible() {
+
+    }
+
     public EspeciePosible(Especie especie, int probInicial, int probFinal) {
         especie = especie;
         probInicial = probInicial;

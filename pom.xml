@@ -42,7 +42,7 @@
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
+			<artifactId>hibernate-java8</artifactId>
 			<version>5.2.2.Final</version>
 		</dependency>
 

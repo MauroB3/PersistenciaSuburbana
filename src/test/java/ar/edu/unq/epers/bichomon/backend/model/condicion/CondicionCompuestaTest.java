@@ -2,7 +2,6 @@ package ar.edu.unq.epers.bichomon.backend.model.condicion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.*;
-import ar.edu.unq.epers.bichomon.backend.model.nivel.Nivel;
 import org.junit.Test;
 import org.junit.Before;
 import org.mockito.Mock;

@@ -52,10 +52,11 @@ public class UbicacionServiceImpTest {
 
     @Test
     public void actualizarUbicacion() {
-        service.crearUbicacion(pueblo);
-        pueblo.setNombre("Pueblo actualizado");
-        service.actualizarUbicacion(pueblo);
-        assertEquals(pueblo.getNombre(), service.getUbicacion("Pueblo actualizado").getNombre());
+        service.crearUbicacion(dojo);
+        dojo.sumarPoblacion();
+        service.actualizarUbicacion(dojo);
+        assertEquals(dojo.getPoblacion(), service.getUbicacion("Un dojo").getPoblacion());
+
     }
 
     @Test

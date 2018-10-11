@@ -4,30 +4,27 @@ import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Entity
 public class Dojo extends Ubicacion {
 
-    @Transient
+    @OneToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private Campeon campeon;
 
     public Campeon getCampeon() {
         return this.campeon;
     }
 
-    public void setCampeon(Bicho bicho) {
+    public void setCampeon(Bicho bicho, LocalDate fechaInicio) {
         if (campeon != null && campeon.getBicho() != bicho) {
-            Campeon campeonAnterior = campeon;
-            campeonAnterior.setFechaFin(LocalDate.now());
-            campeon = new Campeon(bicho, LocalDate.now());
+            campeon.setFechaFin(fechaInicio);
+            campeon = new Campeon(bicho, fechaInicio, this);
         }
         else {
-            campeon = new Campeon(bicho, LocalDate.now());
+            campeon = new Campeon(bicho, fechaInicio, this);
         }
 
     }

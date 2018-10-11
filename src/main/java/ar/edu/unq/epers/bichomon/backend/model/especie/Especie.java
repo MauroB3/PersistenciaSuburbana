@@ -89,6 +89,10 @@ public class Especie {
 		EvolutionHandler.getInstance().agregarEspecie(this);
 	}
 
+	public Especie(String nombre) {
+		this.setNombre(nombre);
+	}
+
 
 	public Condicion getCondicionDeEvolucion(){
 		return condicionDeEvolucion;

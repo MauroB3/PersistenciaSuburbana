@@ -4,7 +4,7 @@ import ar.edu.unq.epers.bichomon.backend.model.duelo.Ataque;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -14,14 +14,19 @@ import java.util.Random;
  * 
  * @author Charly Backend
  */
+@Entity
 public class Bicho {
 
     //Ya no tiene nombre "por simplicidad"
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id; //Agregado porque si
 
+	@ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
 	private Especie especie;
 	private int energia;
+
+	@Transient
 	private Entrenador entrenador;
 	private LocalDate fechaDeCaptura;
 	private int victorias;
@@ -96,7 +101,4 @@ public class Bicho {
 		return id;
 	}
 
-	public void setID(int id){
-		this.id = id;
-	}
 }
