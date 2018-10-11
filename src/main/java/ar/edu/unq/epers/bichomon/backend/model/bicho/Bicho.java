@@ -17,10 +17,9 @@ import java.util.Random;
 @Entity
 public class Bicho {
 
-    //Ya no tiene nombre "por simplicidad"
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id; //Agregado porque si
+	private int id;
 
 	@ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
 	private Especie especie;

@@ -1,7 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.model.duelo;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Campeon;
+import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 
 import java.util.ArrayList;
