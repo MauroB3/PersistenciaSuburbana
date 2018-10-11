@@ -6,25 +6,30 @@ import java.util.List;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
+import org.mockito.cglib.core.Local;
 
 import javax.persistence.Entity;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Entity
 public class Entrenador {
 
     private String nombre;
     private Ubicacion ubicacion;
-    private int exp;
+    private int exp = 0; //Siempr empieza en 0 de experiencia
     private NivelManager nivel;
     private LocalDate ulimaCaptura;
-    private List<Bicho> bichos;
+    private List<Bicho> bichos = new ArrayList<Bicho>();
 
-    public Entrenador(String nombre, int exp, NivelManager nivel, Ubicacion ubicacion){
+    public Entrenador(){
+
+    }
+
+    public Entrenador(String nombre, NivelManager nivel, Ubicacion ubicacion){
         this.nombre = nombre;
-        this.exp = exp;
         this.nivel = nivel;
         this.ubicacion = ubicacion;
-        this.bichos = new ArrayList<Bicho>();
     }
 
     public String nombre(){
@@ -35,19 +40,53 @@ public class Entrenador {
         return this.ubicacion;
     }
 
-    public boolean puedeCapturarBicho(){return this.capacidadMaxima() < bichos.size();}
+    public boolean puedeCapturarBicho(){return this.capacidadMaxima() > bichos.size();}
 
+    /** ¿Debe ser de un servicio?*/
     public void retarADuelo(){}
 
-    public int capacidadMaxima(){ return nivel.capacidadMaximaDeBichos(this.exp);}
+    public int capacidadMaxima(){ return nivel.capacidadMaximaDeBichos(this.exp);} //<-------------
 
     public float factorNivel(){
         return this.nivel.factorNivel() / this.getNivel();
     }
 
-    /** TERMINAR */
-    public float factorTiempo(){ return 0;}
+    public float factorTiempo(){
+        if(this.diasDesdeUltimaCaptura() == 0){
+            return 1;
+        }else{
+            return this.diasDesdeUltimaCaptura();
+        }
+    }
+
+    private long diasDesdeUltimaCaptura(){
+        return DAYS.between(this.ulimaCaptura, LocalDate.now());
+    }
 
     public int getNivel(){return nivel.getNivel(this.exp);}
+
+    public void agregarExperiencia(int exp){
+        this.exp += exp;
+    }
+
+    public void capturarBicho(Bicho bicho){
+        if(this.puedeCapturarBicho()){
+            bichos.add(bicho);
+            ulimaCaptura = LocalDate.now();
+        }
+    }
+
+    /** Para testear */
+    public int cantidadBichos(){
+        return bichos.size();
+    }
+
+    public int getExperiencia(){
+        return exp;
+    }
+
+    public void setUlimaCaptura(LocalDate fecha){
+        this.ulimaCaptura = fecha;
+    }
 
 }

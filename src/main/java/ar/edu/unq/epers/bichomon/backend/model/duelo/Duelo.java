@@ -1,66 +1,87 @@
 package ar.edu.unq.epers.bichomon.backend.model.duelo;
 
-
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Campeon;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 
 import java.util.ArrayList;
 
 public class Duelo {
 
-    private ResultadoCombate resultado = new ResultadoCombate(new ArrayList<Ataque>());
     private Bicho campeon;
+    private Bicho bicho;
+    private ArrayList<Ataque> ataques;
 
-    public void duelo(Bicho bicho){
-        //this.campeon = bicho.getEntrenador().ubicacion().campeon();
-        int turno = 0;
-        while(this.verificarRetadorNoGana(this.campeon, bicho) && this.verificarRetadoNoGana(bicho, this.campeon, turno)){
-            this.resultado.addAtaque(this.ejecutarTurno(bicho, turno));
-            turno +=1;
+    public Duelo(){
+
+    }
+
+    public Duelo(Dojo dojo, Bicho bicho){
+        campeon = dojo.getCampeon().getBicho();
+        this.bicho = bicho;
+        ataques = new ArrayList<Ataque>();
+    }
+
+    public ResultadoCombate pelear(){
+        /** Deben ser 10 turnos si o si */
+        int turnos = 1;
+        while (!this.debeTerminarLaPelea() && !this.pasoLos10Turnos(turnos)){
+            ataques.add(bicho.atacar(campeon));
+            if(!this.debeTerminarLaPelea()) {
+                return this.terminarPelea();
+            }else{
+                ataques.add(campeon.atacar(bicho));
+            }
+        }
+        /** Si el duelo llega hasta aca el campeon gano y no debe ser descoronado */
+        return this.terminarPelea();
+    }
+
+    public boolean debeTerminarLaPelea(){
+        return this.dañoCausadoA(campeon) > campeon.getEnergia() || this.dañoCausadoA(bicho) > bicho.getEnergia();
+    }
+
+    public boolean pasoLos10Turnos(int n){
+        return n > 10;
+    }
+
+    public ResultadoCombate terminarPelea(){
+        campeon.incrementarEnergia();
+        bicho.incrementarEnergia();
+        //CoronarCampeon
+        campeon = this.ganador();
+        campeon.incrementarVictorias();
+        return new ResultadoCombate(ataques, campeon);
+    }
+
+    public Bicho ganador(){
+        if(this.dañoCausadoA(campeon) > campeon.getEnergia()){
+            return bicho;
+        }else{
+            return campeon;
         }
     }
 
-    private boolean verificarRetadorNoGana(Bicho retado, Bicho  retador){
-        if(this.esVencido(retado)){
-            this.finalizarDuelo(retador, retado);
-            return false;
+    public int dañoCausadoA(Bicho bicho) {
+        int dañoCausado = 0;
+        for (Ataque a : ataques) {
+            if (a.atacado() == bicho.getID()) {
+                dañoCausado += a.daño();
+            }
         }
-        else{
-            return true;
-        }
+        return dañoCausado;
     }
 
-    private boolean verificarRetadoNoGana(Bicho retado, Bicho  retador, int turno){
-        if(this.esVencido(retador) || turno == 10){
-            this.finalizarDuelo(retado, retador);
-            return false;
-        }
-        else{
-            return true;
-        }
+    /** Para testear */
+    public void setAtaques(ArrayList<Ataque> ataques){
+        this.ataques = ataques;
     }
 
-    private boolean esVencido(Bicho unBicho){
-        return resultado.ataqueRecibido(unBicho.getID()) > unBicho.getEnergia();
+    public Bicho getCampeon(){
+        return campeon;
     }
 
-
-
-    private void finalizarDuelo(Bicho bicho1 , Bicho bicho2){
-        this.coronarCampeon(bicho1);
-        bicho2.incrementarEnergia();
-        bicho1.incrementarEnergia();
-    }
-
-    private void coronarCampeon(Bicho bicho){
-        //bicho.getEntrenador().getUbicacion().setCampeon(bicho);
-    }
-
-    private Ataque ejecutarTurno(Bicho bicho, int turno){
-        if(turno % 2 == 0 ){
-            return bicho.atacar(this.campeon);
-        }
-        else{
-            return this.campeon.atacar(bicho);
-        }
+    public Bicho getRetador(){
+        return bicho;
     }
 }

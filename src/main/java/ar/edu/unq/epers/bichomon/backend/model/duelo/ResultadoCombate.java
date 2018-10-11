@@ -1,16 +1,24 @@
 package ar.edu.unq.epers.bichomon.backend.model.duelo;
 
+import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+
 import java.util.ArrayList;
 
 public class ResultadoCombate {
     private ArrayList<Ataque> ataques;
+    private Bicho ganador;
 
-    public ResultadoCombate(ArrayList<Ataque> ataques){
+    public ResultadoCombate(ArrayList<Ataque> ataques, Bicho ganador){
+        this.ganador = ganador;
         this.ataques = ataques;
     }
 
     public void addAtaque(Ataque ataque){
         this.ataques.add(ataque);
+    }
+
+    public Bicho getGanador(){
+        return ganador;
     }
 
     public float ataqueRecibido(int bicho){
@@ -21,5 +29,10 @@ public class ResultadoCombate {
             }
         }
         return daño;
+    }
+
+    /** Para testear */
+    public int cantidadDeAtaques(){
+        return ataques.size();
     }
 }

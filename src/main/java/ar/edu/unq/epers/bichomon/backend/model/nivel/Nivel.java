@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.model.entrenador;
+package ar.edu.unq.epers.bichomon.backend.model.nivel;
 
 public class Nivel {
 

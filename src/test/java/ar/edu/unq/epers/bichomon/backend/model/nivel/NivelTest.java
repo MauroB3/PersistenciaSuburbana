@@ -1,6 +1,5 @@
 package ar.edu.unq.epers.bichomon.backend.model.nivel;
 
-import ar.edu.unq.epers.bichomon.backend.model.entrenador.Nivel;
 import org.junit.Before;
 import org.junit.Test;
 

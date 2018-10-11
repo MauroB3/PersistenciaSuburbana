@@ -1,6 +1,5 @@
 package ar.edu.unq.epers.bichomon.backend.model.nivel;
 
-import ar.edu.unq.epers.bichomon.backend.model.entrenador.Nivel;
 
 import java.util.List;
 
@@ -32,19 +31,17 @@ public class NivelManager {
     }
 
     public int getNivel(int experiencia){
-        int nivel = 0;
+        //int nivel = 0;
         for(Nivel level : niveles) {
             if (this.between(level.getExpInicial(), experiencia, level.getExpFinal())){
-                nivel = level.getNivel();
+                return level.getNivel();
             }
         }
-
-        return nivel;
+        return 0;
     }
 
     public int capacidadMaximaDeBichos(int experiencia){
         int capacidad = 0;
-
         for(Nivel nivel : niveles) {
             if (this.between(nivel.getExpInicial(), experiencia, nivel.getExpFinal())){
                 capacidad = nivel.getCapacidadMaximaDeBichos();
@@ -66,5 +63,10 @@ public class NivelManager {
                 level.setExpFinal(expFinal);
             }
         }
+    }
+
+    /** Para usar en el test */
+    public int cantidadDeNiveles(){
+        return niveles.size();
     }
 }
