@@ -54,4 +54,6 @@ public class Campeon {
         return dojo;
     }
 
+    public int getId() { return id; }
+
 }
