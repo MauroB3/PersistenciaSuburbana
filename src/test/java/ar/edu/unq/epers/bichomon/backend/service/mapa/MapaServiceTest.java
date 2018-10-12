@@ -113,7 +113,7 @@ public class MapaServiceTest {
     public void campeon() {
         bichoService.crearBicho(bicho1);
         ubicacionService.crearUbicacion(dojo);
-        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho1, fechaInicio1));
+        //campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho1, fechaInicio1));
         ubicacionService.actualizarUbicacion(dojo);
         assertEquals("Pikachu", mapaService.campeon("Un dojo").getBicho().getEspecie().getNombre());
     }

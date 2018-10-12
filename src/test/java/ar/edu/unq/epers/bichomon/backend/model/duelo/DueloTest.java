@@ -154,7 +154,7 @@ public class DueloTest {
         bichoRetadorMock.setEnergia(1300);
 
         bichoCampeonMock.setEnergia(1000);
-        Campeon campeon = dojo2.actualizarYRetornarCampeon(bichoCampeonMock, LocalDate.now());
+        //Campeon campeon = dojo2.actualizarYRetornarCampeon(bichoCampeonMock, LocalDate.now());
 
         Duelo dueloN = new Duelo(dojo2,bichoCampeonMock);
 
