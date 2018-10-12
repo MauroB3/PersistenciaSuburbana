@@ -20,4 +20,10 @@ public class LeaderboardService {
         });
     }
 
+    public List<Campeon> recuperarCampeonesActuales() {
+        return Runner.runInSession( () -> {
+            return this.campeonDAO.recuperarCampeonesActuales();
+        });
+    }
+
 }

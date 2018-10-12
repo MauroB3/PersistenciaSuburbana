@@ -14,4 +14,6 @@ public interface CampeonDAO {
 
     public List<Campeon> recuperarTodos();
 
+    public List<Campeon> recuperarCampeonesActuales();
+
 }

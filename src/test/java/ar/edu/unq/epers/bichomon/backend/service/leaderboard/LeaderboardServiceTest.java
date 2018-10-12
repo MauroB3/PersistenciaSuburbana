@@ -26,7 +26,8 @@ public class LeaderboardServiceTest {
     private BichoService bichoService;
     private UbicacionServiceImp ubicacionService;
 
-    private Dojo dojo;
+    private Dojo dojo1;
+    private Dojo dojo2;
 
     private Especie especie1 = new Especie("Pikachu");
     private Especie especie2 = new Especie("Charmander");
@@ -47,8 +48,11 @@ public class LeaderboardServiceTest {
         bichoService = new BichoService(new HibernateBichoDAO());
         ubicacionService = new UbicacionServiceImp(new HibernateUbicacionDAO());
 
-        dojo = new Dojo();
-        dojo.setNombre("un dojo");
+        dojo1 = new Dojo();
+        dojo1.setNombre("Dojo 1");
+
+        dojo2 = new Dojo();
+        dojo2.setNombre("Dojo 2");
     }
 
     @Test
@@ -56,11 +60,15 @@ public class LeaderboardServiceTest {
         bichoService.crearBicho(bicho1);
         bichoService.crearBicho(bicho2);
         bichoService.crearBicho(bicho3);
-        ubicacionService.crearUbicacion(dojo);
-        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho1, fechaInicio1));
-        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho2, fechaInicio2));
-        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho3, fechaInicio3));
-        assertEquals(2, leaderboardService.campeones().size());
+        ubicacionService.crearUbicacion(dojo1);
+        ubicacionService.crearUbicacion(dojo2);
+        campeonService.actualizarCampeon(dojo1.actualizarYRetornarCampeon(bicho1, fechaInicio1));
+        ubicacionService.actualizarUbicacion(dojo1);
+        campeonService.actualizarCampeon(dojo1.actualizarYRetornarCampeon(bicho2, fechaInicio2));
+        ubicacionService.actualizarUbicacion(dojo1);
+        campeonService.actualizarCampeon(dojo2.actualizarYRetornarCampeon(bicho3, fechaInicio3));
+        ubicacionService.actualizarUbicacion(dojo2);
+        assertEquals(2, leaderboardService.recuperarCampeonesActuales().size());
 
     }
 }
