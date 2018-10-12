@@ -2,9 +2,14 @@ package ar.edu.unq.epers.bichomon.backend.model.condicion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 
+import javax.persistence.Entity;
+
+@Entity
 public class BasadoEnVictoria extends Condicion{
 
     private int condicionVictorias;
+
+    public BasadoEnVictoria(){}
 
     public BasadoEnVictoria(int condicionVictorias){
         this.setCondicionVictorias(condicionVictorias);

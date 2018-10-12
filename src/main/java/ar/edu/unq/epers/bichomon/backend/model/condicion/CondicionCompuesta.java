@@ -1,12 +1,24 @@
 package ar.edu.unq.epers.bichomon.backend.model.condicion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
 public class CondicionCompuesta extends Condicion {
 
-    private ArrayList<Condicion> condiciones = new ArrayList<Condicion>();
+    public CondicionCompuesta(){}
+
+    @OneToMany(cascade= javax.persistence.CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Condicion> condiciones = new HashSet<Condicion>();
 
     public void agregarCondicion(Condicion c){
         condiciones.add(c);

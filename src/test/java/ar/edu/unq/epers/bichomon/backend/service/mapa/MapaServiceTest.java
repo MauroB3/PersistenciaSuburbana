@@ -1,8 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.service.mapa;
 
 import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
@@ -10,7 +8,7 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
-import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
+import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
@@ -30,7 +28,7 @@ public class MapaServiceTest {
     private HibernateUbicacionDAO ubicacionDAO;
     private UbicacionServiceImp ubicacionService;
     private BichoDAO bichoDAO;
-    private BichoService bichoService;
+    private BichoServiceImpl bichoService;
     private HibernateCampeonDAO campeonDAO;
     private CampeonService campeonService;
     private HibernateEntrenadorDAO entrenadorDAO;
@@ -65,8 +63,7 @@ public class MapaServiceTest {
         nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         ubicacionDAO = new HibernateUbicacionDAO();
         ubicacionService = new UbicacionServiceImp(ubicacionDAO);
-        bichoDAO = new HibernateBichoDAO();
-        bichoService = new BichoService(bichoDAO);
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO());
         campeonDAO = new HibernateCampeonDAO();
         campeonService = new CampeonService(campeonDAO);
         entrenadorDAO = new HibernateEntrenadorDAO();

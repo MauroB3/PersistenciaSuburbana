@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 public class Especie {
 
  	@Id
-	@Column(name="nombre", length=190)
+	@Column(name = "Nombre", nullable = false, unique = true, length=190)
 	private String nombre;
 	private int altura;
 	private int peso;

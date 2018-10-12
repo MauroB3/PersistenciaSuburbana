@@ -14,7 +14,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Entrenador {
 
     @Id
-    @Column(length=190)
+    @Column(name = "Nombre", nullable = false, unique = true, length=190)
     private String Nombre;
 
     @OneToOne(cascade = CascadeType.ALL)

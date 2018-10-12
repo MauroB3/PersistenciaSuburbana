@@ -1,24 +1,20 @@
 package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
-import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
-import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import ar.edu.unq.epers.bichomon.backend.model.duelo.ResultadoCombate;
 
-public class BichoService {
+public interface BichoService {
 
-    private BichoDAO bichoDAO;
+    void crearBicho(Bicho bicho);
 
-    public BichoService(BichoDAO bichoDAO) {
-        this.bichoDAO = bichoDAO;
-    }
+    Bicho buscar(String entrenador);
 
-    public void crearBicho(Bicho bicho){
-        Runner.runInSession( () -> {
-            System.out.println("Popularidad = " + bicho.getEspecie().getPopularidad());
-            this.bichoDAO.guardar(bicho);
-            System.out.println("Popularidad = " + bicho.getEspecie().getPopularidad());
-            return null;
-        });
-    }
+    void abandonar(String entrenador);
 
+    ResultadoCombate duelo(String entrenador);
+
+    boolean puedeEvolucionar(String entrenador, int bicho);
+
+    Bicho evolucionar(String entrenador, int bicho);
+    
 }

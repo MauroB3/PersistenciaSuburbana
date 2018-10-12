@@ -8,7 +8,7 @@ import ar.edu.unq.epers.bichomon.backend.model.condicion.CondicionCompuesta;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
-import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
+import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +23,7 @@ public class EspecieServiceImplTest {
     private EspecieServiceImpl service;
     private HibernateEspecieDAO hibernateEspecieDAO;
     private Condicion condicion;
-    private BichoService bichoService;
+    private BichoServiceImpl bichoService;
 
     private Especie pikachu;
 
@@ -59,7 +59,7 @@ public class EspecieServiceImplTest {
 
     @Before
     public void setUp() {
-        bichoService = new BichoService(new HibernateBichoDAO());
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO());
         hibernateEspecieDAO = new HibernateEspecieDAO();
         service = new EspecieServiceImpl(hibernateEspecieDAO);
         condicion = new CondicionCompuesta();

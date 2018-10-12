@@ -1,6 +1,5 @@
 package ar.edu.unq.epers.bichomon.backend.service.leaderboard;
 
-import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateCampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDAO;
@@ -9,8 +8,7 @@ import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
-import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
+import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
 import org.junit.Before;
@@ -26,7 +24,7 @@ public class LeaderboardServiceTest {
     private LeaderboardService leaderboardService;
     private HibernateCampeonDAO campeonDAO;
     private CampeonService campeonService;
-    private BichoService bichoService;
+    private BichoServiceImpl bichoService;
     private UbicacionServiceImp ubicacionService;
 
     private Dojo dojo1;
@@ -53,7 +51,7 @@ public class LeaderboardServiceTest {
         campeonDAO = new HibernateCampeonDAO();
         campeonService = new CampeonService(campeonDAO);
         leaderboardService = new LeaderboardService(campeonDAO);
-        bichoService = new BichoService(new HibernateBichoDAO());
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO());
         ubicacionService = new UbicacionServiceImp(new HibernateUbicacionDAO());
 
         dojo1 = new Dojo();

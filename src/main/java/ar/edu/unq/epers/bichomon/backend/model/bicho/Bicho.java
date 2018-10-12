@@ -1,5 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model.bicho;
 
+import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.Ataque;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
@@ -20,13 +21,14 @@ public class Bicho {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false, unique = true, length=190)
 	private int id;
 
 	@ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
 	private Especie especie;
 	private int energia;
 
-	@Transient
+	@ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
 	private Entrenador entrenador;
 
 	private LocalDate fechaDeCaptura;

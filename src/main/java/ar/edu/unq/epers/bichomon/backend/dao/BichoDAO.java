@@ -9,4 +9,5 @@ public interface BichoDAO {
     void actualizar(Bicho bicho);
 
     Bicho recuperar(int idBicho);
+
 }

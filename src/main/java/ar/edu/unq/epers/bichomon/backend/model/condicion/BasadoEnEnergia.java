@@ -1,9 +1,14 @@
 package ar.edu.unq.epers.bichomon.backend.model.condicion;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.*;
 
+import javax.persistence.Entity;
+
+@Entity
 public class BasadoEnEnergia extends Condicion {
 
     private int condicionEnergia;
+
+    public BasadoEnEnergia(){}
 
     public BasadoEnEnergia(int energia) {
         this.setCondicionEnergia(energia);

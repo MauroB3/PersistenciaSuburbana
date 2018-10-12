@@ -1,11 +1,16 @@
 package ar.edu.unq.epers.bichomon.backend.model.condicion;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.*;
 
+import javax.persistence.Entity;
+import javax.persistence.ExcludeSuperclassListeners;
 import java.time.LocalDate;
 
+@Entity
 public class BasadoEnEdad extends Condicion{
 
     private LocalDate condicionFecha;
+
+    public BasadoEnEdad(){}
 
     public BasadoEnEdad(LocalDate condicionFecha){
         this.setCondicionEdad(condicionFecha);
@@ -23,4 +28,5 @@ public class BasadoEnEdad extends Condicion{
     public LocalDate getCondicionFecha(){
         return this.condicionFecha;
     }
+
 }
