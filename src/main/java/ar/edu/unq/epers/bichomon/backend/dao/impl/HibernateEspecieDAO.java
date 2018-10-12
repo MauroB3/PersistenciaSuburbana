@@ -3,8 +3,10 @@ package ar.edu.unq.epers.bichomon.backend.dao.impl;
 import ar.edu.unq.epers.bichomon.backend.dao.EspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import jdk.internal.util.xml.impl.ReaderUTF16;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.hibernate.transform.Transformers;
 
 import java.util.List;
 
@@ -47,9 +49,20 @@ public class HibernateEspecieDAO implements EspecieDAO {
 
         String hql = "SELECT count(distinct e.nombre) FROM Especie e JOIN Bicho b WHERE b.estaAbandonado = False";
 
-        String sql = "select e.nombre, e.altura, e.cantidadBichos, e.energiaInicial, e.nroEvolucion, e.peso, e.urlFoto from Especie as e join (select especie_nombre, count(especie_nombre) as cantidad from Bicho where estaAbandonado = False group by especie_nombre) as b on e.nombre = b.especie_nombre order by cantidad desc";
-
         Query<Especie> query = session.createQuery(hql,Especie.class);
         return query.getResultList();
+    }
+
+    public Especie especieLider() {
+        Session session = Runner.getCurrentSession();
+
+        //String sql = "select nombre, count(nombre) as cantidad from Especie as e join (select b.especie_nombre from Bicho as b join Campeon as c on b.id = c.id_bicho) as r on r.especie_nombre = e.nombre group by e.nombre order by cantidad desc";
+
+        String hql = "select e from Campeon c join c.bicho as b join b.especie as e group by e order by count(b) desc";
+
+        Query<Especie> query = session.createQuery(hql, Especie.class);
+        query.setMaxResults(1);
+        return query.getSingleResult();
+
     }
 }

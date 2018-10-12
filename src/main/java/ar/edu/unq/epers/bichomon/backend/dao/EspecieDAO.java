@@ -18,4 +18,7 @@ public interface EspecieDAO {
 	List<Especie> recuperarTodos();
 
 	List<Especie> populares();
+
+	public Especie especieLider();
+
 }

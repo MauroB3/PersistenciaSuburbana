@@ -1,30 +1,25 @@
 package ar.edu.unq.epers.bichomon.backend.service.leaderboard;
 
-import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
-import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import java.time.LocalDate;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
-public class LeaderboardServiceTest {
+
+public class EspecieLiderTest {
 
     private LeaderboardService leaderboardService;
     private HibernateCampeonDAO campeonDAO;
@@ -36,9 +31,11 @@ public class LeaderboardServiceTest {
 
     private Dojo dojo1;
     private Dojo dojo2;
+    private Dojo dojo3;
 
     private Especie especie1;
     private Especie especie2;
+    private Especie especie3;
 
     @Mock
     private NivelManager nivelManager;
@@ -74,29 +71,26 @@ public class LeaderboardServiceTest {
 
 
         dojo1 = new Dojo();
-        dojo2 = new Dojo();
         dojo1.setNombre("Dojo 1");
+        dojo2 = new Dojo();
         dojo2.setNombre("Dojo 2");
+        dojo3 = new Dojo();
+        dojo3.setNombre("Dojo 3");
 
         especie1 = new Especie("Pikachu");
         especie2 = new Especie("Charmander");
+        especie3 = new Especie("Squirtle");
 
         entrenador1 = new Entrenador("entrenador1", nivelManager, dojo1);
         entrenador2 = new Entrenador("entrenador2", nivelManager, dojo2);
-        entrenador3 = new Entrenador("entrenador3", nivelManager, dojo2);
+        entrenador3 = new Entrenador("entrenador3", nivelManager, dojo3);
 
         bicho1 = new Bicho(especie1, entrenador1);
-        bicho1.setEnergia(10);
         bicho2 = new Bicho(especie2, entrenador1);
-        bicho2.setEnergia(10);
         bicho3 = new Bicho(especie1, entrenador2);
-        bicho3.setEnergia(50);
         bicho4 = new Bicho(especie2, entrenador2);
-        bicho4.setEnergia(50);
-        bicho5 = new Bicho(especie2, entrenador3);
-        bicho5.setEnergia(5);
+        bicho5 = new Bicho(especie3, entrenador3);
         bicho6 = new Bicho(especie1, entrenador3);
-        bicho6.setEnergia(5);
 
         entrenador1.agregarBicho(bicho1);
         entrenador1.agregarBicho(bicho2);
@@ -105,31 +99,11 @@ public class LeaderboardServiceTest {
         entrenador3.agregarBicho(bicho5);
         entrenador3.agregarBicho(bicho6);
 
-    }
-
-    @After
-    public void cleanUp(){
-        //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
-        //que ser creada.
-        //
-        //Al tener hibernate configurado con esto <property name="hibernate.hbm2ddl.auto">create-drop</property>
-        //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
-        SessionFactoryProvider.destroy();
-    }
-
-    @Test
-    public void campeones() {
         ubicacionService.crearUbicacion(dojo1);
         ubicacionService.crearUbicacion(dojo2);
         entrenadorService.guardar(entrenador1);
         entrenadorService.guardar(entrenador2);
         entrenadorService.guardar(entrenador3);
-        bichoService.crearBicho(bicho1);
-        bichoService.crearBicho(bicho2);
-        bichoService.crearBicho(bicho3);
-        bichoService.crearBicho(bicho4);
-        bichoService.crearBicho(bicho5);
-        bichoService.crearBicho(bicho6);
         campeonService.actualizarCampeon(dojo1.actualizarYRetornarCampeon(bicho1, fechaInicio1));
         ubicacionService.actualizarUbicacion(dojo1);
         campeonService.actualizarCampeon(dojo1.actualizarYRetornarCampeon(bicho2, fechaInicio2));
@@ -138,37 +112,16 @@ public class LeaderboardServiceTest {
         ubicacionService.actualizarUbicacion(dojo2);
         campeonService.actualizarCampeon(dojo2.actualizarYRetornarCampeon(bicho4, fechaInicio4));
         ubicacionService.actualizarUbicacion(dojo2);
-        campeonService.actualizarCampeon(dojo2.actualizarYRetornarCampeon(bicho5, fechaInicio5));
-        ubicacionService.actualizarUbicacion(dojo2);
-        campeonService.actualizarCampeon(dojo2.actualizarYRetornarCampeon(bicho6, fechaInicio6));
-        ubicacionService.actualizarUbicacion(dojo2);
-        List<Entrenador> e = leaderboardService.recuperarCampeonesActuales();
-        assertEquals(2, e.size());
-        assertEquals("entrenador1", e.get(0).nombre());
-        assertEquals("entrenador3", e.get(1).nombre());
+        campeonService.actualizarCampeon(dojo3.actualizarYRetornarCampeon(bicho5, fechaInicio5));
+        ubicacionService.actualizarUbicacion(dojo3);
+        campeonService.actualizarCampeon(dojo3.actualizarYRetornarCampeon(bicho6, fechaInicio6));
+        ubicacionService.actualizarUbicacion(dojo3);
+
     }
 
     @Test
-    public void lideres() {
-        ubicacionService.crearUbicacion(dojo1);
-        ubicacionService.crearUbicacion(dojo2);
-        entrenadorService.guardar(entrenador1);
-        entrenadorService.guardar(entrenador2);
-        entrenadorService.guardar(entrenador3);
-        bichoService.crearBicho(bicho1);
-        bichoService.crearBicho(bicho2);
-        bichoService.crearBicho(bicho3);
-        bichoService.crearBicho(bicho4);
-        bichoService.crearBicho(bicho5);
-        bichoService.crearBicho(bicho6);
-
-        List<Entrenador> l = leaderboardService.lideres();
-        assertEquals(3,l.size());
-        assertEquals("entrenador2", leaderboardService.lideres().get(0).nombre());
-        assertEquals(100, leaderboardService.lideres().get(0).getPoderTotal());
-        assertEquals("entrenador1", leaderboardService.lideres().get(1).nombre());
-        assertEquals(20, leaderboardService.lideres().get(1).getPoderTotal());
-        assertEquals("entrenador3", leaderboardService.lideres().get(2).nombre());
-        assertEquals(10, leaderboardService.lideres().get(2).getPoderTotal());
+    public void testEspecieLider() {
+        assertEquals("Pikachu", leaderboardService.especieLider().getNombre());
     }
+
 }
