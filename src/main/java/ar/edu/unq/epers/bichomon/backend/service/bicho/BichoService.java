@@ -14,7 +14,9 @@ public class BichoService {
 
     public void crearBicho(Bicho bicho){
         Runner.runInSession( () -> {
+            System.out.println("Popularidad = " + bicho.getEspecie().getPopularidad());
             this.bichoDAO.guardar(bicho);
+            System.out.println("Popularidad = " + bicho.getEspecie().getPopularidad());
             return null;
         });
     }

@@ -69,7 +69,7 @@ public class BichoTest {
 
     @Test
     public void testGetEntrenador(){
-        bicho.setEntrenador(entrenador);
+        bicho.serAdoptado(entrenador);
 
         assertEquals(entrenador, bicho.getEntrenador());
     }

@@ -74,5 +74,11 @@ public class EspecieServiceREST implements EspecieService {
     public List<Especie> populares(){
 	    return null;
     }
+
+    @Override
+	public void incrementarPopularidad(String st){}
+
+	@Override
+	public void decrementarPopularidad(String st){}
 }
 

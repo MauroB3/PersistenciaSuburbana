@@ -23,6 +23,8 @@ public class Especie {
 	private int altura;
 	private int peso;
 
+	private int popularidad;
+
 	private TipoBicho tipo;
 
 	@Transient
@@ -206,4 +208,15 @@ public class Especie {
 		return this.especieRaiz == especie.getEspecieRaiz() && this.nroEvolucion == especie.getNroEvolucion() + 1;
 	}
 
+	public void incrementarPopularidad(){
+		this.popularidad++;
+	}
+
+	public void decrementarPopularidad(){
+		this.popularidad = this.popularidad - 1;
+	}
+
+	public int getPopularidad(){
+		return this.popularidad;
+	}
 }

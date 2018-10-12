@@ -26,6 +26,7 @@ public class HibernateEspecieDAO implements EspecieDAO {
         String hql = "delete from Especie";
 
         Query<Especie> query = session.createQuery(hql, Especie.class);
+        int result = query.executeUpdate();
     }
 
     public Especie recuperar(String nombreEspecie){
@@ -45,11 +46,41 @@ public class HibernateEspecieDAO implements EspecieDAO {
     public List<Especie> populares(){
         Session session = Runner.getCurrentSession();
 
-        String hql = "SELECT count(distinct e.nombre) FROM Especie e JOIN Bicho b WHERE b.estaAbandonado = False";
+        //String hql = "SELECT count(distinct e.nombre) FROM Especie e JOIN Bicho b WHERE b.estaAbandonado = False";
 
-        String sql = "select e.nombre, e.altura, e.cantidadBichos, e.energiaInicial, e.nroEvolucion, e.peso, e.urlFoto from Especie as e join (select especie_nombre, count(especie_nombre) as cantidad from Bicho where estaAbandonado = False group by especie_nombre) as b on e.nombre = b.especie_nombre order by cantidad desc";
+        String hql = "from Especie e order by e.popularidad desc";
+
+        //String sql = "select e.nombre, e.altura, e.cantidadBichos, e.energiaInicial, e.nroEvolucion, e.peso, e.urlFoto from Especie as e join (select especie_nombre, count(especie_nombre) as cantidad from Bicho where estaAbandonado = False group by especie_nombre) as b on e.nombre = b.especie_nombre order by cantidad desc";
 
         Query<Especie> query = session.createQuery(hql,Especie.class);
-        return query.getResultList();
+        return query.setMaxResults(10).getResultList();
     }
+
+    public List<Especie> impopulares(){
+        Session session = Runner.getCurrentSession();
+
+        String hql = "from Especie e order by e.popularidad asc";
+
+        Query<Especie> query = session.createQuery(hql,Especie.class);
+        return query.setMaxResults(10).getResultList();
+    }
+
+    public void incrementarPopularidad(String nombreEspecie){
+        Session session = Runner.getCurrentSession();
+
+        String hql = "update Especie e set e.popularidad = (e.popularidad +1) where e.nombre = " + nombreEspecie;
+
+        Query<Especie> query = session.createQuery(hql, Especie.class);
+        query.executeUpdate();
+    }
+
+    public void decrementarPopularidad(String nombreEspecie){
+        Session session = Runner.getCurrentSession();
+
+        String hql = "update Especie e set e.popularidad = (e.popularidad -1) where e.nombre = " + nombreEspecie;
+
+        Query<Especie> query = session.createQuery(hql,Especie.class);
+        int retult = query.executeUpdate();
+    }
+
 }

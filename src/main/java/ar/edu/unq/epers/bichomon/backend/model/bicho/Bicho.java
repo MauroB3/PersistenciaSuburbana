@@ -38,6 +38,7 @@ public class Bicho {
 	public Bicho(Especie especie, Entrenador entrenador) {
 		this.entrenador = entrenador;
 		this.especie = especie;
+		this.energia = especie.getEnergiaInicial();
 	}
 
 	/**
@@ -80,7 +81,7 @@ public class Bicho {
 		return entrenador;
 	}
 
-	public void setEntrenador(Entrenador entrenador){
+	public void serAdoptado(Entrenador entrenador){
 	    this.entrenador = entrenador;
     }
 
@@ -105,6 +106,6 @@ public class Bicho {
 	}
 
 	public void serAbandonado(){
-		estaAbandonado = true;
+		this.estaAbandonado = true;
 	}
 }

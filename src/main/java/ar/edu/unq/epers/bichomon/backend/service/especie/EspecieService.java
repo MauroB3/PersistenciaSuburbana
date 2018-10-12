@@ -53,4 +53,8 @@ public interface EspecieService {
     List<Especie> populares();
 
     List<Especie> impopulares();
+
+    void incrementarPopularidad(String nombreEspecie);
+
+    void decrementarPopularidad(String nombreEspecie);
 }

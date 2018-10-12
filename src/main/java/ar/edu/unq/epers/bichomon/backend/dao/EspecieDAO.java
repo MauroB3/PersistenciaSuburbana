@@ -18,4 +18,10 @@ public interface EspecieDAO {
 	List<Especie> recuperarTodos();
 
 	List<Especie> populares();
+
+	List<Especie> impopulares();
+
+	void incrementarPopularidad(String nombreEspecie);
+
+	void decrementarPopularidad(String nombreEspecie);
 }

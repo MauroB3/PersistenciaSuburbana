@@ -24,6 +24,7 @@ public class EspecieServiceImpl implements EspecieService {
 	public void crearEspecie(Especie especie){
 		Runner.runInSession( () -> {
 			this.especieDAO.guardar(especie);
+
 			return null;
 		});
 	}
@@ -49,11 +50,12 @@ public class EspecieServiceImpl implements EspecieService {
 	}
 
 
-	@Override
+	@Override //Crea un bicho e incrementa la popularidad de su especie
 	public Bicho crearBicho(String nombreEspecie, Entrenador entrenador){
 		return Runner.runInSession( () -> {
 			Especie especie = especieDAO.recuperar(nombreEspecie);
 			Bicho bicho = especie.crearBicho(entrenador);
+			especie.incrementarPopularidad();
 			especieDAO.actualizar(especie);
 			return bicho;
 		});
@@ -75,7 +77,29 @@ public class EspecieServiceImpl implements EspecieService {
 
 	@Override
 	public List<Especie> impopulares(){
-		return null;
+		return Runner.runInSession(() -> {
+			return especieDAO.impopulares();
+		});
+	}
+
+	@Override
+	public void incrementarPopularidad(String nombreEspecie){
+		Runner.runInSession(() -> {
+			especieDAO.incrementarPopularidad(nombreEspecie);
+			return null;
+		});
+	}
+
+	@Override /** No debe hacerse aca */
+	public void decrementarPopularidad(String nombreEspecie){
+		Runner.runInSession(() -> {
+			Especie especie = especieDAO.recuperar(nombreEspecie);
+			//System.out.println("Popularidad " + nombreEspecie + " = " + especie.getPopularidad());
+			especie.decrementarPopularidad();
+			//System.out.println("Popularidad " + nombreEspecie + " = " + especie.getPopularidad());
+			especieDAO.actualizar(especie);
+			return null;
+		});
 	}
 
 }
