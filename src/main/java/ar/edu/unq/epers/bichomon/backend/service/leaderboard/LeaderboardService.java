@@ -2,9 +2,10 @@ package ar.edu.unq.epers.bichomon.backend.service.leaderboard;
 
 import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
-import java.util.List;
+import java.util.*;
 
 public class LeaderboardService {
 
@@ -20,9 +21,19 @@ public class LeaderboardService {
         });
     }
 
-    public List<Campeon> recuperarCampeonesActuales() {
+    public List<Entrenador> recuperarCampeonesActuales() {
         return Runner.runInSession( () -> {
-            return this.campeonDAO.recuperarCampeonesActuales();
+            List<Campeon> campeonesAnteriores = this.campeonDAO.recuperarCampeonesAnteriores();
+
+            List<Entrenador> entrenadoresConCampeonActual = new ArrayList<>();
+            //Elimino los repetidos manteniendo el orden
+            for(Campeon campeon : campeonesAnteriores) {
+                if(!entrenadoresConCampeonActual.contains(campeon.getBicho().getEntrenador())) {
+                    entrenadoresConCampeonActual.add(campeon.getBicho().getEntrenador());
+                }
+            }
+
+            return entrenadoresConCampeonActual;
         });
     }
 

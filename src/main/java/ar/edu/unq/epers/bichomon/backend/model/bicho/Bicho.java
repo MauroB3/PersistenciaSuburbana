@@ -26,7 +26,7 @@ public class Bicho {
 	private Especie especie;
 	private int energia;
 
-	@Transient
+	@ManyToOne
 	private Entrenador entrenador;
 
 	private LocalDate fechaDeCaptura;
