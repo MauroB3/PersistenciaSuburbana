@@ -5,7 +5,9 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateCampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
@@ -13,6 +15,7 @@ import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.time.LocalDate;
 
@@ -32,9 +35,15 @@ public class LeaderboardServiceTest {
     private Especie especie1 = new Especie("Pikachu");
     private Especie especie2 = new Especie("Charmander");
 
-    private Bicho bicho1 = new Bicho(especie1);
-    private Bicho bicho2 = new Bicho(especie2);
-    private Bicho bicho3 = new Bicho(especie2);
+    @Mock
+    private NivelManager nivelManager;
+
+
+    Entrenador entrenador = new Entrenador("entrenador", nivelManager, dojo1);
+
+    private Bicho bicho1 = new Bicho(especie1, entrenador);
+    private Bicho bicho2 = new Bicho(especie2, entrenador);
+    private Bicho bicho3 = new Bicho(especie2, entrenador);
 
     private LocalDate fechaInicio1 = LocalDate.of(2018,10,05);
     private LocalDate fechaInicio2 = LocalDate.of(2018,10,10);

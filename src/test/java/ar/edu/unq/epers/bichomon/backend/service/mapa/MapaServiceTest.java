@@ -43,18 +43,20 @@ public class MapaServiceTest {
     private Especie especie2 = new Especie("Charmander");
     private Especie especie3 = new Especie("Squirtle");
 
-    private Bicho bicho1 = new Bicho(especie1);
-    private Bicho bicho2 = new Bicho(especie2);
-    private Bicho bicho3 = new Bicho(especie3);
 
-    private Entrenador entrenador;
+    @Mock
+    private NivelManager nivelManager;
+
+    Entrenador entrenador = new Entrenador("entrenador", nivelManager, dojo);
+
+    private Bicho bicho1 = new Bicho(especie1, entrenador);
+    private Bicho bicho2 = new Bicho(especie2, entrenador);
+    private Bicho bicho3 = new Bicho(especie3, entrenador);
+
 
     private LocalDate fechaInicio1 = LocalDate.of(2018,10,05);
     private LocalDate fechaInicio2 = LocalDate.of(2018,10,10);
     private LocalDate fechaInicio3 = LocalDate.of(2018,10,12);
-
-    @Mock
-    private NivelManager nivelManager;
 
     private NivelServiceImpl nivelService;
 
@@ -76,8 +78,6 @@ public class MapaServiceTest {
 
         guarderia = new Guarderia();
         guarderia.setNombre("Una guarderia");
-
-        entrenador = new Entrenador("entrenador", nivelManager, dojo);
 
     }
 
