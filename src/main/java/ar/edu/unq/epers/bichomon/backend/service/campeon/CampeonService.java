@@ -16,7 +16,7 @@ public class CampeonService {
 
     public void actualizarCampeon(Campeon campeon) {
         Runner.runInSession( () -> {
-            this.campeonDAO.actualizarCampeon(campeon);
+            this.campeonDAO.actualizarOGuardarCampeon(campeon);
             return null;
         });
     }

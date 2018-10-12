@@ -9,6 +9,8 @@ import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import org.mockito.cglib.core.Local;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -16,10 +18,13 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Entrenador {
 
     private String nombre;
+    @OneToOne
     private Ubicacion ubicacion;
-    private int exp = 0; //Siempr empieza en 0 de experiencia
+    private int exp = 0;
+    @Transient
     private NivelManager nivel;
     private LocalDate ulimaCaptura;
+    @Transient
     private List<Bicho> bichos = new ArrayList<Bicho>();
 
     public Entrenador(){

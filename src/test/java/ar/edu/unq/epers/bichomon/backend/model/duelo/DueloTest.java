@@ -1,13 +1,14 @@
 package ar.edu.unq.epers.bichomon.backend.model.duelo;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Campeon;
+import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -140,7 +141,7 @@ public class DueloTest {
     }
 
     @Test
-    public void pelear() {
+    public void pelear(){
         /**
          * En este test no se pueden usar mocks porque en la funcion "pelear()" que devuelve un "resultadoCombate"
          * requiere que los mocks generen un objeto "Ataque" y no puede ser posible utilizando mocks
@@ -149,17 +150,17 @@ public class DueloTest {
         Bicho bichoCampeonMock = new Bicho();
         Dojo dojo2 = new Dojo();
 
-        //Al bicho se le settea una id porque no toma id del constructor sino de la BBDD
-        bichoRetadorMock.setID(1);
         bichoRetadorMock.setEnergia(1300);
 
-        bichoCampeonMock.setID(2);
         bichoCampeonMock.setEnergia(1000);
-        dojo2.setCampeon(bichoCampeonMock);
+        Campeon campeon = dojo2.actualizarYRetornarCampeon(bichoCampeonMock, LocalDate.now());
 
         Duelo dueloN = new Duelo(dojo2,bichoCampeonMock);
 
         assertEquals(bichoCampeonMock.getID(), dueloN.pelear().getGanador().getID());
+
+        assertEquals(bichoCampeonMock, dueloN.pelear().getGanador());
+        assertNotEquals(bichoRetadorMock, dueloN.pelear().getGanador());
     }
 
     @Test

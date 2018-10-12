@@ -30,19 +30,12 @@ public class EspecieTest {
      @Before
      public void setUp() throws Exception{
         MockitoAnnotations.initMocks(this);
-        especieRaiz = new Especie(1, "Mogo", TipoBicho.FUEGO,condicionEvolucion, 50, 6, 100);
-        especieEvolucion1 = new Especie(especieRaiz,2,condicionEvolucion2,2,"Gonza", 70, 8, 200);
-        especieEvolucion2 = new Especie(especieRaiz, 3, condicionEvolucion3, 3, "Mauro", 100, 10, 300);
+        especieRaiz = new Especie("Mogo", TipoBicho.FUEGO,condicionEvolucion, 50, 6, 100);
+        especieEvolucion1 = new Especie(especieRaiz,2,condicionEvolucion2,"Gonza", 70, 8, 200);
+        especieEvolucion2 = new Especie(especieRaiz, 3, condicionEvolucion3,"Mauro", 100, 10, 300);
 
         Bicho bicho1 = especieRaiz.crearBicho();
         Bicho bicho2 = especieEvolucion1.crearBicho();
-    }
-
-    @Test
-    public void testGetId(){
-        assertEquals(1, especieRaiz.getId(),0);
-        assertEquals(2, especieEvolucion1.getId(),0);
-        assertEquals(3, especieEvolucion2.getId(),0);
     }
 
     @Test

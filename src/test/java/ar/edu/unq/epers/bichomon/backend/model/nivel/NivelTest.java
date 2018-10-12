@@ -11,22 +11,22 @@ public class NivelTest {
 
     @Before
     public void setUp() {
-        nivel = new Nivel(1, 10 , 1, 100);
+        nivel = new Nivel(1, 10, 100);
     }
 
     @Test
     public void getNivelTest(){
-        assertEquals(1, nivel.getNivel());
+        assertEquals(0, nivel.getNivel());
     }
 
     @Test
     public void getCapacidadMaximaDeBichosTest(){
-        assertEquals(10, nivel.getCapacidadMaximaDeBichos());
+        assertEquals(1, nivel.getCapacidadMaximaDeBichos());
     }
 
     @Test
     public void getExpInicialTest(){
-        assertEquals(1, nivel.getExpInicial());
+        assertEquals(10, nivel.getExpInicial());
     }
 
     @Test

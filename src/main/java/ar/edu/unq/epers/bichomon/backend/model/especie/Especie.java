@@ -16,7 +16,6 @@ import javax.persistence.Transient;
 @Entity
 public class Especie {
 
-	private Integer id;
  	@Id
 	@Column(name="nombre", length=190)
 	private String nombre;
@@ -52,9 +51,8 @@ public class Especie {
 	 * @param energiaInicial = energia con la que inician todos los bichos de esa especie
 	 */
 
-	public Especie(int id, String nombre, TipoBicho tipo, Condicion condicionDeEvolucion, int altura, int peso, int energiaInicial){
+	public Especie(String nombre, TipoBicho tipo, Condicion condicionDeEvolucion, int altura, int peso, int energiaInicial){
 		this.setEspecieRaiz(this);
-		this.setId(id);
 		this.setNombre(nombre);
 		this.setTipo(tipo);
 		this.setCondicionDeEvolucion(condicionDeEvolucion);
@@ -76,11 +74,10 @@ public class Especie {
 	 * @param energiaInicial = energia con la que inician todos los bichos de esa especie
 	 */
 
-	public Especie(Especie especie, int nroEvolucion,Condicion condicionDeEvolucion,int id, String nombre, int altura, int peso, int energiaInicial) {
+	public Especie(Especie especie, int nroEvolucion,Condicion condicionDeEvolucion, String nombre, int altura, int peso, int energiaInicial) {
 		this.setEspecieRaiz(especie);
 		this.setNroEvolucion(nroEvolucion);
 		this.setCondicionDeEvolucion(condicionDeEvolucion);
-		this.setId(id);
 		this.setNombre(nombre);
 		this.setTipo(especie.getTipo());
 		this.setAltura(altura);
@@ -173,13 +170,6 @@ public class Especie {
 	}
 	public void setCantidadBichos(int i) {
 		this.cantidadBichos = i;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public Bicho crearBicho(){

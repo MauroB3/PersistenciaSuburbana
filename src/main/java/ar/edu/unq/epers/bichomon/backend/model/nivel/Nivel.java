@@ -1,14 +1,22 @@
 package ar.edu.unq.epers.bichomon.backend.model.nivel;
 
+import javax.persistence.*;
+
+@Entity
 public class Nivel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Nivel", nullable = false, unique = true, length=190)
     private int nivel;
+
     private int cantMaxBichos;
     private int expInicial;
     private int expFinal;
 
-    public Nivel(int nivel, int cantMaxBichos, int expInicial, int expFinal){
-        this.nivel = nivel;
+    public Nivel(){}
+
+    public Nivel(int cantMaxBichos, int expInicial, int expFinal){
         this.cantMaxBichos = cantMaxBichos;
         this.expInicial = expInicial;
         this.expFinal = expFinal;

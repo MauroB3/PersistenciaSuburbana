@@ -36,9 +36,9 @@ public class EspecieServiceImplTest {
         service = new EspecieServiceImpl(hibernateEspecieDAO);
         condicion = new CondicionCompuesta();
 
-        pikachu = new Especie(1,"Pikachu", TipoBicho.ELECTRICIDAD, condicion,55,99,100);
-        charmander = new Especie(2, "Charmander", TipoBicho.FUEGO, condicion, 55, 187, 150);
-        squirtle = new Especie(3, "Squirtle", TipoBicho.AGUA, condicion, 55, 223, 100 );
+        pikachu = new Especie("Pikachu", TipoBicho.ELECTRICIDAD, condicion,55,99,100);
+        charmander = new Especie("Charmander", TipoBicho.FUEGO, condicion, 55, 187, 150);
+        squirtle = new Especie("Squirtle", TipoBicho.AGUA, condicion, 55, 223, 100 );
 
         especies = new ArrayList<Especie>();
 
@@ -95,4 +95,13 @@ public class EspecieServiceImplTest {
         assertEquals(60,service.getEspecie("Pikachu").getAltura(),0);
     }
 
+    @Test
+    public void populares(){
+
+    }
+
+    @Test
+    public void impopulares(){
+
+    }
 }
