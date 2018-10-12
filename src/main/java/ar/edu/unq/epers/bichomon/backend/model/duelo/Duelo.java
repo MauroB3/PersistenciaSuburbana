@@ -1,6 +1,10 @@
 package ar.edu.unq.epers.bichomon.backend.model.duelo;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+<<<<<<< HEAD
+=======
+import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
+>>>>>>> 649d82ebeed9b421e9b72ededd8f062d1916cbdd
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 
 import java.util.ArrayList;

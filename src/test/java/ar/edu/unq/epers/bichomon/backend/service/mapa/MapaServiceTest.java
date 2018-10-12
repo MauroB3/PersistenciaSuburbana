@@ -2,17 +2,25 @@ package ar.edu.unq.epers.bichomon.backend.service.mapa;
 
 import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateCampeonDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
+import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
+
 import org.junit.*;
+import org.mockito.Mock;
 
 import java.time.LocalDate;
 
@@ -27,8 +35,11 @@ public class MapaServiceTest {
     private BichoService bichoService;
     private HibernateCampeonDAO campeonDAO;
     private CampeonService campeonService;
+    private HibernateEntrenadorDAO entrenadorDAO;
+    private EntrenadorService entrenadorService;
 
     private Dojo dojo;
+    private Guarderia guarderia;
 
     private Especie especie1 = new Especie("Pikachu");
     private Especie especie2 = new Especie("Charmander");
@@ -38,9 +49,15 @@ public class MapaServiceTest {
     private Bicho bicho2 = new Bicho(especie2);
     private Bicho bicho3 = new Bicho(especie3);
 
+    private Entrenador entrenador;
+
     private LocalDate fechaInicio1 = LocalDate.of(2018,10,05);
     private LocalDate fechaInicio2 = LocalDate.of(2018,10,10);
     private LocalDate fechaInicio3 = LocalDate.of(2018,10,12);
+
+    @Mock
+    private NivelManager nivelManager;
+
 
     @Before
     public void setUp() {
@@ -50,13 +67,21 @@ public class MapaServiceTest {
         bichoService = new BichoService(bichoDAO);
         campeonDAO = new HibernateCampeonDAO();
         campeonService = new CampeonService(campeonDAO);
-        mapaService = new MapaService(ubicacionDAO, campeonDAO);
+        entrenadorDAO = new HibernateEntrenadorDAO();
+        mapaService = new MapaService(ubicacionDAO, campeonDAO, entrenadorDAO);
+        entrenadorService = new EntrenadorService(entrenadorDAO);
 
         dojo = new Dojo();
         dojo.setNombre("un dojo");
+
+        guarderia = new Guarderia();
+        guarderia.setNombre("Una guarderia");
+
+        entrenador = new Entrenador("entrenador", nivelManager, dojo);
+
     }
 
-    /*
+
     @After
     public void cleanUp(){
         //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
@@ -66,18 +91,22 @@ public class MapaServiceTest {
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
     }
-    */
 
     @Test
     public void mover() {
-
+        assertEquals(1, dojo.getPoblacion());
+        ubicacionService.crearUbicacion(guarderia);
+        entrenadorService.guardar(entrenador);
+        mapaService.mover("entrenador", "Una guarderia");
+        assertEquals(1, ubicacionService.getUbicacion("Una guarderia").getPoblacion());
+        assertEquals(0, ubicacionService.getUbicacion("Un dojo").getPoblacion());
     }
 
     @Test
     public void cantidadEntrenadores() {
         dojo.sumarPoblacion();
         ubicacionService.crearUbicacion(dojo);
-        assertEquals(1, mapaService.cantidadEntrenadores(dojo.getNombre()));
+        assertEquals(2, mapaService.cantidadEntrenadores(dojo.getNombre()));
     }
 
     @Test
