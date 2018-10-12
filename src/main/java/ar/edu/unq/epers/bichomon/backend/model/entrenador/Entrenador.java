@@ -42,7 +42,7 @@ public class Entrenador {
 
     private LocalDate ulimaCaptura;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Bicho> bichos = new ArrayList<>();
 
     public Entrenador(){
@@ -107,12 +107,24 @@ public class Entrenador {
         return bichos.size();
     }
 
+    public void agregarBicho(Bicho bicho) {
+        this.bichos.add(bicho);
+    }
+
     public int getExperiencia(){
         return exp;
     }
 
     public void setUlimaCaptura(LocalDate fecha){
         this.ulimaCaptura = fecha;
+    }
+
+    public int getPoderTotal() {
+        int poderTotal = 0;
+        for(Bicho bicho : bichos) {
+            poderTotal += bicho.getEnergia();
+        }
+        return poderTotal;
     }
 
 }

@@ -12,7 +12,9 @@ import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
+import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -64,7 +66,7 @@ public class LeaderboardServiceTest {
     public void setUp() {
         campeonDAO = new HibernateCampeonDAO();
         campeonService = new CampeonService(campeonDAO);
-        leaderboardService = new LeaderboardService(campeonDAO);
+        leaderboardService = new LeaderboardService(campeonDAO, new HibernateEntrenadorDAO());
         bichoService = new BichoService(new HibernateBichoDAO());
         ubicacionService = new UbicacionServiceImp(new HibernateUbicacionDAO());
         nivelService = new NivelServiceImpl(new HibernateNivelDAO());
@@ -84,12 +86,35 @@ public class LeaderboardServiceTest {
         entrenador3 = new Entrenador("entrenador3", nivelManager, dojo2);
 
         bicho1 = new Bicho(especie1, entrenador1);
+        bicho1.setEnergia(10);
         bicho2 = new Bicho(especie2, entrenador1);
+        bicho2.setEnergia(10);
         bicho3 = new Bicho(especie1, entrenador2);
+        bicho3.setEnergia(50);
         bicho4 = new Bicho(especie2, entrenador2);
+        bicho4.setEnergia(50);
         bicho5 = new Bicho(especie2, entrenador3);
+        bicho5.setEnergia(5);
         bicho6 = new Bicho(especie1, entrenador3);
+        bicho6.setEnergia(5);
 
+        entrenador1.agregarBicho(bicho1);
+        entrenador1.agregarBicho(bicho2);
+        entrenador2.agregarBicho(bicho3);
+        entrenador2.agregarBicho(bicho4);
+        entrenador3.agregarBicho(bicho5);
+        entrenador3.agregarBicho(bicho6);
+
+    }
+
+    @After
+    public void cleanUp(){
+        //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
+        //que ser creada.
+        //
+        //Al tener hibernate configurado con esto <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
+        SessionFactoryProvider.destroy();
     }
 
     @Test
@@ -122,5 +147,29 @@ public class LeaderboardServiceTest {
         assertEquals("entrenador2", leaderboardService.recuperarCampeonesActuales().get(0).nombre());
         assertEquals("entrenador1", leaderboardService.recuperarCampeonesActuales().get(1).nombre());
         assertEquals("entrenador3", leaderboardService.recuperarCampeonesActuales().get(2).nombre());
+    }
+
+    @Test
+    public void lideres() {
+        ubicacionService.crearUbicacion(dojo1);
+        ubicacionService.crearUbicacion(dojo2);
+        entrenadorService.guardar(entrenador1);
+        entrenadorService.guardar(entrenador2);
+        entrenadorService.guardar(entrenador3);
+        bichoService.crearBicho(bicho1);
+        bichoService.crearBicho(bicho2);
+        bichoService.crearBicho(bicho3);
+        bichoService.crearBicho(bicho4);
+        bichoService.crearBicho(bicho5);
+        bichoService.crearBicho(bicho6);
+
+        List<Entrenador> l = leaderboardService.lideres();
+        assertEquals(3,l.size());
+        assertEquals("entrenador2", leaderboardService.lideres().get(0).nombre());
+        assertEquals(100, leaderboardService.lideres().get(0).getPoderTotal());
+        assertEquals("entrenador1", leaderboardService.lideres().get(1).nombre());
+        assertEquals(20, leaderboardService.lideres().get(1).getPoderTotal());
+        assertEquals("entrenador3", leaderboardService.lideres().get(2).nombre());
+        assertEquals(10, leaderboardService.lideres().get(2).getPoderTotal());
     }
 }
