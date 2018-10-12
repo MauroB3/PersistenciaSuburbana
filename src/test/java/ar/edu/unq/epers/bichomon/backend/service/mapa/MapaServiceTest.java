@@ -47,7 +47,7 @@ public class MapaServiceTest {
     @Mock
     private NivelManager nivelManager;
 
-    Entrenador entrenador = new Entrenador("entrenador", nivelManager, dojo);
+    private Entrenador entrenador;
 
     private Bicho bicho1 = new Bicho(especie1, entrenador);
     private Bicho bicho2 = new Bicho(especie2, entrenador);
@@ -78,6 +78,8 @@ public class MapaServiceTest {
 
         guarderia = new Guarderia();
         guarderia.setNombre("Una guarderia");
+
+        entrenador = new Entrenador("entrenador", nivelManager, dojo);
 
     }
 
@@ -113,7 +115,7 @@ public class MapaServiceTest {
     public void campeon() {
         bichoService.crearBicho(bicho1);
         ubicacionService.crearUbicacion(dojo);
-        //campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho1, fechaInicio1));
+        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho1, fechaInicio1));
         ubicacionService.actualizarUbicacion(dojo);
         assertEquals("Pikachu", mapaService.campeon("Un dojo").getBicho().getEspecie().getNombre());
     }

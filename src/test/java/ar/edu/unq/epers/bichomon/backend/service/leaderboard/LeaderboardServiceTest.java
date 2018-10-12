@@ -38,8 +38,7 @@ public class LeaderboardServiceTest {
     @Mock
     private NivelManager nivelManager;
 
-
-    Entrenador entrenador = new Entrenador("entrenador", nivelManager, dojo1);
+    private Entrenador entrenador;
 
     private Bicho bicho1 = new Bicho(especie1, entrenador);
     private Bicho bicho2 = new Bicho(especie2, entrenador);
@@ -62,6 +61,8 @@ public class LeaderboardServiceTest {
 
         dojo2 = new Dojo();
         dojo2.setNombre("Dojo 2");
+
+        entrenador = new Entrenador("entrenador", nivelManager, dojo1);
     }
 
     @Test
