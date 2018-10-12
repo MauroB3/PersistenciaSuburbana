@@ -3,6 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.model.bicho;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.Ataque;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -27,12 +28,15 @@ public class Bicho {
 
 	@Transient
 	private Entrenador entrenador;
+
 	private LocalDate fechaDeCaptura;
 	private int victorias;
+	private boolean estaAbandonado;
 
 	public Bicho(){}
 
-	public Bicho(Especie especie) {
+	public Bicho(Especie especie, Entrenador entrenador) {
+		this.entrenador = entrenador;
 		this.especie = especie;
 	}
 
@@ -100,4 +104,7 @@ public class Bicho {
 		return id;
 	}
 
+	public void serAbandonado(){
+		estaAbandonado = true;
+	}
 }

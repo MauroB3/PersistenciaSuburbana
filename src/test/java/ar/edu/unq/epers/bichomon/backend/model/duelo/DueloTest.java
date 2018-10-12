@@ -149,11 +149,9 @@ public class DueloTest {
         Bicho bichoRetadorMock = new Bicho();
         Bicho bichoCampeonMock = new Bicho();
         Dojo dojo2 = new Dojo();
-
-<<<<<<< HEAD
-=======
+        
         //Al bicho se le settea una id porque no toma id del constructor sino de la BBDD
->>>>>>> 649d82ebeed9b421e9b72ededd8f062d1916cbdd
+
         bichoRetadorMock.setEnergia(1300);
 
         bichoCampeonMock.setEnergia(1000);
@@ -165,10 +163,6 @@ public class DueloTest {
 
         assertEquals(bichoCampeonMock, dueloN.pelear().getGanador());
         assertNotEquals(bichoRetadorMock, dueloN.pelear().getGanador());
-<<<<<<< HEAD
-=======
-
->>>>>>> 649d82ebeed9b421e9b72ededd8f062d1916cbdd
     }
 
     @Test

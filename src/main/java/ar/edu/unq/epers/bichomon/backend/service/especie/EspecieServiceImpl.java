@@ -4,7 +4,9 @@ import java.util.List;
 
 import ar.edu.unq.epers.bichomon.backend.dao.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
 
@@ -48,10 +50,10 @@ public class EspecieServiceImpl implements EspecieService {
 
 
 	@Override
-	public Bicho crearBicho(String nombreEspecie){
+	public Bicho crearBicho(String nombreEspecie, Entrenador entrenador){
 		return Runner.runInSession( () -> {
 			Especie especie = especieDAO.recuperar(nombreEspecie);
-			Bicho bicho = especie.crearBicho();
+			Bicho bicho = especie.crearBicho(entrenador);
 			especieDAO.actualizar(especie);
 			return bicho;
 		});
@@ -67,8 +69,7 @@ public class EspecieServiceImpl implements EspecieService {
 	@Override
 	public List<Especie> populares(){
 		return Runner.runInSession(() -> {
-			return null;
-
+			return especieDAO.populares();
 		});
 	}
 

@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.service.nivel;
 
 import ar.edu.unq.epers.bichomon.backend.dao.NivelDAO;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.Nivel;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 
 import java.util.List;
@@ -43,6 +44,12 @@ public class NivelServiceImpl implements NivelService {
         return Runner.runInSession(() -> {
            List<Nivel> niveles = this.dao.recuperarTodos();
             return niveles;
+        });
+    }
+
+    public NivelManager getNivelManager(){
+        return Runner.runInSession(() -> {
+            return new NivelManager(this.recuperarTodos(),10);
         });
     }
 }

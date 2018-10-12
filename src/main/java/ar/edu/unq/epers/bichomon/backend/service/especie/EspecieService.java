@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.service.especie;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public interface EspecieService {
      * @param nombreEspecie - el nombre de la especie del bicho a crear
      * @return un objeto {@link Bicho} instanciado
      */
-    Bicho crearBicho(String nombreEspecie);
+    Bicho crearBicho(String nombreEspecie, Entrenador entrenador);
 
 
     List<Especie> populares();

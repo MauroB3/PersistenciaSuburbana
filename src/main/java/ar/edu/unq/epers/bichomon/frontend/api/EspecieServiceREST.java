@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.service.ServiceFactory;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
@@ -60,8 +61,8 @@ public class EspecieServiceREST implements EspecieService {
 	@POST
 	@Path("{nombreEspecie}/{nombreBicho}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Bicho crearBicho(@PathParam("nombreEspecie") String nombreEspecie) {
-		return this.decorado.crearBicho(nombreEspecie);
+	public Bicho crearBicho(@PathParam("nombreEspecie") String nombreEspecie, Entrenador entrenador) {
+		return this.decorado.crearBicho(nombreEspecie, entrenador);
 	}
 
 	@Override

@@ -2,10 +2,12 @@ package ar.edu.unq.epers.bichomon.backend.service.entrenador;
 
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDAO;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
+import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import org.junit.After;
 import org.junit.Before;
@@ -21,16 +23,19 @@ public class EntrenadorServiceTest {
 
     private HibernateEntrenadorDAO entrenadorDAO;
     private EntrenadorService entrenadorService;
+    private NivelServiceImpl nivelService;
+
     private Dojo dojo;
     private Entrenador entrenador;
 
     @Before
     public void setUp() {
+        nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         entrenadorDAO = new HibernateEntrenadorDAO();
-        entrenadorService = new EntrenadorService(entrenadorDAO);
+        entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
         dojo = new Dojo();
         dojo.setNombre("Un dojo");
-        entrenador = new Entrenador("Un entrenador", nivelManager, dojo);
+        entrenador = new Entrenador("Spore", nivelManager, dojo);
     }
 
     @After
@@ -46,7 +51,7 @@ public class EntrenadorServiceTest {
     @Test
     public void guardarYRecuperar() {
         this.entrenadorService.guardar(entrenador);
-        assertEquals(entrenador.nombre(), entrenadorService.recuperar("Un entrenador").nombre());
+        assertEquals(entrenador.nombre(), entrenadorService.recuperar("Spore").nombre());
     }
 
     @Test
@@ -54,6 +59,7 @@ public class EntrenadorServiceTest {
         this.entrenadorService.guardar(entrenador);
         entrenador.agregarExperiencia(100);
         entrenadorService.actualizar(entrenador);
-        assertEquals(100, entrenadorService.recuperar("Un entrenador").getExperiencia());
+        assertEquals(100, entrenadorService.recuperar("Spore").getExperiencia());
     }
+
 }

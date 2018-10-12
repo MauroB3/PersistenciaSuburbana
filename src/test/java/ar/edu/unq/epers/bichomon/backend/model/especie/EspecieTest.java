@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.model.especie;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.CondicionCompuesta;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import org.junit.Test;
 import org.junit.Before;
 import org.mockito.Mock;
@@ -27,6 +28,9 @@ public class EspecieTest {
     @Mock
     private CondicionCompuesta condicionEvolucion3;
 
+    @Mock
+    private Entrenador entrenador;
+
      @Before
      public void setUp() throws Exception{
         MockitoAnnotations.initMocks(this);
@@ -34,8 +38,8 @@ public class EspecieTest {
         especieEvolucion1 = new Especie(especieRaiz,2,condicionEvolucion2,"Gonza", 70, 8, 200);
         especieEvolucion2 = new Especie(especieRaiz, 3, condicionEvolucion3,"Mauro", 100, 10, 300);
 
-        Bicho bicho1 = especieRaiz.crearBicho();
-        Bicho bicho2 = especieEvolucion1.crearBicho();
+        Bicho bicho1 = especieRaiz.crearBicho(entrenador);
+        Bicho bicho2 = especieEvolucion1.crearBicho(entrenador);
     }
 
     @Test

@@ -41,4 +41,15 @@ public class HibernateEspecieDAO implements EspecieDAO {
         Query<Especie> query = session.createQuery(hql, Especie.class);
         return query.getResultList();
     }
+
+    public List<Especie> populares(){
+        Session session = Runner.getCurrentSession();
+
+        String hql = "SELECT count(distinct e.nombre) FROM Especie e JOIN Bicho b WHERE b.estaAbandonado = False";
+
+        String sql = "select e.nombre, e.altura, e.cantidadBichos, e.energiaInicial, e.nroEvolucion, e.peso, e.urlFoto from Especie as e join (select especie_nombre, count(especie_nombre) as cantidad from Bicho where estaAbandonado = False group by especie_nombre) as b on e.nombre = b.especie_nombre order by cantidad desc";
+
+        Query<Especie> query = session.createQuery(hql,Especie.class);
+        return query.getResultList();
+    }
 }

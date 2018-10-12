@@ -68,7 +68,7 @@ public class Pueblo extends Ubicacion {
             }
         }
 
-        return new Bicho(especieResultado);
+        return especieResultado.crearBicho(entrenador);
 
 
     }

@@ -3,10 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.service.mapa;
 import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.EntrenadorDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateCampeonDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
@@ -16,6 +13,7 @@ import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
+import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
 
@@ -58,9 +56,11 @@ public class MapaServiceTest {
     @Mock
     private NivelManager nivelManager;
 
+    private NivelServiceImpl nivelService;
 
     @Before
     public void setUp() {
+        nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         ubicacionDAO = new HibernateUbicacionDAO();
         ubicacionService = new UbicacionServiceImp(ubicacionDAO);
         bichoDAO = new HibernateBichoDAO();
@@ -69,7 +69,7 @@ public class MapaServiceTest {
         campeonService = new CampeonService(campeonDAO);
         entrenadorDAO = new HibernateEntrenadorDAO();
         mapaService = new MapaService(ubicacionDAO, campeonDAO, entrenadorDAO);
-        entrenadorService = new EntrenadorService(entrenadorDAO);
+        entrenadorService = new EntrenadorService(entrenadorDAO,nivelService);
 
         dojo = new Dojo();
         dojo.setNombre("un dojo");

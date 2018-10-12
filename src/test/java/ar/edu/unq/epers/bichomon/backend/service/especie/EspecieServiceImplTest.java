@@ -1,11 +1,15 @@
 package ar.edu.unq.epers.bichomon.backend.service.especie;
 
+import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.CondicionCompuesta;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
+import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import org.junit.After;
 import org.junit.Before;
@@ -21,6 +25,7 @@ public class EspecieServiceImplTest {
     private EspecieServiceImpl service;
     private HibernateEspecieDAO hibernateEspecieDAO;
     private Condicion condicion;
+    private BichoService bichoService;
 
     private Especie pikachu;
 
@@ -30,8 +35,11 @@ public class EspecieServiceImplTest {
 
     private ArrayList<Especie> especies;
 
+    private Entrenador entrenador;
+
     @Before
     public void setUp() {
+        bichoService = new BichoService(new HibernateBichoDAO());
         hibernateEspecieDAO = new HibernateEspecieDAO();
         service = new EspecieServiceImpl(hibernateEspecieDAO);
         condicion = new CondicionCompuesta();
@@ -42,10 +50,10 @@ public class EspecieServiceImplTest {
 
         especies = new ArrayList<Especie>();
 
-        service.crearEspecie(pikachu);
+        //service.crearEspecie(pikachu);
     }
 
-
+    /*
     @After
     public void cleanUp(){
             //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
@@ -104,4 +112,44 @@ public class EspecieServiceImplTest {
     public void impopulares(){
 
     }
+    */
+
+    @Test
+    public void setUpBD(){
+        service.crearEspecie(pikachu);
+        service.crearEspecie(charmander);
+        service.crearEspecie(squirtle);
+
+        Bicho bicho1 = service.crearBicho("Pikachu", entrenador);
+        Bicho bicho2 = service.crearBicho("Pikachu", entrenador);
+        Bicho bicho3 = service.crearBicho("Pikachu", entrenador);
+        Bicho bicho4 = service.crearBicho("Pikachu", entrenador);
+        Bicho bicho5 = service.crearBicho("Pikachu", entrenador);
+
+        Bicho bicho6 = service.crearBicho("Charmander", entrenador);
+        Bicho bicho7 = service.crearBicho("Charmander", entrenador);
+        Bicho bicho8 = service.crearBicho("Charmander", entrenador);
+
+        Bicho bicho9 = service.crearBicho("Squirtle", entrenador);
+
+
+        bicho1.serAbandonado();
+        bicho7.serAbandonado();
+        bicho9.serAbandonado();
+
+        bichoService.crearBicho(bicho1);
+        bichoService.crearBicho(bicho2);
+        bichoService.crearBicho(bicho3);
+        bichoService.crearBicho(bicho4);
+        bichoService.crearBicho(bicho5);
+        bichoService.crearBicho(bicho6);
+        bichoService.crearBicho(bicho7);
+        bichoService.crearBicho(bicho8);
+        bichoService.crearBicho(bicho9);
+
+
+
+        //assertEquals(2, service.populares().size());
+    }
+
 }

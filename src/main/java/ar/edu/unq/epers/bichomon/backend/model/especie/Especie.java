@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.model.especie;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -172,9 +173,9 @@ public class Especie {
 		this.cantidadBichos = i;
 	}
 
-	public Bicho crearBicho(){
+	public Bicho crearBicho(Entrenador entrenador){
 		this.cantidadBichos++;
-		return new Bicho(this);
+		return new Bicho(this, entrenador);
 	}
 
 	public Especie getEspecieRaiz(){
@@ -204,4 +205,5 @@ public class Especie {
 	public boolean esSiguienteEvolucion(Especie especie) {
 		return this.especieRaiz == especie.getEspecieRaiz() && this.nroEvolucion == especie.getNroEvolucion() + 1;
 	}
+
 }

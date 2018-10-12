@@ -35,8 +35,8 @@ public class BichoTest {
     @Before
     public void setUp() throws Exception{
         MockitoAnnotations.initMocks(this);
-        bicho = new Bicho(especieAgua);
-        otroBicho = new Bicho(especieAgua);
+        bicho = new Bicho(especieAgua, entrenador);
+        otroBicho = new Bicho(especieAgua, entrenador);
 
 
     }
