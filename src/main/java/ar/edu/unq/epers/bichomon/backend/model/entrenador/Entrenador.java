@@ -6,44 +6,50 @@ import java.util.List;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
-import org.mockito.cglib.core.Local;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
-
+import javax.persistence.*;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Entity
 public class Entrenador {
 
-    private String nombre;
-    @OneToOne
+    @Id
+    @Column(length=190)
+    private String Nombre;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Ubicacion ubicacion;
-    private int exp = 0;
+
+    private int exp = 0; //Siempr empieza en 0 de experiencia
+
     @Transient
     private NivelManager nivel;
+
     private LocalDate ulimaCaptura;
-    @Transient
-    private List<Bicho> bichos = new ArrayList<Bicho>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Bicho> bichos = new ArrayList<>();
 
     public Entrenador(){
 
     }
 
     public Entrenador(String nombre, NivelManager nivel, Ubicacion ubicacion){
-        this.nombre = nombre;
+        this.Nombre = nombre;
         this.nivel = nivel;
         this.ubicacion = ubicacion;
+        ubicacion.sumarPoblacion();
     }
 
     public String nombre(){
-        return this.nombre;
+        return this.Nombre;
     }
 
     public Ubicacion ubicacion(){
         return this.ubicacion;
     }
+
+    public void mover(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
 
     public boolean puedeCapturarBicho(){return this.capacidadMaxima() > bichos.size();}
 
