@@ -7,6 +7,7 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
+import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
@@ -64,7 +65,7 @@ public class EspecieLiderTest {
         campeonDAO = new HibernateCampeonDAO();
         campeonService = new CampeonService(campeonDAO);
         leaderboardService = new LeaderboardService(campeonDAO, new HibernateEntrenadorDAO(), new HibernateEspecieDAO());
-        bichoService = new BichoService(new HibernateBichoDAO());
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), new HibernateEspecieDAO());
         ubicacionService = new UbicacionServiceImp(new HibernateUbicacionDAO());
         nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         entrenadorService = new EntrenadorService(new HibernateEntrenadorDAO(), nivelService);

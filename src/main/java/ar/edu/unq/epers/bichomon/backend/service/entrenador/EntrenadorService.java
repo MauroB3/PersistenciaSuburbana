@@ -27,7 +27,9 @@ public class EntrenadorService {
 
     public Entrenador recuperar(String entrenador) {
         return Runner.runInSession(() -> {
-            return entrenadorDAO.recuperar(entrenador);
+            Entrenador entr = entrenadorDAO.recuperar(entrenador);
+            entr.setNivelManager(this.nivelManager);
+            return entr;
         });
     }
 

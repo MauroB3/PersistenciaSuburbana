@@ -8,6 +8,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -109,5 +110,18 @@ public class Bicho {
 
 	public void serAbandonado(){
 		this.estaAbandonado = true;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Bicho bicho = (Bicho) o;
+		return id == bicho.id;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 }

@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.service.especie;
 
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
@@ -59,8 +60,8 @@ public class EspecieServiceImplTest {
 
     @Before
     public void setUp() {
-        bichoService = new BichoServiceImpl(new HibernateBichoDAO());
         hibernateEspecieDAO = new HibernateEspecieDAO();
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), hibernateEspecieDAO);
         service = new EspecieServiceImpl(hibernateEspecieDAO);
         condicion = new CondicionCompuesta();
 

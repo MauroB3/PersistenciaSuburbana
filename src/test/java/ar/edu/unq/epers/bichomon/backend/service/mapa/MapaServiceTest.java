@@ -63,10 +63,10 @@ public class MapaServiceTest {
         nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         ubicacionDAO = new HibernateUbicacionDAO();
         ubicacionService = new UbicacionServiceImp(ubicacionDAO);
-        bichoService = new BichoServiceImpl(new HibernateBichoDAO());
         campeonDAO = new HibernateCampeonDAO();
         campeonService = new CampeonService(campeonDAO);
         entrenadorDAO = new HibernateEntrenadorDAO();
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), entrenadorDAO, new HibernateEspecieDAO());
         mapaService = new MapaService(ubicacionDAO, campeonDAO, entrenadorDAO);
         entrenadorService = new EntrenadorService(entrenadorDAO,nivelService);
 

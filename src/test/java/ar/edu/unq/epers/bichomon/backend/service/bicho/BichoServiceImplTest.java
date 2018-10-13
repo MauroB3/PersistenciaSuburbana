@@ -10,6 +10,7 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.Nivel;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Pueblo;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.Condicion.CondicionService;
@@ -17,6 +18,7 @@ import ar.edu.unq.epers.bichomon.backend.service.Condicion.CondicionServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
+import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
@@ -25,19 +27,36 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class BichoServiceImplTest {
 
     private HibernateBichoDAO bichoDAO;
 
-    private BichoServiceImpl service;
+    private HibernateEntrenadorDAO entrenadorDAO;
 
-    private Bicho bicho;
+    private HibernateEspecieDAO especieDAO;
+
+    private BichoServiceImpl bichoService;
+
+    private UbicacionServiceImp ubicacionService;
+
+    private EntrenadorService entrenadorService;
+
+    @Mock
+    private NivelServiceImpl nivelService;
+
+    private Bicho bicho1;
+
+    private Bicho bicho2;
 
     private Especie especie;
 
+    @Mock
     private NivelManager manager;
 
     private Pueblo pueblo;
@@ -46,25 +65,56 @@ public class BichoServiceImplTest {
 
     private Condicion condVic;
 
+    private Guarderia guarderia;
+
     @Before
     public void setUp(){
+        MockitoAnnotations.initMocks(this);
+        when(nivelService.getNivelManager()).thenReturn(manager);
+        when(manager.capacidadMaximaDeBichos(10)).thenReturn(10);
+
+        nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         bichoDAO = new HibernateBichoDAO();
-        service = new BichoServiceImpl(bichoDAO);
+        entrenadorDAO = new HibernateEntrenadorDAO();
+        entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
+        especieDAO = new HibernateEspecieDAO();
+        ubicacionService = new UbicacionServiceImp(new HibernateUbicacionDAO());
+        bichoService = new BichoServiceImpl(bichoDAO, entrenadorDAO, especieDAO);
 
         pueblo = new Pueblo();
         pueblo.setNombre("Sporeland");
 
-        manager = new NivelManager(); /** No usar este constructor */
+        guarderia = new Guarderia();
+        guarderia.setNombre("Una guarderia");
+
+        //manager = new NivelManager(); /** No usar este constructor */
+
         condVic = new BasadoEnVictoria(5);
         especie = new Especie("Onix",TipoBicho.CHOCOLATE, condVic,257,300,446);
-        entrenador = new Entrenador("Spore", manager, pueblo);
-        bicho = new Bicho(especie, entrenador);
+        entrenador = new Entrenador("Spore", manager, guarderia);
+        entrenador.agregarExperiencia(10);
+        bicho1 = new Bicho(especie, entrenador);
+        bicho2 = new Bicho(especie, entrenador);
     }
 
     @Test
     public void crearBicho(){
-        service.crearBicho(bicho);
+        bichoService.crearBicho(bicho1);
     }
 
+    @Test
+    public void abandonarBicho() {
+        ubicacionService.crearUbicacion(guarderia);
+        entrenadorService.guardar(entrenador);
+        bichoService.crearBicho(bicho1);
+        bichoService.crearBicho(bicho2);
+        bichoService.abandonar(entrenador.nombre(), bicho1.getID());
+        ubicacionService.actualizarUbicacion(guarderia);
+
+        assertEquals(1, ubicacionService.getUbicacion("Una guarderia").getCantidadBichosAbandonados());
+
+
+
+    }
 
 }

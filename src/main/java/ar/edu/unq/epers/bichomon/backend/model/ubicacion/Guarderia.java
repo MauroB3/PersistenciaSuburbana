@@ -8,18 +8,21 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Guarderia extends Ubicacion {
 
-    @Transient
-    @OneToMany
-    private ArrayList<Bicho> bichosAbandonados = new ArrayList<>();
 
-    public ArrayList<Bicho> getBichosAbandonados() {
+    @OneToMany
+    private Set<Bicho> bichosAbandonados = new HashSet<>();
+
+    public Set<Bicho> getBichosAbandonados() {
         return this.bichosAbandonados;
     }
 
+    @Override
     public void abandonarBicho(Bicho unBicho) {
         bichosAbandonados.add(unBicho);
     }
@@ -45,6 +48,11 @@ public class Guarderia extends Ubicacion {
         Bicho bicho = bichosPosibles.get((int) Math.random() * (bichosAbandonados.size() - 1));
         bichosAbandonados.remove(bicho);
         return bicho;
+    }
+
+    @Override
+    public int getCantidadBichosAbandonados() {
+        return this.bichosAbandonados.size();
     }
 
 }

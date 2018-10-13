@@ -66,12 +66,19 @@ public class Entrenador {
 
     public void mover(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
 
-    public boolean puedeCapturarBicho(){return this.capacidadMaxima() > bichos.size();}
+    public boolean puedeCapturarBicho() {
+        return this.capacidadMaxima() > bichos.size();
+    }
+
+    public boolean puedeAbandonarBicho() { return this.bichos.size() > 1; }
 
     /** ¿Debe ser de un servicio?*/
     public void retarADuelo(){}
 
-    public int capacidadMaxima(){ return nivel.capacidadMaximaDeBichos(this.exp);} //<-------------
+    public int capacidadMaxima() {
+        System.out.println("-------------- ACA ESTA: " + nivel.capacidadMaximaDeBichos(this.exp));
+        return nivel.capacidadMaximaDeBichos(this.exp);
+    }
 
     public float factorNivel(){
         return this.nivel.factorNivel() / this.getNivel();
@@ -125,6 +132,14 @@ public class Entrenador {
             poderTotal += bicho.getEnergia();
         }
         return poderTotal;
+    }
+
+    public void abandonarBicho(Bicho bicho) {
+        this.bichos.remove(bicho);
+    }
+
+    public void setNivelManager(NivelManager nivelManager) {
+        this.nivel = nivelManager;
     }
 
 }

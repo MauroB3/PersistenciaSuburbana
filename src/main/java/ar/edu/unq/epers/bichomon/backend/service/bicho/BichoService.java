@@ -9,12 +9,14 @@ public interface BichoService {
 
     Bicho buscar(String entrenador);
 
-    void abandonar(String entrenador);
+    void abandonar(String entrenador, int bicho);
 
     ResultadoCombate duelo(String entrenador);
 
-    boolean puedeEvolucionar(String entrenador, int bicho);
+    boolean puedeEvolucionar(String nombreEntrenador, int nroBicho);
 
     Bicho evolucionar(String entrenador, int bicho);
+
+    Bicho getBicho(int idBicho);
     
 }

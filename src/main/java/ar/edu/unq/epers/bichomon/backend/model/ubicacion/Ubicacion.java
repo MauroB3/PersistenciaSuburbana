@@ -64,4 +64,8 @@ public abstract class Ubicacion {
         return false;
     }
 
+    public void abandonarBicho(Bicho bicho) { }
+
+    public int getCantidadBichosAbandonados() { return 0; }
+
 }
