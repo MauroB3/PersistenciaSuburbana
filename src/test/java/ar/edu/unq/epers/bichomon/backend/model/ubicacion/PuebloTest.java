@@ -23,9 +23,15 @@ public class PuebloTest {
     @Mock
     public Entrenador entrenador;
 
+    @Mock
+    Bicho bicho1;
+
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         pueblo = new Pueblo();
+        when(especie1.crearBicho(entrenador)).thenReturn(bicho1);
+        when(bicho1.getEspecie()).thenReturn(especie1);
     }
 
     @Test
@@ -67,6 +73,7 @@ public class PuebloTest {
     @Test
     public void testBichoEncontrado() {
         pueblo.agregarEspecie(especie1, 100);
+        assertEquals(1, pueblo.getEspeciesQueHabitan().size());
         Bicho bichoEncontrado = pueblo.bichoEncontrado(entrenador);
         assertEquals(especie1, bichoEncontrado.getEspecie());
     }

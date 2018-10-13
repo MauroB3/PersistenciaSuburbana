@@ -4,9 +4,7 @@ import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +13,7 @@ import java.util.Set;
 public class Guarderia extends Ubicacion {
 
 
-    @OneToMany
+    @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Bicho> bichosAbandonados = new HashSet<>();
 
     public Set<Bicho> getBichosAbandonados() {

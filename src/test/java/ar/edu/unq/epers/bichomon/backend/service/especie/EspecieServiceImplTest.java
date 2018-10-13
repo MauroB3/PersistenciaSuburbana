@@ -9,15 +9,20 @@ import ar.edu.unq.epers.bichomon.backend.model.condicion.CondicionCompuesta;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
+import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 public class EspecieServiceImplTest {
 
@@ -58,10 +63,19 @@ public class EspecieServiceImplTest {
 
     private Entrenador entrenador;
 
+    @Mock
+    private NivelServiceImpl nivelService;
+
+    @Mock
+    private NivelManager nivelManager;
+
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        when(nivelService.getNivelManager()).thenReturn(nivelManager);
+        when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
         hibernateEspecieDAO = new HibernateEspecieDAO();
-        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), hibernateEspecieDAO);
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), hibernateEspecieDAO, nivelService);
         service = new EspecieServiceImpl(hibernateEspecieDAO);
         condicion = new CondicionCompuesta();
 

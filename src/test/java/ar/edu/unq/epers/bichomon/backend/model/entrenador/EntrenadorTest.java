@@ -31,7 +31,7 @@ public class EntrenadorTest {
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        entrenador = new Entrenador("Spore",nivelManager,puebloPaleta);
+        entrenador = new Entrenador("Spore",puebloPaleta);
 
         entrenador.agregarExperiencia(250);
 
@@ -54,24 +54,24 @@ public class EntrenadorTest {
     public void testCapacidadMaxima(){
         System.out.println(" " + nivelManager.getNivel(250));
 
-        assertEquals(2, entrenador.capacidadMaxima(),0);
+        assertEquals(2, entrenador.capacidadMaxima(nivelManager),0);
     }
 
     @Test
     public void testPuedeCapturarBicho(){
         entrenador.capturarBicho(bicho1);
 
-        assertTrue(entrenador.puedeCapturarBicho());
+        assertTrue(entrenador.puedeCapturarBicho(nivelManager));
     }
 
     @Test
     public void testFactorNivel(){
-        assertEquals(50, entrenador.factorNivel(),0);
+        assertEquals(50, entrenador.factorNivel(nivelManager),0);
     }
 
     @Test
     public void testGetNivel(){
-        assertEquals(2,entrenador.getNivel());
+        assertEquals(2,entrenador.getNivel(nivelManager));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class EntrenadorTest {
     public void factorTiempo(){
         entrenador.setUlimaCaptura(LocalDate.of(1943,5,25));
 
-        assertEquals(27532, entrenador.factorTiempo(), 0);
+        assertEquals(27535, entrenador.factorTiempo(), 0);
     }
 
 }

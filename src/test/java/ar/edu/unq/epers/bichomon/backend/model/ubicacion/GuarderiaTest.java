@@ -2,6 +2,8 @@ package ar.edu.unq.epers.bichomon.backend.model.ubicacion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -29,10 +31,18 @@ public class GuarderiaTest {
     @Mock
     private Entrenador entrenador2;
 
+    @Mock
+    private NivelServiceImpl nivelService;
+
+    @Mock
+    private NivelManager nivelManager;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        when(entrenador1.factorNivel()).thenReturn(1f);
+        when(nivelService.getNivelManager()).thenReturn(nivelManager);
+        when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
+        when(entrenador1.factorNivel(nivelManager)).thenReturn(1f);
         when(entrenador1.factorTiempo()).thenReturn(1f);
         when(bicho1.getEntrenador()).thenReturn(entrenador1);
         when(bicho2.getEntrenador()).thenReturn(entrenador2);

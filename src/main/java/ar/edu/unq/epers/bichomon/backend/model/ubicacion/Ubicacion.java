@@ -2,6 +2,8 @@ package ar.edu.unq.epers.bichomon.backend.model.ubicacion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelService;
 
 import javax.persistence.*;
 
@@ -33,8 +35,8 @@ public abstract class Ubicacion {
         Nombre = nombre;
     }
 
-    public Bicho buscar(Entrenador entrenador){
-        if (busquedaExitosa(entrenador)) {
+    public Bicho buscar(Entrenador entrenador, NivelManager nivelManager){
+        if (busquedaExitosa(entrenador, nivelManager)) {
             return bichoEncontrado(entrenador);
         }
         else {
@@ -42,8 +44,8 @@ public abstract class Ubicacion {
         }
     }
 
-    private Boolean busquedaExitosa(Entrenador entrenador) {
-        return (entrenador.factorTiempo() * entrenador.factorNivel() * getFactorPoblacion() * (float) (Math.random() * 1) > 0.5);
+    private Boolean busquedaExitosa(Entrenador entrenador, NivelManager nivelManager) {
+        return (entrenador.factorTiempo() * entrenador.factorNivel(nivelManager) * getFactorPoblacion() * (float) (Math.random() * 1) > 0.5);
     }
 
     public int getFactorPoblacion() {

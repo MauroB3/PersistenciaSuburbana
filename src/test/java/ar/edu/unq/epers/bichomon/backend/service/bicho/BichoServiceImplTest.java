@@ -4,27 +4,16 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.BasadoEnVictoria;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
-import ar.edu.unq.epers.bichomon.backend.model.duelo.ResultadoCombate;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
-import ar.edu.unq.epers.bichomon.backend.model.nivel.Nivel;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Pueblo;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
-import ar.edu.unq.epers.bichomon.backend.service.Condicion.CondicionService;
-import ar.edu.unq.epers.bichomon.backend.service.Condicion.CondicionServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
-import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
-import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
-import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
-import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -50,14 +39,14 @@ public class BichoServiceImplTest {
     @Mock
     private NivelServiceImpl nivelService;
 
+    @Mock
+    private NivelManager manager;
+
     private Bicho bicho1;
 
     private Bicho bicho2;
 
     private Especie especie;
-
-    @Mock
-    private NivelManager manager;
 
     private Pueblo pueblo;
 
@@ -79,7 +68,7 @@ public class BichoServiceImplTest {
         entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
         especieDAO = new HibernateEspecieDAO();
         ubicacionService = new UbicacionServiceImp(new HibernateUbicacionDAO());
-        bichoService = new BichoServiceImpl(bichoDAO, entrenadorDAO, especieDAO);
+        bichoService = new BichoServiceImpl(bichoDAO, entrenadorDAO, especieDAO, nivelService);
 
         pueblo = new Pueblo();
         pueblo.setNombre("Sporeland");
@@ -87,11 +76,9 @@ public class BichoServiceImplTest {
         guarderia = new Guarderia();
         guarderia.setNombre("Una guarderia");
 
-        //manager = new NivelManager(); /** No usar este constructor */
-
         condVic = new BasadoEnVictoria(5);
         especie = new Especie("Onix",TipoBicho.CHOCOLATE, condVic,257,300,446);
-        entrenador = new Entrenador("Spore", manager, guarderia);
+        entrenador = new Entrenador("Spore", guarderia);
         entrenador.agregarExperiencia(10);
         bicho1 = new Bicho(especie, entrenador);
         bicho2 = new Bicho(especie, entrenador);

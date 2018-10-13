@@ -6,6 +6,8 @@ import static org.mockito.Mockito.when;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.Ataque;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -32,9 +34,17 @@ public class BichoTest {
     private Ataque ataque;
 
 
+    @Mock
+    private NivelServiceImpl nivelService;
+
+    @Mock
+    private NivelManager nivelManager;
+
     @Before
-    public void setUp() throws Exception{
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
+        when(nivelService.getNivelManager()).thenReturn(nivelManager);
+        when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
         bicho = new Bicho(especieAgua, entrenador);
         otroBicho = new Bicho(especieAgua, entrenador);
 
@@ -84,16 +94,16 @@ public class BichoTest {
 
     @Test
     public void testPuedeEvolucionar(){
-        when(especieAgua.puedeEvolucionar(bicho)).thenReturn(true);
+        when(especieAgua.puedeEvolucionar(bicho, nivelManager)).thenReturn(true);
 
-        assertTrue(bicho.puedeEvolucionar());
+        assertTrue(bicho.puedeEvolucionar(nivelManager));
     }
 
     @Test
     public void testNoPuedeEvolucionar(){
-        when(especieAgua.puedeEvolucionar(bicho)).thenReturn(false);
+        when(especieAgua.puedeEvolucionar(bicho, nivelManager)).thenReturn(false);
 
-        assertFalse(bicho.puedeEvolucionar());
+        assertFalse(bicho.puedeEvolucionar(nivelManager));
     }
 
     @Test

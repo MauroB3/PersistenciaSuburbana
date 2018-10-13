@@ -33,7 +33,7 @@ public class Pueblo extends Ubicacion {
 
     //No se puede agregar una especie con probabilidad 0
     public void agregarEspecie(Especie especie, int probabilidad) {
-        especiesQueHabitan.add(new EspeciePosible(especie, siguienteProbabilidadInicial, siguienteProbabilidadInicial + probabilidad - 1));
+        this.especiesQueHabitan.add(new EspeciePosible(especie, siguienteProbabilidadInicial, siguienteProbabilidadInicial + probabilidad - 1));
         siguienteProbabilidadInicial += probabilidad;
     }
 

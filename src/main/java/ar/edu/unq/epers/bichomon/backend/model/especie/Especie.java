@@ -3,6 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.model.especie;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -196,8 +197,8 @@ public class Especie {
 		this.nroEvolucion = nroEvolucion;
 	}
 
-	public boolean puedeEvolucionar(Bicho bicho){
-		return this.condicionDeEvolucion.cumpleConLaCondicion(bicho);
+	public boolean puedeEvolucionar(Bicho bicho, NivelManager nivelManager){
+		return this.condicionDeEvolucion.cumpleConLaCondicion(bicho, nivelManager);
 	}
 
 	public Especie buscarSiguienteEvolucion(){

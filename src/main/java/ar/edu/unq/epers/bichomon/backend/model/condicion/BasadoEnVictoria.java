@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.model.condicion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 
 import javax.persistence.Entity;
 
@@ -16,7 +17,7 @@ public class BasadoEnVictoria extends Condicion{
     }
 
     @Override
-    public Boolean cumpleConLaCondicion(Bicho bicho){
+    public Boolean cumpleConLaCondicion(Bicho bicho, NivelManager nivelManager){
         return bicho.getVictorias() > condicionVictorias;
     }
 

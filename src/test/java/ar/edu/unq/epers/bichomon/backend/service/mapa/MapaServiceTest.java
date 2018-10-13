@@ -66,7 +66,7 @@ public class MapaServiceTest {
         campeonDAO = new HibernateCampeonDAO();
         campeonService = new CampeonService(campeonDAO);
         entrenadorDAO = new HibernateEntrenadorDAO();
-        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), entrenadorDAO, new HibernateEspecieDAO());
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), entrenadorDAO, new HibernateEspecieDAO(), nivelService);
         mapaService = new MapaService(ubicacionDAO, campeonDAO, entrenadorDAO);
         entrenadorService = new EntrenadorService(entrenadorDAO,nivelService);
 
@@ -76,7 +76,7 @@ public class MapaServiceTest {
         guarderia = new Guarderia();
         guarderia.setNombre("Una guarderia");
 
-        entrenador = new Entrenador("entrenador", nivelManager, dojo);
+        entrenador = new Entrenador("entrenador", dojo);
 
     }
 

@@ -1,11 +1,15 @@
 package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
+import ar.edu.unq.epers.bichomon.backend.dao.NivelDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.ResultadoCombate;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionIncorrectaException;
 
@@ -14,11 +18,13 @@ public class BichoServiceImpl implements BichoService{
     private HibernateBichoDAO bichoDAO;
     private HibernateEntrenadorDAO entrenadorDAO;
     private HibernateEspecieDAO especieDAO;
+    private NivelServiceImpl nivelService;
 
-    public BichoServiceImpl(HibernateBichoDAO bichoDAO, HibernateEntrenadorDAO entrenadorDAO, HibernateEspecieDAO especieDAO) {
+    public BichoServiceImpl(HibernateBichoDAO bichoDAO, HibernateEntrenadorDAO entrenadorDAO, HibernateEspecieDAO especieDAO, NivelServiceImpl nivelService) {
         this.bichoDAO = bichoDAO;
         this.entrenadorDAO = entrenadorDAO;
         this.especieDAO = especieDAO;
+        this.nivelService = nivelService;
     }
 
     @Override
@@ -48,8 +54,9 @@ public class BichoServiceImpl implements BichoService{
         Runner.runInSession( () -> {
             Bicho bicho = this.bichoDAO.recuperar(nroBicho);
             Entrenador entrenador = this.entrenadorDAO.recuperar(nombreEntrenador);
+            NivelManager nivelManager = nivelService.getNivelManager();
             if(entrenador.ubicacion().esGuarderia()) {
-                if(entrenador.puedeCapturarBicho()) {
+                if(entrenador.puedeCapturarBicho(nivelManager)) {
                     entrenador.abandonarBicho(bicho);
                     entrenador.ubicacion().abandonarBicho(bicho);
 
@@ -71,7 +78,7 @@ public class BichoServiceImpl implements BichoService{
 
     public boolean puedeEvolucionar(String entrenador, int idBicho) {
         return Runner.runInSession(() -> {
-            return bichoDAO.recuperar(idBicho).puedeEvolucionar();
+            return bichoDAO.recuperar(idBicho).puedeEvolucionar(nivelService.getNivelManager());
         });
     }
 

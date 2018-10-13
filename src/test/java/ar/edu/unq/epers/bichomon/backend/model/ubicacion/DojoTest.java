@@ -3,6 +3,8 @@ package ar.edu.unq.epers.bichomon.backend.model.ubicacion;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -32,30 +34,33 @@ public class DojoTest {
     @Mock
     private Especie especieRaiz;
 
-    /*
+    @Mock
+    private NivelServiceImpl nivelService;
 
+    @Mock
+    private NivelManager nivelManager;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        when(nivelService.getNivelManager()).thenReturn(nivelManager);
+        when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
         dojo = new Dojo();
-        dojo.setCampeon(bicho1, LocalDate.now());
+        dojo.actualizarYRetornarCampeon(bicho1, LocalDate.now());
         when(bicho1.getEspecie()).thenReturn(especieBicho);
         when(especieBicho.getEspecieRaiz()).thenReturn(especieRaiz);
-        when(entrenador.factorNivel()).thenReturn(1f);
+        when(entrenador.getExperiencia()).thenReturn(10);
+        when(entrenador.factorNivel(nivelManager)).thenReturn(1f);
         when(entrenador.factorTiempo()).thenReturn(1f);
-    }
-
-    @Test
-    public void testGetYSetCampeonActual() {
-        dojo.setCampeon(bicho1, LocalDate.now());
-        assertEquals(dojo.getCampeon(), bicho1);
+        when(especieRaiz.crearBicho(entrenador)).thenReturn(bicho2);
+        when(bicho2.getEspecie()).thenReturn(especieRaiz);
+        when(especieBicho.getEspecieRaiz()).thenReturn(especieRaiz);
     }
 
     @Test
     public void testGetYSetCampeonNuevo() {
-        dojo.setCampeon(bicho2, LocalDate.now());
-        assertEquals(dojo.getCampeon(), bicho2);
+        dojo.actualizarYRetornarCampeon(bicho2, LocalDate.now());
+        assertEquals(dojo.getCampeon().getId(), bicho2.getID());
     }
 
     @Test
@@ -65,11 +70,9 @@ public class DojoTest {
 
     @Test
     public void testBusqueda() {
-        dojo.setCampeon(bicho1, LocalDate.now());
+        dojo.actualizarYRetornarCampeon(bicho1, LocalDate.now());
         Especie especie = dojo.bichoEncontrado(entrenador).getEspecie();
         assertEquals(especie, especieRaiz);
     }
-
-    */
 
 }

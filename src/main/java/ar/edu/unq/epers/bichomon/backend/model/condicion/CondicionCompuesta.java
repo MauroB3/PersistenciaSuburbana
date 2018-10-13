@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.model.condicion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
@@ -32,10 +33,10 @@ public class CondicionCompuesta extends Condicion {
         return condiciones.size();
     }
 
-    public Boolean cumpleConLaCondicion(Bicho bicho){
+    public Boolean cumpleConLaCondicion(Bicho bicho, NivelManager nivelManager){
         Boolean cumple = true;
         for(Condicion cond : condiciones){
-            cumple = cumple && cond.cumpleConLaCondicion(bicho);
+            cumple = cumple && cond.cumpleConLaCondicion(bicho, nivelManager);
         }
         return cumple;
     }

@@ -2,6 +2,8 @@ package ar.edu.unq.epers.bichomon.backend.model.condicion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.*;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import org.junit.Test;
 import org.junit.Before;
 import org.mockito.Mock;
@@ -28,9 +30,17 @@ public class CondicionCompuestaTest {
     @Mock
     private BasadoEnVictoria condVictoria;
 
+    @Mock
+    private NivelServiceImpl nivelService;
+
+    @Mock
+    private NivelManager nivelManager;
+
     @Before
-    public void setUp() throws Exception{
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
+        when(nivelService.getNivelManager()).thenReturn(nivelManager);
+        when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
         condicion = new CondicionCompuesta();
 
         condicion.agregarCondicion(condEdad);
@@ -38,9 +48,9 @@ public class CondicionCompuestaTest {
         condicion.agregarCondicion(condEnergia);
         condicion.agregarCondicion(condVictoria);
 
-        when(condEdad.cumpleConLaCondicion(bicho)).thenReturn(true);
-        when(condNivel.cumpleConLaCondicion(bicho)).thenReturn(true);
-        when(condEnergia.cumpleConLaCondicion(bicho)).thenReturn(true);
+        when(condEdad.cumpleConLaCondicion(bicho, nivelManager)).thenReturn(true);
+        when(condNivel.cumpleConLaCondicion(bicho, nivelManager)).thenReturn(true);
+        when(condEnergia.cumpleConLaCondicion(bicho, nivelManager)).thenReturn(true);
     }
 
     @Test
@@ -57,16 +67,16 @@ public class CondicionCompuestaTest {
 
     @Test
     public void testCumpleTodasLasCondiciones(){
-        when(condVictoria.cumpleConLaCondicion(bicho)).thenReturn(true);
+        when(condVictoria.cumpleConLaCondicion(bicho, nivelManager)).thenReturn(true);
 
-        assertTrue(condicion.cumpleConLaCondicion(bicho));
+        assertTrue(condicion.cumpleConLaCondicion(bicho, nivelManager));
     }
 
     @Test
     public void testNoCumpleTodasLasCondiciones(){
-        when(condVictoria.cumpleConLaCondicion(bicho)).thenReturn(false);
+        when(condVictoria.cumpleConLaCondicion(bicho, nivelManager)).thenReturn(false);
 
-        assertFalse(condicion.cumpleConLaCondicion(bicho));
+        assertFalse(condicion.cumpleConLaCondicion(bicho, nivelManager));
     }
 
 }

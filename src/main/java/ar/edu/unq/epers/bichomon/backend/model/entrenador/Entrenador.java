@@ -37,9 +37,6 @@ public class Entrenador {
 
     private int exp = 0; //Siempr empieza en 0 de experiencia
 
-    @Transient
-    private NivelManager nivel;
-
     private LocalDate ulimaCaptura;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -49,9 +46,8 @@ public class Entrenador {
 
     }
 
-    public Entrenador(String nombre, NivelManager nivel, Ubicacion ubicacion){
+    public Entrenador(String nombre, Ubicacion ubicacion){
         this.Nombre = nombre;
-        this.nivel = nivel;
         this.ubicacion = ubicacion;
         ubicacion.sumarPoblacion();
     }
@@ -66,8 +62,8 @@ public class Entrenador {
 
     public void mover(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
 
-    public boolean puedeCapturarBicho() {
-        return this.capacidadMaxima() > bichos.size();
+    public boolean puedeCapturarBicho(NivelManager nivelManager) {
+        return this.capacidadMaxima(nivelManager) > bichos.size();
     }
 
     public boolean puedeAbandonarBicho() { return this.bichos.size() > 1; }
@@ -75,13 +71,13 @@ public class Entrenador {
     /** ¿Debe ser de un servicio?*/
     public void retarADuelo(){}
 
-    public int capacidadMaxima() {
-        System.out.println("-------------- ACA ESTA: " + nivel.capacidadMaximaDeBichos(this.exp));
-        return nivel.capacidadMaximaDeBichos(this.exp);
+    public int capacidadMaxima(NivelManager nivelManager) {
+        System.out.println("-------------- ACA ESTA: " + nivelManager.capacidadMaximaDeBichos(this.exp));
+        return nivelManager.capacidadMaximaDeBichos(this.exp);
     }
 
-    public float factorNivel(){
-        return this.nivel.factorNivel() / this.getNivel();
+    public float factorNivel(NivelManager nivelManager){
+        return nivelManager.factorNivel() / this.getNivel(nivelManager);
     }
 
     public float factorTiempo(){
@@ -96,17 +92,15 @@ public class Entrenador {
         return DAYS.between(this.ulimaCaptura, LocalDate.now());
     }
 
-    public int getNivel(){return nivel.getNivel(this.exp);}
+    public int getNivel(NivelManager nivelManager){return nivelManager.getNivel(this.exp);}
 
     public void agregarExperiencia(int exp){
         this.exp += exp;
     }
 
     public void capturarBicho(Bicho bicho){
-        if(this.puedeCapturarBicho()){
-            bichos.add(bicho);
-            ulimaCaptura = LocalDate.now();
-        }
+        bichos.add(bicho);
+        ulimaCaptura = LocalDate.now();
     }
 
     /** Para testear */
@@ -136,10 +130,6 @@ public class Entrenador {
 
     public void abandonarBicho(Bicho bicho) {
         this.bichos.remove(bicho);
-    }
-
-    public void setNivelManager(NivelManager nivelManager) {
-        this.nivel = nivelManager;
     }
 
 }

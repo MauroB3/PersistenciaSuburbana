@@ -1,5 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model.condicion;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.*;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 
 import javax.persistence.Entity;
 
@@ -23,7 +24,7 @@ public class BasadoEnEnergia extends Condicion {
     }
 
     @Override
-    public Boolean cumpleConLaCondicion(Bicho bicho) {
+    public Boolean cumpleConLaCondicion(Bicho bicho, NivelManager nivelManager) {
         return bicho.getEnergia() > this.condicionEnergia;
     }
 

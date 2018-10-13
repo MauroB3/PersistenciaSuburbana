@@ -70,7 +70,7 @@ public class LeaderboardServiceTest {
         campeonDAO = new HibernateCampeonDAO();
         campeonService = new CampeonService(campeonDAO);
         leaderboardService = new LeaderboardService(campeonDAO, new HibernateEntrenadorDAO(), new HibernateEspecieDAO());
-        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), new HibernateEspecieDAO());
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), new HibernateEspecieDAO(), nivelService);
         ubicacionService = new UbicacionServiceImp(new HibernateUbicacionDAO());
         nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         entrenadorService = new EntrenadorService(new HibernateEntrenadorDAO(), nivelService);
@@ -84,9 +84,9 @@ public class LeaderboardServiceTest {
         especie1 = new Especie("Pikachu");
         especie2 = new Especie("Charmander");
 
-        entrenador1 = new Entrenador("entrenador1", nivelManager, dojo1);
-        entrenador2 = new Entrenador("entrenador2", nivelManager, dojo2);
-        entrenador3 = new Entrenador("entrenador3", nivelManager, dojo2);
+        entrenador1 = new Entrenador("entrenador1", dojo1);
+        entrenador2 = new Entrenador("entrenador2", dojo2);
+        entrenador3 = new Entrenador("entrenador3", dojo2);
 
         bicho1 = new Bicho(especie1, entrenador1);
         bicho1.setEnergia(10);

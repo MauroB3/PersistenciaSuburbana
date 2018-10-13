@@ -4,6 +4,7 @@ import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.Ataque;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
@@ -92,8 +93,8 @@ public class Bicho {
 		this.especie = this.especie.buscarSiguienteEvolucion();
     }
 
-    public boolean puedeEvolucionar(){
-		return this.especie.puedeEvolucionar(this);
+    public boolean puedeEvolucionar(NivelManager nivelManager){
+		return this.especie.puedeEvolucionar(this, nivelManager);
 	}
 
 	public Ataque atacar(Bicho bicho) {

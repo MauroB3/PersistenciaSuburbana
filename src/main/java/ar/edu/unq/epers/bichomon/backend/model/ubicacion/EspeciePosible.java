@@ -26,9 +26,9 @@ public class EspeciePosible {
     }
 
     public EspeciePosible(Especie especie, int probInicial, int probFinal) {
-        especie = especie;
-        probInicial = probInicial;
-        probFinal = probFinal;
+        this.especie = especie;
+        this.probInicial = probInicial;
+        this.probFinal = probFinal;
     }
 
     public Especie getEspecie() {

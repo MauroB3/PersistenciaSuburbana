@@ -35,7 +35,7 @@ public class EntrenadorServiceTest {
         entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
         dojo = new Dojo();
         dojo.setNombre("Un dojo");
-        entrenador = new Entrenador("Spore", nivelManager, dojo);
+        entrenador = new Entrenador("Spore", dojo);
     }
 
     @After

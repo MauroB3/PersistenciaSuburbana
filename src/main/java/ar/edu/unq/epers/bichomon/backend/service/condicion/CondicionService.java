@@ -1,4 +1,4 @@
-package ar.edu.unq.epers.bichomon.backend.service.Condicion;
+package ar.edu.unq.epers.bichomon.backend.service.condicion;
 
 import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
 

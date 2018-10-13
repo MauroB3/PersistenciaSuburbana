@@ -1,5 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.model.condicion;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.*;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 
 import javax.persistence.*;
 
@@ -12,5 +13,5 @@ public abstract class Condicion {
     @Column(nullable = false, unique = true, length=190)
     private int id;
 
-    abstract public Boolean cumpleConLaCondicion(Bicho bicho);
+    abstract public Boolean cumpleConLaCondicion(Bicho bicho, NivelManager nivelManager);
 }
