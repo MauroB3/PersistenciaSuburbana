@@ -90,9 +90,9 @@ public class EntrenadorTest {
 
     @Test
     public void factorTiempo(){
-        entrenador.setUlimaCaptura(LocalDate.of(1943,5,25));
+        entrenador.setUlimaCaptura(LocalDate.now());
 
-        assertEquals(27536, entrenador.factorTiempo(), 0);
+        assertEquals(1, entrenador.factorTiempo(), 0);
     }
 
 }
