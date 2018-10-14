@@ -105,7 +105,7 @@ public class BichoServiceImplTest {
         entrenador = new Entrenador("Spore", guarderia);
         entrenador.agregarExperiencia(10);
     }
-
+    /*
     @After
     public void cleanUp(){
         //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
@@ -115,13 +115,14 @@ public class BichoServiceImplTest {
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
     }
-
+    */
     @Test
     public void crearBicho() {
+        especieService.crearEspecie(especie);
         Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho1);
 
-        assertEquals(446, bichoService.getBicho(1).getEnergia());
+        assertEquals(446, bichoService.getBicho(bicho1.getID()).getEnergia());
     }
 
     @Test
@@ -147,10 +148,9 @@ public class BichoServiceImplTest {
         bicho4.incrementarVictorias();
         bicho4.incrementarVictorias();
         bichoService.crearBicho(bicho4);
-
-
-        assertFalse(bichoService.puedeEvolucionar("Spore", 4));
-        assertTrue(bichoService.puedeEvolucionar("Spore", 2));
+        
+        assertFalse(bichoService.puedeEvolucionar("Spore", bicho4.getID()));
+        assertTrue(bichoService.puedeEvolucionar("Spore", bicho3.getID()));
     }
 
 
