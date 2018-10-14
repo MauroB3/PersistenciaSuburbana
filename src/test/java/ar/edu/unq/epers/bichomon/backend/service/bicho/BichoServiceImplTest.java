@@ -148,11 +148,37 @@ public class BichoServiceImplTest {
         bicho4.incrementarVictorias();
         bicho4.incrementarVictorias();
         bichoService.crearBicho(bicho4);
-        
+
         assertFalse(bichoService.puedeEvolucionar("Spore", bicho4.getID()));
         assertTrue(bichoService.puedeEvolucionar("Spore", bicho3.getID()));
     }
 
+    @Test
+    public void evolucionar(){
+        especieService.crearEspecie(especie2);
+        especieService.crearEspecie(especie3);
+        Bicho bicho3 = especieService.crearBicho("Charmander",entrenador);
+        bicho3.incrementarVictorias();
+        bicho3.incrementarVictorias();
+        bicho3.incrementarVictorias();
+        bicho3.incrementarVictorias();
+        bicho3.incrementarVictorias();
+        bicho3.incrementarVictorias();
+        bichoService.crearBicho(bicho3);
+        condService.crearCondicion(condVic);
+        Bicho bicho4 = especieService.crearBicho("Charmeleon", entrenador);
+        bicho4.incrementarVictorias();
+        bicho4.incrementarVictorias();
+        bicho4.incrementarVictorias();
+        bicho4.incrementarVictorias();
+        bicho4.incrementarVictorias();
+        bicho4.incrementarVictorias();
+        bicho4.incrementarVictorias();
+        bicho4.incrementarVictorias();
+        bichoService.crearBicho(bicho4);
+
+        assertEquals(especie3.getNombre(), bichoService.evolucionar(entrenador.nombre(), bicho3.getID()).getEspecie().getNombre());
+    }
 
     @Test
     public void abandonarBicho() {

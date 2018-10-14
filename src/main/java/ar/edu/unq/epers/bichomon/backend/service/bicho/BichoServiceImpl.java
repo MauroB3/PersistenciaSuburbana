@@ -91,7 +91,18 @@ public class BichoServiceImpl implements BichoService{
     }
 
     @Override
-    public Bicho evolucionar(String entrenador, int bicho) {
-        return null;
+    public Bicho evolucionar(String entrenador, int idBicho) {
+        return Runner.runInSession(() -> {
+            Bicho bicho = bichoDAO.recuperar(idBicho);
+            if(puedeEvolucionar(entrenador, bicho.getID())){
+                especieDAO.decrementarPopularidad(bicho.getEspecie().getNombre());
+                bicho.evolucionar(especieDAO.siguienteEvolucion(bicho.getEspecie()));
+                especieDAO.incrementarPopularidad(bicho.getEspecie().getNombre());
+                bichoDAO.actualizar(bicho);
+            }else{
+                throw new BichoNoPuedeEvolucionarException(bicho.getEspecie().getNombre());
+            }
+            return bicho;
+        });
     }
 }
