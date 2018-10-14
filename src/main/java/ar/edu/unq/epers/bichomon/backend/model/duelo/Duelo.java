@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.model.duelo;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 
 import java.util.ArrayList;
 
@@ -14,8 +15,8 @@ public class Duelo {
     public Duelo(){
 
     }
-
-    public Duelo(Dojo dojo, Bicho bicho){
+    //Esta ubicacion tiene que ser un dojo
+    public Duelo(Ubicacion dojo, Bicho bicho){
         campeon = dojo.getCampeon().getBicho();
         this.bicho = bicho;
         ataques = new ArrayList<Ataque>();

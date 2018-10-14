@@ -2,7 +2,9 @@ package ar.edu.unq.epers.bichomon.backend.model.duelo;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
+
 
 public class ResultadoCombate {
     private ArrayList<Ataque> ataques;

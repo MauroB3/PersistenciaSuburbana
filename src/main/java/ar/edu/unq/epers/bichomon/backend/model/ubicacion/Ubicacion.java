@@ -1,18 +1,20 @@
 package ar.edu.unq.epers.bichomon.backend.model.ubicacion;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelService;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Ubicacion {
 
     @Id
-    @Column(name = "Nombre", nullable = false, unique = true, length=190)
+    @Column(name = "Nombre", nullable = false, unique = true, length = 190)
     private String Nombre;
 
     private int poblacion = 0;
@@ -29,17 +31,18 @@ public abstract class Ubicacion {
         poblacion -= 1;
     }
 
-    public int getPoblacion() { return poblacion; }
+    public int getPoblacion() {
+        return poblacion;
+    }
 
     public void setNombre(String nombre) {
         Nombre = nombre;
     }
 
-    public Bicho buscar(Entrenador entrenador, NivelManager nivelManager){
+    public Bicho buscar(Entrenador entrenador, NivelManager nivelManager) {
         if (busquedaExitosa(entrenador, nivelManager)) {
             return bichoEncontrado(entrenador);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -66,8 +69,18 @@ public abstract class Ubicacion {
         return false;
     }
 
-    public void abandonarBicho(Bicho bicho) { }
+    public void abandonarBicho(Bicho bicho) {
+    }
 
-    public int getCantidadBichosAbandonados() { return 0; }
+    public int getCantidadBichosAbandonados() {
+        return 0;
+    }
 
+    public Campeon getCampeon() {
+        return null;
+    }
+
+    public Campeon actualizarYRetornarCampeon(Bicho bicho, LocalDate fecha){
+        return null;
+    }
 }

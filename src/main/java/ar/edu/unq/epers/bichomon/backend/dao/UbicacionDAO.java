@@ -1,6 +1,8 @@
 package ar.edu.unq.epers.bichomon.backend.dao;
 
+import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 
 import java.util.List;
@@ -19,4 +21,5 @@ public interface UbicacionDAO {
 
     int getCantidadEntrenadores(String nombreUbicacion);
 
+    void actualizarCampeon(Ubicacion dojo, Bicho bicho);
 }

@@ -14,6 +14,7 @@ public class Dojo extends Ubicacion {
     @OneToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private Campeon campeon;
 
+    @Override
     public Campeon getCampeon() {
         return this.campeon;
     }

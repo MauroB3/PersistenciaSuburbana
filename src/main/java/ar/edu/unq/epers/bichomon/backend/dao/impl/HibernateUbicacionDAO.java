@@ -1,12 +1,14 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
 import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDAO;
+import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -45,5 +47,11 @@ public class HibernateUbicacionDAO implements UbicacionDAO {
         Session session = Runner.getCurrentSession();
 
         return session.get(Ubicacion.class, nombreUbicacion).getPoblacion();
+    }
+
+    public void actualizarCampeon(Ubicacion dojo, Bicho bicho){
+        Session session = Runner.getCurrentSession();
+        dojo.actualizarYRetornarCampeon(bicho, LocalDate.now());
+        session.update(dojo);
     }
 }

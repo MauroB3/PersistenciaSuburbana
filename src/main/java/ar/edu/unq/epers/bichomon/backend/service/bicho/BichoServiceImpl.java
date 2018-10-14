@@ -1,10 +1,8 @@
 package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
 import ar.edu.unq.epers.bichomon.backend.dao.NivelDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.UbicacionDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.Duelo;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.ResultadoCombate;
@@ -12,6 +10,7 @@ import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
@@ -23,12 +22,14 @@ public class BichoServiceImpl implements BichoService{
     private HibernateEntrenadorDAO entrenadorDAO;
     private HibernateEspecieDAO especieDAO;
     private NivelServiceImpl nivelService;
+    private HibernateUbicacionDAO ubicacionDAO;
 
-    public BichoServiceImpl(HibernateBichoDAO bichoDAO, HibernateEntrenadorDAO entrenadorDAO, HibernateEspecieDAO especieDAO, NivelServiceImpl nivelService) {
+    public BichoServiceImpl(HibernateBichoDAO bichoDAO, HibernateEntrenadorDAO entrenadorDAO, HibernateEspecieDAO especieDAO, NivelServiceImpl nivelService, HibernateUbicacionDAO ubicacionDAO) {
         this.bichoDAO = bichoDAO;
         this.entrenadorDAO = entrenadorDAO;
         this.especieDAO = especieDAO;
         this.nivelService = nivelService;
+        this.ubicacionDAO = ubicacionDAO;
     }
 
     @Override
@@ -96,11 +97,14 @@ public class BichoServiceImpl implements BichoService{
            Entrenador ent = entrenadorDAO.recuperar(entrenador);
            if(ent.ubicacion().esDojo()){
                Bicho bichoRetador = bichoDAO.recuperar(bicho);
-               Duelo duelo = new Duelo(ent.ubicacion(), bichoRetador); /** ??????????????????????????????????????????????????????????????????????????? */
+               Ubicacion dojo = ent.ubicacion();
+               Duelo duelo = new Duelo(dojo, bichoRetador);
+               ResultadoCombate resultado = duelo.pelear();
+               ubicacionDAO.actualizarCampeon(dojo, resultado.getGanador());
+               return resultado;
            }else{
                throw new UbicacionIncorrectaException(ent.ubicacion().getNombre(), "Dojo");
            }
-           return null;
         });
     }
 

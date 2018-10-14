@@ -1,7 +1,9 @@
 package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
+import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.BasadoEnVictoria;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
@@ -9,12 +11,14 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.Nivel;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Pueblo;
 import ar.edu.unq.epers.bichomon.backend.service.condicion.CondicionService;
 import ar.edu.unq.epers.bichomon.backend.service.condicion.CondicionServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
+import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
@@ -34,6 +38,8 @@ import static org.mockito.Mockito.when;
 
 public class BichoServiceImplTest {
 
+    private HibernateCampeonDAO campeonDAO;
+
     private HibernateBichoDAO bichoDAO;
 
     private HibernateEntrenadorDAO entrenadorDAO;
@@ -41,6 +47,8 @@ public class BichoServiceImplTest {
     private HibernateEspecieDAO especieDAO;
 
     private HibernateCondicionDAO condDAO;
+
+    private HibernateUbicacionDAO ubiDAO;
 
     private CondicionService condService;
 
@@ -51,6 +59,8 @@ public class BichoServiceImplTest {
     private EntrenadorService entrenadorService;
 
     private EspecieServiceImpl especieService;
+
+    private MapaService mapaService;
 
     private NivelServiceImpl nivelService;
 
@@ -78,6 +88,8 @@ public class BichoServiceImplTest {
     public void setUp(){
         MockitoAnnotations.initMocks(this);
 
+        campeonDAO = new HibernateCampeonDAO();
+        ubiDAO = new HibernateUbicacionDAO();
         condDAO = new HibernateCondicionDAO();
         nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         bichoDAO = new HibernateBichoDAO();
@@ -85,10 +97,11 @@ public class BichoServiceImplTest {
         entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
         especieDAO = new HibernateEspecieDAO();
         especieService = new EspecieServiceImpl(especieDAO);
-        ubicacionService = new UbicacionServiceImp(new HibernateUbicacionDAO());
-        bichoService = new BichoServiceImpl(bichoDAO, entrenadorDAO, especieDAO, nivelService);
+        ubicacionService = new UbicacionServiceImp(ubiDAO);
+        bichoService = new BichoServiceImpl(bichoDAO, entrenadorDAO, especieDAO, nivelService, ubiDAO);
         condService = new CondicionServiceImpl(condDAO);
         especieService = new EspecieServiceImpl(especieDAO);
+        mapaService = new MapaService(ubiDAO, campeonDAO, entrenadorDAO);
 
         nivelDAO = new HibernateNivelDAO();
         nivelService = new NivelServiceImpl(nivelDAO);
@@ -103,7 +116,7 @@ public class BichoServiceImplTest {
         guarderia.setNombre("Una guarderia");
 
         condVic = new BasadoEnVictoria(5);
-        especie = new Especie("Onix",TipoBicho.CHOCOLATE, condVic,257,300,446);
+        especie = new Especie("Onix",TipoBicho.CHOCOLATE, condVic,257,300,9999999);
         especie2 = new Especie("Charmander", TipoBicho.FUEGO, condVic, 55, 75, 110);
         especie3 = new Especie(especie2,2,condVic,"Charmeleon",88,100,300);
 
@@ -112,7 +125,7 @@ public class BichoServiceImplTest {
         entrenador2 = new Entrenador("Mauro", guarderia);
         entrenador2.agregarExperiencia(10);
     }
-
+    /*
     @After
     public void cleanUp(){
         //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
@@ -122,7 +135,7 @@ public class BichoServiceImplTest {
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
     }
-
+    */
     @Test
     public void crearBicho() {
         especieService.crearEspecie(especie);
@@ -236,6 +249,28 @@ public class BichoServiceImplTest {
 
         assertEquals(3, entrenadorService.recuperar(entrenador.nombre()).cantidadBichos());
         assertEquals(1, entrenadorService.recuperar(entrenador2.nombre()).cantidadBichos());
+    }
+
+    @Test
+    public void duelo(){
+        especieService.crearEspecie(especie);
+        especieService.crearEspecie(especie3);
+        Bicho bichoCampeon = especieService.crearBicho("Charmeleon", entrenador2);
+        Bicho bichoRetador = especieService.crearBicho("Onix", entrenador);
+
+        bichoService.crearBicho(bichoCampeon);
+        bichoService.crearBicho(bichoRetador);
+
+        Dojo dojo = new Dojo();
+        dojo.setNombre("Cobra Kai");
+        Campeon campeon = dojo.actualizarYRetornarCampeon(bichoCampeon,LocalDate.now());
+
+        ubicacionService.crearUbicacion(dojo);
+        mapaService.mover("Spore","Cobra Kai");
+        mapaService.mover("Mauro", "Cobra Kai");
+
+
+        assertEquals(bichoRetador.getID(), bichoService.duelo("Spore", bichoRetador.getID()).getGanador().getID());
     }
 
 }
