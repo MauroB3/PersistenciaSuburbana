@@ -89,9 +89,9 @@ public class Bicho {
 	    this.entrenador = entrenador;
     }
 
-	public void evolucionar(Especie especie){
+    public void evolucionar(Especie especie){
 		this.especie = especie;
-	}
+    }
 
     public boolean puedeEvolucionar(NivelManager nivelManager){
 		return this.especie.puedeEvolucionar(this, nivelManager);

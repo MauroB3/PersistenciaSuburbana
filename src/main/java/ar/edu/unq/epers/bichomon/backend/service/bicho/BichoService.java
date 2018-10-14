@@ -15,7 +15,7 @@ public interface BichoService {
 
     boolean puedeEvolucionar(String nombreEntrenador, int nroBicho);
 
-    Bicho evolucionar(String entrenador, int bicho);
+    Bicho evolucionar(String entrenador, int idBicho);
 
     Bicho getBicho(int idBicho);
     

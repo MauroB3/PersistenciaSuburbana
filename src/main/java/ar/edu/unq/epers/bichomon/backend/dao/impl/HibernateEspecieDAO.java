@@ -89,8 +89,6 @@ public class HibernateEspecieDAO implements EspecieDAO {
     }
 
     public Especie siguienteEvolucion(Especie especie){
-
-
         Session session = Runner.getCurrentSession();
 
         String hql = "from Especie e where e.nroEvolucion =:numeroEvolucion and e.especieRaiz =:raiz";
