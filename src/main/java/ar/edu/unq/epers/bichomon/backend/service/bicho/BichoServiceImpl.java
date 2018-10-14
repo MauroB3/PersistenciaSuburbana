@@ -49,7 +49,21 @@ public class BichoServiceImpl implements BichoService{
 
     @Override
     public Bicho buscar(String entrenador) {
-        return null;
+        return Runner.runInSession( () -> {
+            Entrenador entrenador1 = entrenadorDAO.recuperar(entrenador);
+            Bicho bichoEncontrado = entrenador1.ubicacion().buscar(entrenador1, nivelService.getNivelManager());
+
+            if(bichoEncontrado != null) {
+                bichoEncontrado.serAdoptado(entrenador1);
+                entrenadorDAO.agregarBicho(entrenador1.nombre(), bichoEncontrado);
+                especieDAO.incrementarPopularidad(bichoEncontrado.getEspecie().getNombre());
+                return bichoEncontrado;
+            }
+            else {
+                return null;
+            }
+
+        });
     }
 
     //El entrenador tiene que tener si o si al bicho

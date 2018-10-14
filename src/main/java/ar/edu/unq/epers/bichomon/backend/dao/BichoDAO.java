@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.dao;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 
 public interface BichoDAO {
 
@@ -11,4 +12,6 @@ public interface BichoDAO {
     Bicho recuperar(int idBicho);
 
     void abandonarBicho(Bicho bicho);
+
+    void adoptarBicho(Bicho bicho, Entrenador entrenador);
 }
