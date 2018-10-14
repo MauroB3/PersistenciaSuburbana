@@ -5,11 +5,7 @@ import ar.edu.unq.epers.bichomon.backend.model.condicion.*;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
-
+import javax.persistence.*;
 /**
  * Representa una {@link Especie} de bicho.
  * 
@@ -28,7 +24,7 @@ public class Especie {
 
 	private TipoBicho tipo;
 
-	@Transient
+	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	private Especie especieRaiz;
 
 	private int nroEvolucion;
@@ -39,7 +35,7 @@ public class Especie {
 
 	private int cantidadBichos;
 
-	@Transient
+	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	private Condicion condicionDeEvolucion;
 	
 	public Especie(){

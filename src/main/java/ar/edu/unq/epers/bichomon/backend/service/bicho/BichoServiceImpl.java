@@ -8,6 +8,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.ResultadoCombate;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
@@ -78,8 +79,13 @@ public class BichoServiceImpl implements BichoService{
 
     public boolean puedeEvolucionar(String entrenador, int idBicho) {
         return Runner.runInSession(() -> {
-            return bichoDAO.recuperar(idBicho).puedeEvolucionar(nivelService.getNivelManager());
+            Bicho bicho = bichoDAO.recuperar(idBicho);
+            return bicho.puedeEvolucionar(nivelService.getNivelManager()) && this.tieneSiguienteEvolucion(bicho.getEspecie());
         });
+    }
+
+    private boolean tieneSiguienteEvolucion(Especie especie){
+        return especieDAO.siguienteEvolucion(especie) != null;
     }
 
     @Override

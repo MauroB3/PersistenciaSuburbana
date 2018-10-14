@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 
+import java.util.EmptyStackException;
 import java.util.List;
 
 public class HibernateEspecieDAO implements EspecieDAO {
@@ -64,20 +65,16 @@ public class HibernateEspecieDAO implements EspecieDAO {
 
     public void incrementarPopularidad(String nombreEspecie){
         Session session = Runner.getCurrentSession();
-
-        String hql = "update Especie e set e.popularidad = (e.popularidad +1) where e.nombre = " + nombreEspecie;
-
-        Query<Especie> query = session.createQuery(hql, Especie.class);
-        query.executeUpdate();
+        Especie especie = session.get(Especie.class, nombreEspecie);
+        especie.incrementarPopularidad();
+        session.update(especie);
     }
 
     public void decrementarPopularidad(String nombreEspecie){
         Session session = Runner.getCurrentSession();
-
-        String hql = "update Especie e set e.popularidad = (e.popularidad -1) where e.nombre = " + nombreEspecie;
-
-        Query<Especie> query = session.createQuery(hql,Especie.class);
-        int retult = query.executeUpdate();
+        Especie especie = session.get(Especie.class, nombreEspecie);
+        especie.decrementarPopularidad();
+        session.update(especie);
     }
 
     public Especie especieLider() {
@@ -90,4 +87,18 @@ public class HibernateEspecieDAO implements EspecieDAO {
         return query.getSingleResult();
 
     }
+
+    public Especie siguienteEvolucion(Especie especie){
+
+
+        Session session = Runner.getCurrentSession();
+
+        String hql = "from Especie e where e.nroEvolucion =:numeroEvolucion and e.especieRaiz =:raiz";
+
+        Query<Especie> query = session.createQuery(hql, Especie.class);
+        query.setParameter("numeroEvolucion", especie.getNroEvolucion()+1);
+        query.setParameter("raiz", especie.getEspecieRaiz());
+        return query.getResultList().stream().findFirst().orElse(null);
+    }
+
 }

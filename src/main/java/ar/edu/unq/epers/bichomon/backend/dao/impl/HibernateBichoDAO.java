@@ -23,7 +23,6 @@ public class HibernateBichoDAO implements BichoDAO {
         session.update(bicho);
     }
 
-
     @Override
     public Bicho recuperar(int id){
         Session session = Runner.getCurrentSession();

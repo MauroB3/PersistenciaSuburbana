@@ -68,9 +68,6 @@ public class Entrenador {
 
     public boolean puedeAbandonarBicho() { return this.bichos.size() > 1; }
 
-    /** ¿Debe ser de un servicio?*/
-    public void retarADuelo(){}
-
     public int capacidadMaxima(NivelManager nivelManager) {
         System.out.println("-------------- ACA ESTA: " + nivelManager.capacidadMaximaDeBichos(this.exp));
         return nivelManager.capacidadMaximaDeBichos(this.exp);
