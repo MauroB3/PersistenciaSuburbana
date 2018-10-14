@@ -10,6 +10,7 @@ import ar.edu.unq.epers.bichomon.backend.model.duelo.ResultadoCombate;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionIncorrectaException;
@@ -57,10 +58,11 @@ public class BichoServiceImpl implements BichoService{
             Entrenador entrenador = this.entrenadorDAO.recuperar(nombreEntrenador);
             NivelManager nivelManager = nivelService.getNivelManager();
             if(entrenador.ubicacion().esGuarderia()) {
-                if(entrenador.puedeCapturarBicho(nivelManager)) {
+                if(entrenador.puedeAbandonarBicho()) {
                     entrenador.abandonarBicho(bicho);
                     entrenador.ubicacion().abandonarBicho(bicho);
-
+                    entrenadorDAO.actualizar(entrenador);
+                    bichoDAO.abandonarBicho(bicho);
                     especieDAO.decrementarPopularidad(bicho.getEspecie().getNombre());
                 }
             }

@@ -39,7 +39,7 @@ public class Entrenador {
 
     private LocalDate ulimaCaptura;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Bicho> bichos = new ArrayList<>();
 
     public Entrenador(){
@@ -69,7 +69,6 @@ public class Entrenador {
     public boolean puedeAbandonarBicho() { return this.bichos.size() > 1; }
 
     public int capacidadMaxima(NivelManager nivelManager) {
-        System.out.println("-------------- ACA ESTA: " + nivelManager.capacidadMaximaDeBichos(this.exp));
         return nivelManager.capacidadMaximaDeBichos(this.exp);
     }
 

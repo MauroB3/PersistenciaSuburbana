@@ -10,4 +10,5 @@ public interface BichoDAO {
 
     Bicho recuperar(int idBicho);
 
+    void abandonarBicho(Bicho bicho);
 }

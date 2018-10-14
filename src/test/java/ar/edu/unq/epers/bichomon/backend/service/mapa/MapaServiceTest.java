@@ -11,6 +11,7 @@ import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
+import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
