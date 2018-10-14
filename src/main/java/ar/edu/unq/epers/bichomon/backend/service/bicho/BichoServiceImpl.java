@@ -6,10 +6,12 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateNivelDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.duelo.Duelo;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.ResultadoCombate;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
@@ -75,8 +77,17 @@ public class BichoServiceImpl implements BichoService{
     }
 
     @Override
-    public ResultadoCombate duelo(String entrenador) {
-        return null;
+    public ResultadoCombate duelo(String entrenador, int bicho) {
+        return Runner.runInSession(() -> {
+           Entrenador ent = entrenadorDAO.recuperar(entrenador);
+           if(ent.ubicacion().esDojo()){
+               Bicho bichoRetador = bichoDAO.recuperar(bicho);
+               Duelo duelo = new Duelo(ent.ubicacion(), bichoRetador); /** ??????????????????????????????????????????????????????????????????????????? */
+           }else{
+               throw new UbicacionIncorrectaException(ent.ubicacion().getNombre(), "Dojo");
+           }
+           return null;
+        });
     }
 
     public boolean puedeEvolucionar(String entrenador, int idBicho) {

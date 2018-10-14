@@ -11,7 +11,7 @@ public interface BichoService {
 
     void abandonar(String entrenador, int bicho);
 
-    ResultadoCombate duelo(String entrenador);
+    ResultadoCombate duelo(String entrenador, int bicho);
 
     boolean puedeEvolucionar(String nombreEntrenador, int nroBicho);
 
