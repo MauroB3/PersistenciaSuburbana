@@ -89,14 +89,10 @@ public class EspecieServiceImpl implements EspecieService {
 		});
 	}
 
-	@Override /** No debe hacerse aca */
+	@Override
 	public void decrementarPopularidad(String nombreEspecie){
 		Runner.runInSession(() -> {
-			Especie especie = especieDAO.recuperar(nombreEspecie);
-			//System.out.println("Popularidad " + nombreEspecie + " = " + especie.getPopularidad());
-			especie.decrementarPopularidad();
-			//System.out.println("Popularidad " + nombreEspecie + " = " + especie.getPopularidad());
-			especieDAO.actualizar(especie);
+			especieDAO.decrementarPopularidad(nombreEspecie);
 			return null;
 		});
 	}

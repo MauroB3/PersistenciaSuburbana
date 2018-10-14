@@ -29,4 +29,12 @@ public class HibernateBichoDAO implements BichoDAO {
         Session session = Runner.getCurrentSession();
         return session.get(Bicho.class,id);
     }
+
+    @Override
+    public void abandonarBicho(Bicho bicho) {
+        Session session = Runner.getCurrentSession();
+        bicho.serAbandonado();
+        session.update(bicho);
+    }
+
 }

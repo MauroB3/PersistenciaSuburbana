@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.service.entrenador;
 
 import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
+import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 
@@ -35,4 +36,12 @@ public class EntrenadorService {
            return null;
         });
     }
+
+    public void agregarBicho(Entrenador entrenador, Bicho bicho) {
+        Runner.runInSession(() -> {
+            entrenadorDAO.agregarBicho(entrenador.nombre(), bicho);
+            return null;
+        });
+    }
+
 }

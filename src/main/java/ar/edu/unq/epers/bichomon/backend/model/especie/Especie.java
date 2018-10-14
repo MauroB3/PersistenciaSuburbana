@@ -178,7 +178,8 @@ public class Especie {
 
 	public Bicho crearBicho(Entrenador entrenador){
 		this.cantidadBichos++;
-		return new Bicho(this, entrenador);
+		Bicho bicho = new Bicho(this, entrenador);
+		return bicho;
 	}
 
 	public Especie getEspecieRaiz(){

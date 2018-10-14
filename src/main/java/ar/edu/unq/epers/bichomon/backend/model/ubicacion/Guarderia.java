@@ -50,6 +50,7 @@ public class Guarderia extends Ubicacion {
 
     @Override
     public int getCantidadBichosAbandonados() {
+        System.out.println("------------- CANTIDAD DE BICHOS ABANDONADOS: " + this.bichosAbandonados.size());
         return this.bichosAbandonados.size();
     }
 
