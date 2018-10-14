@@ -48,4 +48,11 @@ public class HibernateEntrenadorDAO implements EntrenadorDAO {
         session.update(entrenador);
     }
 
+    public void aumentarExperiencia(String nombreEntrenador, int valor){
+        Session session = Runner.getCurrentSession();
+        Entrenador entrenador = this.recuperar(nombreEntrenador);
+        entrenador.agregarExperiencia(valor);
+        session.update(entrenador);
+    }
+
 }

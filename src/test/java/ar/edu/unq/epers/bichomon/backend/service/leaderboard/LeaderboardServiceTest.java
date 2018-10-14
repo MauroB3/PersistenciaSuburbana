@@ -70,7 +70,7 @@ public class LeaderboardServiceTest {
         campeonDAO = new HibernateCampeonDAO();
         campeonService = new CampeonService(campeonDAO);
         leaderboardService = new LeaderboardService(campeonDAO, new HibernateEntrenadorDAO(), new HibernateEspecieDAO());
-        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), new HibernateEspecieDAO(), nivelService, new HibernateUbicacionDAO());
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), new HibernateEspecieDAO(), nivelService, new HibernateUbicacionDAO(), new HibernateExperienciaDAO());
         ubicacionService = new UbicacionServiceImp(new HibernateUbicacionDAO());
         nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         entrenadorService = new EntrenadorService(new HibernateEntrenadorDAO(), nivelService);

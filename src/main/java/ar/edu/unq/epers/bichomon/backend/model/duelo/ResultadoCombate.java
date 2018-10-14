@@ -33,7 +33,10 @@ public class ResultadoCombate {
         return daño;
     }
 
-    /** Para testear */
+    public ArrayList<Ataque> getAtaques(){
+        return ataques;
+    }
+
     public int cantidadDeAtaques(){
         return ataques.size();
     }

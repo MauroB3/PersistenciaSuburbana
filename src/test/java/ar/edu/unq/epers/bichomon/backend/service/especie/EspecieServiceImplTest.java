@@ -1,9 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.service.especie;
 
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateBichoDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEntrenadorDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateEspecieDAO;
-import ar.edu.unq.epers.bichomon.backend.dao.impl.HibernateUbicacionDAO;
+import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.CondicionCompuesta;
@@ -76,7 +73,7 @@ public class EspecieServiceImplTest {
         when(nivelService.getNivelManager()).thenReturn(nivelManager);
         when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
         hibernateEspecieDAO = new HibernateEspecieDAO();
-        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), hibernateEspecieDAO, nivelService, new HibernateUbicacionDAO());
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), hibernateEspecieDAO, nivelService, new HibernateUbicacionDAO(), new HibernateExperienciaDAO());
         service = new EspecieServiceImpl(hibernateEspecieDAO);
         condicion = new CondicionCompuesta();
 
