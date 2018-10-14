@@ -88,7 +88,7 @@ public class BichoTest {
     public void testEvolucionar(){
         when(especieAgua.buscarSiguienteEvolucion()).thenReturn(especieAguaEvolucion);
 
-        bicho.evolucionar();
+        bicho.evolucionar(especieAguaEvolucion);
         assertEquals(especieAguaEvolucion, bicho.getEspecie());
     }
 

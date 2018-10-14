@@ -24,6 +24,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.cglib.core.Local;
+
+import java.time.LocalDate;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -65,6 +68,8 @@ public class BichoServiceImplTest {
 
     private Entrenador entrenador;
 
+    private Entrenador entrenador2;
+
     private Condicion condVic;
 
     private Guarderia guarderia;
@@ -104,8 +109,10 @@ public class BichoServiceImplTest {
 
         entrenador = new Entrenador("Spore", guarderia);
         entrenador.agregarExperiencia(10);
+        entrenador2 = new Entrenador("Mauro", guarderia);
+        entrenador2.agregarExperiencia(10);
     }
-    /*
+
     @After
     public void cleanUp(){
         //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
@@ -115,7 +122,7 @@ public class BichoServiceImplTest {
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
     }
-    */
+
     @Test
     public void crearBicho() {
         especieService.crearEspecie(especie);
@@ -174,6 +181,35 @@ public class BichoServiceImplTest {
         assertEquals(1, entrenadorService.recuperar("Spore").cantidadBichos());
         assertEquals(1, ubicacionService.getUbicacion("Una guarderia").getCantidadBichosAbandonados());
         assertEquals(1, especieService.getEspecie("Onix").getPopularidad());
+    }
+
+    @Test
+    public void adoptarBicho() {
+
+        ubicacionService.crearUbicacion(guarderia);
+        entrenadorService.guardar(entrenador);
+        especieService.crearEspecie(especie);
+        especieService.crearEspecie(especie2);
+        Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho1);
+        Bicho bicho2 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho2);
+        Bicho bicho3 = especieService.crearBicho("Charmander", entrenador2);
+        bichoService.crearBicho(bicho3);
+        Bicho bicho4 = especieService.crearBicho("Charmander", entrenador2);
+        bichoService.crearBicho(bicho4);
+        ubicacionService.actualizarUbicacion(guarderia);
+        entrenadorService.agregarBicho(entrenador, bicho1);
+        entrenadorService.agregarBicho(entrenador, bicho2);
+        entrenadorService.agregarBicho(entrenador2, bicho3);
+        entrenadorService.agregarBicho(entrenador2, bicho4);
+        bichoService.abandonar(entrenador2.nombre(), bicho4.getID());
+        ubicacionService.actualizarUbicacion(guarderia);
+
+        bichoService.buscar(entrenador.nombre());
+
+        assertEquals(3, entrenadorService.recuperar(entrenador.nombre()).cantidadBichos());
+        assertEquals(1, entrenadorService.recuperar(entrenador2.nombre()).cantidadBichos());
     }
 
 }

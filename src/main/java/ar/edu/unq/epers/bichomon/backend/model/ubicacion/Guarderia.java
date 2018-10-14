@@ -43,7 +43,8 @@ public class Guarderia extends Ubicacion {
     @Override
     public Bicho bichoEncontrado(Entrenador entrenador) {
         ArrayList<Bicho> bichosPosibles = getBichosPosiblesPara(entrenador);
-        Bicho bicho = bichosPosibles.get((int) Math.random() * (bichosAbandonados.size() - 1));
+        int numRandom = (int) Math.random() * (bichosAbandonados.size() - 1);
+        Bicho bicho = bichosPosibles.get(numRandom);
         bichosAbandonados.remove(bicho);
         return bicho;
     }

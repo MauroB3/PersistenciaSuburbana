@@ -7,6 +7,7 @@ import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class HibernateEntrenadorDAO implements EntrenadorDAO {
@@ -43,7 +44,7 @@ public class HibernateEntrenadorDAO implements EntrenadorDAO {
         Session session = Runner.getCurrentSession();
 
         Entrenador entrenador = this.recuperar(nombreEntrenador);
-        entrenador.agregarBicho(bicho);
+        entrenador.capturarBicho(bicho);
         session.update(entrenador);
     }
 

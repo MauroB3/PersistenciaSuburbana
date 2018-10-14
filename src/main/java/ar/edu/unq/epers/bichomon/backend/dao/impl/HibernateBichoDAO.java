@@ -1,5 +1,6 @@
 package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import org.hibernate.Session;
 
 import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
@@ -33,6 +34,13 @@ public class HibernateBichoDAO implements BichoDAO {
     public void abandonarBicho(Bicho bicho) {
         Session session = Runner.getCurrentSession();
         bicho.serAbandonado();
+        session.update(bicho);
+    }
+
+    @Override
+    public void adoptarBicho(Bicho bicho, Entrenador entrenador) {
+        Session session = Runner.getCurrentSession();
+        bicho.serAdoptado(entrenador);
         session.update(bicho);
     }
 
