@@ -101,12 +101,24 @@ public class LeaderboardServiceTest {
         bicho6 = new Bicho(especie1, entrenador3);
         bicho6.setEnergia(5);
 
-        entrenador1.agregarBicho(bicho1);
-        entrenador1.agregarBicho(bicho2);
-        entrenador2.agregarBicho(bicho3);
-        entrenador2.agregarBicho(bicho4);
-        entrenador3.agregarBicho(bicho5);
-        entrenador3.agregarBicho(bicho6);
+
+        ubicacionService.crearUbicacion(dojo1);
+        ubicacionService.crearUbicacion(dojo2);
+        entrenadorService.guardar(entrenador1);
+        entrenadorService.guardar(entrenador2);
+        entrenadorService.guardar(entrenador3);
+        bichoService.crearBicho(bicho1);
+        bichoService.crearBicho(bicho2);
+        bichoService.crearBicho(bicho3);
+        bichoService.crearBicho(bicho4);
+        bichoService.crearBicho(bicho5);
+        bichoService.crearBicho(bicho6);
+        entrenadorService.agregarBicho(entrenador1, bicho1);
+        entrenadorService.agregarBicho(entrenador1, bicho2);
+        entrenadorService.agregarBicho(entrenador2, bicho3);
+        entrenadorService.agregarBicho(entrenador2, bicho4);
+        entrenadorService.agregarBicho(entrenador3, bicho5);
+        entrenadorService.agregarBicho(entrenador3, bicho6);
 
     }
 
@@ -122,17 +134,6 @@ public class LeaderboardServiceTest {
 
     @Test
     public void campeones() {
-        ubicacionService.crearUbicacion(dojo1);
-        ubicacionService.crearUbicacion(dojo2);
-        entrenadorService.guardar(entrenador1);
-        entrenadorService.guardar(entrenador2);
-        entrenadorService.guardar(entrenador3);
-        bichoService.crearBicho(bicho1);
-        bichoService.crearBicho(bicho2);
-        bichoService.crearBicho(bicho3);
-        bichoService.crearBicho(bicho4);
-        bichoService.crearBicho(bicho5);
-        bichoService.crearBicho(bicho6);
         campeonService.actualizarCampeon(dojo1.actualizarYRetornarCampeon(bicho1, fechaInicio1));
         ubicacionService.actualizarUbicacion(dojo1);
         campeonService.actualizarCampeon(dojo1.actualizarYRetornarCampeon(bicho2, fechaInicio2));
@@ -153,17 +154,6 @@ public class LeaderboardServiceTest {
 
     @Test
     public void lideres() {
-        ubicacionService.crearUbicacion(dojo1);
-        ubicacionService.crearUbicacion(dojo2);
-        entrenadorService.guardar(entrenador1);
-        entrenadorService.guardar(entrenador2);
-        entrenadorService.guardar(entrenador3);
-        bichoService.crearBicho(bicho1);
-        bichoService.crearBicho(bicho2);
-        bichoService.crearBicho(bicho3);
-        bichoService.crearBicho(bicho4);
-        bichoService.crearBicho(bicho5);
-        bichoService.crearBicho(bicho6);
 
         List<Entrenador> l = leaderboardService.lideres();
         assertEquals(3,l.size());

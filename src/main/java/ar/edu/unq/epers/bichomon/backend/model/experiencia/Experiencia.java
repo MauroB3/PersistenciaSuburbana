@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Experiencia {
 
     @Id
+    @Column(nullable = false, length=190)
     private String nombre;
 
     private int valor;

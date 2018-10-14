@@ -10,7 +10,6 @@ import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoService;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
-import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
 import org.junit.Before;
@@ -52,7 +51,6 @@ public class EspecieLiderTest {
     private Bicho bicho4;
     private Bicho bicho5;
     private Bicho bicho6;
-    private Bicho bicho7;
 
     private LocalDate fechaInicio1 = LocalDate.of(2018,10,05);
     private LocalDate fechaInicio2 = LocalDate.of(2018,10,10);
@@ -94,18 +92,26 @@ public class EspecieLiderTest {
         bicho5 = new Bicho(especie3, entrenador3);
         bicho6 = new Bicho(especie1, entrenador3);
 
-        entrenador1.agregarBicho(bicho1);
-        entrenador1.agregarBicho(bicho2);
-        entrenador2.agregarBicho(bicho3);
-        entrenador2.agregarBicho(bicho4);
-        entrenador3.agregarBicho(bicho5);
-        entrenador3.agregarBicho(bicho6);
-
         ubicacionService.crearUbicacion(dojo1);
         ubicacionService.crearUbicacion(dojo2);
         entrenadorService.guardar(entrenador1);
         entrenadorService.guardar(entrenador2);
         entrenadorService.guardar(entrenador3);
+
+        bichoService.crearBicho(bicho1);
+        bichoService.crearBicho(bicho2);
+        bichoService.crearBicho(bicho3);
+        bichoService.crearBicho(bicho4);
+        bichoService.crearBicho(bicho5);
+        bichoService.crearBicho(bicho6);
+
+        entrenadorService.agregarBicho(entrenador1, bicho1);
+        entrenadorService.agregarBicho(entrenador1, bicho2);
+        entrenadorService.agregarBicho(entrenador2, bicho3);
+        entrenadorService.agregarBicho(entrenador2, bicho4);
+        entrenadorService.agregarBicho(entrenador3, bicho5);
+        entrenadorService.agregarBicho(entrenador3, bicho6);
+
         campeonService.actualizarCampeon(dojo1.actualizarYRetornarCampeon(bicho1, fechaInicio1));
         ubicacionService.actualizarUbicacion(dojo1);
         campeonService.actualizarCampeon(dojo1.actualizarYRetornarCampeon(bicho2, fechaInicio2));
