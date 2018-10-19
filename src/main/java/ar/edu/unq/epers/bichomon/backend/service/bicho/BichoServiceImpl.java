@@ -133,11 +133,14 @@ public class BichoServiceImpl implements BichoService{
     public Bicho evolucionar(String entrenador, int idBicho) {
         return Runner.runInSession(() -> {
             Bicho bicho = bichoDAO.recuperar(idBicho);
+            Especie especie = especieDAO.recuperar(bicho.getEspecie().getNombre());
             if(puedeEvolucionar(entrenador, bicho.getID())){
-                especieDAO.decrementarPopularidad(bicho.getEspecie().getNombre());
+                especie.decrementarPopularidad();
                 bicho.evolucionar(especieDAO.siguienteEvolucion(bicho.getEspecie()));
-                especieDAO.incrementarPopularidad(bicho.getEspecie().getNombre());
+                bicho.getEspecie().incrementarPopularidad();
+                //especieDAO.incrementarPopularidad(bicho.getEspecie().getNombre());
                 bichoDAO.actualizar(bicho);
+                especieDAO.actualizar(especie);
                 /* Se aumenta la experiencia a ambos entrenadores */
                 entrenadorDAO.aumentarExperiencia(entrenador, experienciaDAO.obtenerExperiencia("Evolucion"));
             }else{
@@ -146,4 +149,5 @@ public class BichoServiceImpl implements BichoService{
             return bicho;
         });
     }
+
 }

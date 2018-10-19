@@ -63,6 +63,17 @@ public class HibernateEspecieDAO implements EspecieDAO {
         return query.setMaxResults(10).getResultList();
     }
 
+    public Especie especieLider() {
+        Session session = Runner.getCurrentSession();
+
+        String hql = "select e from Campeon c join c.bicho as b join b.especie as e group by e order by count(b) desc";
+
+        Query<Especie> query = session.createQuery(hql, Especie.class);
+        query.setMaxResults(1);
+        return query.getSingleResult();
+
+    }
+
     public void incrementarPopularidad(String nombreEspecie){
         Session session = Runner.getCurrentSession();
         Especie especie = session.get(Especie.class, nombreEspecie);
@@ -75,17 +86,6 @@ public class HibernateEspecieDAO implements EspecieDAO {
         Especie especie = session.get(Especie.class, nombreEspecie);
         especie.decrementarPopularidad();
         session.update(especie);
-    }
-
-    public Especie especieLider() {
-        Session session = Runner.getCurrentSession();
-
-        String hql = "select e from Campeon c join c.bicho as b join b.especie as e group by e order by count(b) desc";
-
-        Query<Especie> query = session.createQuery(hql, Especie.class);
-        query.setMaxResults(1);
-        return query.getSingleResult();
-
     }
 
     public Especie siguienteEvolucion(Especie especie){
