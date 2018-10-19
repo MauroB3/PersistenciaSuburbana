@@ -11,7 +11,9 @@ import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
+import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -125,6 +127,16 @@ public class EspecieLiderTest {
         campeonService.actualizarCampeon(dojo3.actualizarYRetornarCampeon(bicho6, fechaInicio6));
         ubicacionService.actualizarUbicacion(dojo3);
 
+    }
+
+    @After
+    public void cleanUp(){
+        //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
+        //que ser creada.
+        //
+        //Al tener hibernate configurado con esto <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
+        SessionFactoryProvider.destroy();
     }
 
     @Test
