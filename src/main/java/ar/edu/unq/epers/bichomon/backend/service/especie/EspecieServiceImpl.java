@@ -83,7 +83,9 @@ public class EspecieServiceImpl implements EspecieService {
 	@Override
 	public void incrementarPopularidad(String nombreEspecie){
 		Runner.runInSession(() -> {
-			especieDAO.incrementarPopularidad(nombreEspecie);
+			Especie especie = especieDAO.recuperar(nombreEspecie);
+			especie.incrementarPopularidad();
+			especieDAO.actualizar(especie);
 			return null;
 		});
 	}
@@ -91,7 +93,9 @@ public class EspecieServiceImpl implements EspecieService {
 	@Override
 	public void decrementarPopularidad(String nombreEspecie){
 		Runner.runInSession(() -> {
-			especieDAO.decrementarPopularidad(nombreEspecie);
+			Especie especie = especieDAO.recuperar(nombreEspecie);
+			especie.decrementarPopularidad();
+			especieDAO.actualizar(especie);
 			return null;
 		});
 	}

@@ -138,7 +138,6 @@ public class BichoServiceImplTest {
         experienciaService.crearExperiencia("Evolucion", 5);
     }
 
-    /*
     @After
     public void cleanUp(){
         //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
@@ -148,8 +147,7 @@ public class BichoServiceImplTest {
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
     }
-    */
-
+    
     @Test
     public void crearBicho() {
         especieService.crearEspecie(especie);
