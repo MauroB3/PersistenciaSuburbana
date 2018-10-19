@@ -90,6 +90,9 @@ public class BichoServiceImpl implements BichoService{
                     bicho.getEspecie().decrementarPopularidad();
                     bichoDAO.actualizar(bicho);
                 }
+                else {
+                    throw new EntrenadorNoPuedeAbandonarException(nombreEntrenador);
+                }
             }
             else {
                 throw new UbicacionIncorrectaException(entrenador.ubicacion().getNombre(), "guarderia");

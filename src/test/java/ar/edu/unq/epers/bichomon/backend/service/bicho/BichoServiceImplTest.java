@@ -286,4 +286,17 @@ public class BichoServiceImplTest {
         assertEquals(bichoRetador.getID(), resultado.getGanador().getID());
     }
 
+    @Test(expected = EntrenadorNoPuedeAbandonarException.class)
+    public void entrenadorNoPuedeAbandonarException() {
+        ubicacionService.crearUbicacion(guarderia);
+        entrenadorService.guardar(entrenador);
+        especieService.crearEspecie(especie);
+        Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho1);
+        ubicacionService.actualizarUbicacion(guarderia);
+        entrenadorService.agregarBicho(entrenador, bicho1);
+
+        bichoService.abandonar(entrenador.nombre(), bicho1.getID());
+    }
+
 }
