@@ -63,20 +63,6 @@ public class HibernateEspecieDAO implements EspecieDAO {
         return query.setMaxResults(10).getResultList();
     }
 
-    public void incrementarPopularidad(String nombreEspecie){
-        Session session = Runner.getCurrentSession();
-        Especie especie = session.get(Especie.class, nombreEspecie);
-        especie.incrementarPopularidad();
-        session.update(especie);
-    }
-
-    public void decrementarPopularidad(String nombreEspecie){
-        Session session = Runner.getCurrentSession();
-        Especie especie = session.get(Especie.class, nombreEspecie);
-        especie.decrementarPopularidad();
-        session.update(especie);
-    }
-
     public Especie especieLider() {
         Session session = Runner.getCurrentSession();
 

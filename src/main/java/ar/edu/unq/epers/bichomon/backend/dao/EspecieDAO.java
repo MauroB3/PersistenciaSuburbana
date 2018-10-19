@@ -21,10 +21,6 @@ public interface EspecieDAO {
 
 	List<Especie> impopulares();
 
-	void incrementarPopularidad(String nombreEspecie);
-
-	void decrementarPopularidad(String nombreEspecie);
-
 	public Especie especieLider();
 
 }

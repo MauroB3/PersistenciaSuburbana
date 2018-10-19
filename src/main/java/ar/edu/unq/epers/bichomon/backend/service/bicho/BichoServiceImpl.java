@@ -59,7 +59,8 @@ public class BichoServiceImpl implements BichoService{
             if(bichoEncontrado != null) {
                 bichoEncontrado.serAdoptado(entrenador1);
                 entrenadorDAO.agregarBicho(entrenador1.nombre(), bichoEncontrado);
-                especieDAO.incrementarPopularidad(bichoEncontrado.getEspecie().getNombre());
+                bichoEncontrado.getEspecie().incrementarPopularidad();
+                bichoDAO.actualizar(bichoEncontrado);
 
                 /* Se aumenta la experiencia a ambos entrenadores */
                 entrenadorDAO.aumentarExperiencia(entrenador, experienciaDAO.obtenerExperiencia("Captura"));
@@ -86,7 +87,8 @@ public class BichoServiceImpl implements BichoService{
                     entrenador.ubicacion().abandonarBicho(bicho);
                     entrenadorDAO.actualizar(entrenador);
                     bichoDAO.abandonarBicho(bicho);
-                    especieDAO.decrementarPopularidad(bicho.getEspecie().getNombre());
+                    bicho.getEspecie().decrementarPopularidad();
+                    bichoDAO.actualizar(bicho);
                 }
             }
             else {
@@ -133,11 +135,13 @@ public class BichoServiceImpl implements BichoService{
     public Bicho evolucionar(String entrenador, int idBicho) {
         return Runner.runInSession(() -> {
             Bicho bicho = bichoDAO.recuperar(idBicho);
+            Especie especie = especieDAO.recuperar(bicho.getEspecie().getNombre());
             if(puedeEvolucionar(entrenador, bicho.getID())){
-                especieDAO.decrementarPopularidad(bicho.getEspecie().getNombre());
+                especie.decrementarPopularidad();
                 bicho.evolucionar(especieDAO.siguienteEvolucion(bicho.getEspecie()));
-                especieDAO.incrementarPopularidad(bicho.getEspecie().getNombre());
+                bicho.getEspecie().incrementarPopularidad();
                 bichoDAO.actualizar(bicho);
+                especieDAO.actualizar(especie);
                 /* Se aumenta la experiencia a ambos entrenadores */
                 entrenadorDAO.aumentarExperiencia(entrenador, experienciaDAO.obtenerExperiencia("Evolucion"));
             }else{
@@ -146,4 +150,5 @@ public class BichoServiceImpl implements BichoService{
             return bicho;
         });
     }
+
 }
