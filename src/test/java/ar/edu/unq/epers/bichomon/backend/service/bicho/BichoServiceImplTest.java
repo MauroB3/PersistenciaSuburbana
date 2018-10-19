@@ -147,7 +147,7 @@ public class BichoServiceImplTest {
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
     }
-    
+
     @Test
     public void crearBicho() {
         especieService.crearEspecie(especie);
