@@ -43,7 +43,9 @@ public class GuarderiaTest {
         when(nivelService.getNivelManager()).thenReturn(nivelManager);
         when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
         when(entrenador1.factorNivel(nivelManager)).thenReturn(1f);
-        when(entrenador1.factorTiempo()).thenReturn(1f);
+        when(entrenador1.getExperiencia()).thenReturn(1000);
+        when(entrenador1.factorNivel(nivelManager)).thenReturn(1000f);
+        when(entrenador1.factorTiempo()).thenReturn(1000f);
         when(bicho1.getEntrenador()).thenReturn(entrenador1);
         when(bicho2.getEntrenador()).thenReturn(entrenador2);
         when(bicho3.getEntrenador()).thenReturn(entrenador2);
@@ -68,6 +70,12 @@ public class GuarderiaTest {
         assertEquals(3, guarderia.getBichosAbandonados().size());
         Bicho bichoEncontrado = guarderia.bichoEncontrado(entrenador1);
         assertEquals(2, guarderia.getBichosAbandonados().size());
+    }
+
+    @Test(expected = BichoNoEncontradoException.class)
+    public void testBuscarEnDojoSinCampeon() {
+        assertEquals(0, guarderia.getCantidadBichosAbandonados());
+        Bicho bichoEncontrado = guarderia.buscar(entrenador1, nivelManager);
     }
 
 

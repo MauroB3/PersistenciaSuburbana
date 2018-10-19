@@ -42,16 +42,20 @@ public class Guarderia extends Ubicacion {
 
     @Override
     public Bicho bichoEncontrado(Entrenador entrenador) {
-        ArrayList<Bicho> bichosPosibles = getBichosPosiblesPara(entrenador);
-        int numRandom = (int) Math.random() * (bichosAbandonados.size() - 1);
-        Bicho bicho = bichosPosibles.get(numRandom);
-        bichosAbandonados.remove(bicho);
-        return bicho;
+        if(this.getCantidadBichosAbandonados() > 0) {
+            ArrayList<Bicho> bichosPosibles = getBichosPosiblesPara(entrenador);
+            int numRandom = (int) Math.random() * (bichosAbandonados.size() - 1);
+            Bicho bicho = bichosPosibles.get(numRandom);
+            bichosAbandonados.remove(bicho);
+            return bicho;
+        }
+        else {
+            throw new BichoNoEncontradoException("bichos abandonados", this.getNombre());
+        }
     }
 
     @Override
     public int getCantidadBichosAbandonados() {
-        System.out.println("------------- CANTIDAD DE BICHOS ABANDONADOS: " + this.bichosAbandonados.size());
         return this.bichosAbandonados.size();
     }
 
