@@ -22,7 +22,12 @@ public class Pueblo extends Ubicacion {
 
     @Override
     public int getFactorPoblacion() {
-        return (dividendoFactorPoblacion / super.getPoblacion());
+        if(super.getPoblacion() > 0) {
+            return (dividendoFactorPoblacion / super.getPoblacion());
+        }
+        else {
+            return 0;
+        }
     }
 
     public void setDividendoFactorPoblacion(int dividendoFactorPoblacion) {
@@ -59,17 +64,19 @@ public class Pueblo extends Ubicacion {
 
     @Override
     public Bicho bichoEncontrado(Entrenador entrenador) {
-        int resultado = (int) (Math.random() * siguienteProbabilidadInicial);
-
-        Especie especieResultado = null;
-        for (EspeciePosible especie : especiesQueHabitan) {
-            if(resultado > especie.getProbInicial() && resultado < especie.getProbFinal()) {
-                especieResultado = especie.getEspecie();
+        if(this.especiesQueHabitan.size() > 0) {
+            int resultado = (int) (Math.random() * siguienteProbabilidadInicial);
+            Especie especieResultado = null;
+            for (EspeciePosible especie : especiesQueHabitan) {
+                if (resultado > especie.getProbInicial() && resultado < especie.getProbFinal()) {
+                    especieResultado = especie.getEspecie();
+                }
             }
+            return especieResultado.crearBicho(entrenador);
         }
-
-        return especieResultado.crearBicho(entrenador);
-
+        else {
+            throw new BichoNoEncontradoException("especies que la habiten", this.getNombre());
+        }
 
     }
 

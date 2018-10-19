@@ -3,6 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.model.ubicacion;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
+import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -26,12 +27,19 @@ public class PuebloTest {
     @Mock
     Bicho bicho1;
 
+    @Mock
+    private NivelManager nivelManager;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         pueblo = new Pueblo();
         when(especie1.crearBicho(entrenador)).thenReturn(bicho1);
         when(bicho1.getEspecie()).thenReturn(especie1);
+        when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
+        when(entrenador.getExperiencia()).thenReturn(1000000);
+        when(entrenador.factorNivel(nivelManager)).thenReturn(1000000f);
+        when(entrenador.factorTiempo()).thenReturn(10000000f);
     }
 
     @Test
@@ -79,5 +87,11 @@ public class PuebloTest {
     }
 
 
+    @Test(expected = BichoNoEncontradoException.class)
+    public void testBuscarEnDojoSinCampeon() {
+        assertEquals(0, pueblo.getEspeciesQueHabitan().size());
+        pueblo.sumarPoblacion();
+        Bicho bichoEncontrado = pueblo.buscar(entrenador, nivelManager);
+    }
 
 }
