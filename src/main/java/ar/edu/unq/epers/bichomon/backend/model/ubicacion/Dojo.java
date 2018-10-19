@@ -44,8 +44,13 @@ public class Dojo extends Ubicacion {
 
     @Override
     public Bicho bichoEncontrado(Entrenador entrenador) {
-        Especie especie = campeon.getBicho().getEspecie().getEspecieRaiz();
-        return especie.crearBicho(entrenador);
+        if(this.campeon != null) {
+            Especie especie = campeon.getBicho().getEspecie().getEspecieRaiz();
+            return especie.crearBicho(entrenador);
+        }
+        else {
+            throw new BichoNoEncontradoException("campeon", this.getNombre());
+        }
     }
 
 }

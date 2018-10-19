@@ -46,15 +46,20 @@ public class DojoTest {
         when(nivelService.getNivelManager()).thenReturn(nivelManager);
         when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
         dojo = new Dojo();
-        dojo.actualizarYRetornarCampeon(bicho1, LocalDate.now());
         when(bicho1.getEspecie()).thenReturn(especieBicho);
         when(especieBicho.getEspecieRaiz()).thenReturn(especieRaiz);
-        when(entrenador.getExperiencia()).thenReturn(10);
-        when(entrenador.factorNivel(nivelManager)).thenReturn(1f);
-        when(entrenador.factorTiempo()).thenReturn(1f);
+        when(entrenador.getExperiencia()).thenReturn(1000);
+        when(entrenador.factorNivel(nivelManager)).thenReturn(1000f);
+        when(entrenador.factorTiempo()).thenReturn(1000f);
         when(especieRaiz.crearBicho(entrenador)).thenReturn(bicho2);
         when(bicho2.getEspecie()).thenReturn(especieRaiz);
         when(especieBicho.getEspecieRaiz()).thenReturn(especieRaiz);
+    }
+
+    @Test(expected = BichoNoEncontradoException.class)
+    public void testBuscarEnDojoSinCampeon() {
+        assertNull(dojo.getCampeon());
+        Bicho bichoEncontrado = dojo.buscar(entrenador, nivelManager);
     }
 
     @Test
