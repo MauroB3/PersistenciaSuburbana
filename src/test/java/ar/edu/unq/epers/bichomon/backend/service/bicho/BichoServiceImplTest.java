@@ -154,7 +154,6 @@ public class BichoServiceImplTest {
         Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho1);
 
-        assertEquals(9999999, bichoService.getBicho(bicho1.getID()).getEnergia());
     }
 
     @Test
@@ -267,8 +266,8 @@ public class BichoServiceImplTest {
     public void duelo(){
         especieService.crearEspecie(especie);
         especieService.crearEspecie(especie3);
-        Bicho bichoCampeon = especieService.crearBicho("Charmeleon", entrenador2);
         Bicho bichoRetador = especieService.crearBicho("Onix", entrenador);
+        Bicho bichoCampeon  = especieService.crearBicho("Charmeleon", entrenador2);
 
         bichoService.crearBicho(bichoCampeon);
         bichoService.crearBicho(bichoRetador);
@@ -281,9 +280,20 @@ public class BichoServiceImplTest {
         mapaService.mover("Spore","Cobra Kai");
         mapaService.mover("Mauro", "Cobra Kai");
 
+        assertEquals(10, entrenador2.getExperiencia());
+        assertEquals(10, entrenador.getExperiencia());
+
+        System.out.println("Energia Onix = " + bichoRetador.getEnergia());
+        System.out.println("Energia Charmeleon = " + bichoCampeon.getEnergia());
+
         ResultadoCombate resultado = bichoService.duelo("Spore", bichoRetador.getID());
 
         assertEquals(bichoRetador.getID(), resultado.getGanador().getID());
-    }
 
+        entrenador = entrenadorService.recuperar(entrenador.nombre());
+        entrenador2 = entrenadorService.recuperar(entrenador2.nombre());
+        assertEquals(20, entrenador.getExperiencia());
+        assertEquals(20, entrenador2.getExperiencia());
+
+    }
 }

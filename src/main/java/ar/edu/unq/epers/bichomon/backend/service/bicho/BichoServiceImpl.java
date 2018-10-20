@@ -104,16 +104,17 @@ public class BichoServiceImpl implements BichoService{
         return Runner.runInSession(() -> {
            Entrenador ent = entrenadorDAO.recuperar(entrenador);
            if(ent.ubicacion().esDojo()){
-               Bicho bichoRetador = bichoDAO.recuperar(bicho);
-               Ubicacion dojo = ent.ubicacion();
-               Duelo duelo = new Duelo(dojo, bichoRetador);
                Entrenador entrenadorCampeon = entrenadorDAO.recuperar(ent.ubicacion().getCampeon().getBicho().getEntrenador().nombre());
                ent.agregarExperiencia(experienciaDAO.obtenerExperiencia("Combate"));
                entrenadorCampeon.agregarExperiencia(experienciaDAO.obtenerExperiencia("Combate"));
+               Bicho bichoRetador = bichoDAO.recuperar(bicho);
+               Ubicacion dojo = ent.ubicacion();
+               Duelo duelo = new Duelo(dojo, bichoRetador);
+
                entrenadorDAO.actualizar(ent);
                entrenadorDAO.actualizar(entrenadorCampeon);
-               ResultadoCombate resultado = duelo.pelear();
 
+               ResultadoCombate resultado = duelo.pelear();
                ubicacionDAO.actualizarCampeon(dojo, resultado.getGanador());
                return resultado;
            }else{
@@ -147,7 +148,6 @@ public class BichoServiceImpl implements BichoService{
                 especieDAO.actualizar(especie);
                 /* Se aumenta la experiencia a ambos entrenadores */
                 entrenadorBicho.agregarExperiencia(experienciaDAO.obtenerExperiencia("Evolucion"));
-                //entrenadorDAO.aumentarExperiencia(entrenador, experienciaDAO.obtenerExperiencia("Evolucion"));
             }else{
                 throw new BichoNoPuedeEvolucionarException(bicho.getEspecie().getNombre());
             }
