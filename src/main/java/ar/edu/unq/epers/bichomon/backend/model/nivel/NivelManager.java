@@ -31,7 +31,6 @@ public class NivelManager {
     }
 
     public int getNivel(int experiencia){
-        //int nivel = 0;
         for(Nivel level : niveles) {
             if (this.between(level.getExpInicial(), experiencia, level.getExpFinal())){
                 return level.getNivel();

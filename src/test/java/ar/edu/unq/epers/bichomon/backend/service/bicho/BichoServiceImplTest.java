@@ -76,6 +76,24 @@ public class BichoServiceImplTest {
 
     private Nivel nivel1;
 
+    private Nivel nivel2;
+
+    private Nivel nivel3;
+
+    private Nivel nivel4;
+
+    private Nivel nivel5;
+
+    private Nivel nivel6;
+
+    private Nivel nivel7;
+
+    private Nivel nivel8;
+
+    private Nivel nivel9;
+
+    private Nivel nivel10;
+
     private Especie especie;
 
     private Especie especie2;
@@ -99,7 +117,6 @@ public class BichoServiceImplTest {
         campeonDAO = new HibernateCampeonDAO();
         ubiDAO = new HibernateUbicacionDAO();
         condDAO = new HibernateCondicionDAO();
-        nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         bichoDAO = new HibernateBichoDAO();
         entrenadorDAO = new HibernateEntrenadorDAO();
         entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
@@ -115,7 +132,25 @@ public class BichoServiceImplTest {
         nivelService = new NivelServiceImpl(nivelDAO);
 
         nivel1 = new Nivel(1,1,99);
+        nivel2 = new Nivel(2,100,399);
+        nivel3 = new Nivel(3,400,999);
+        nivel4 = new Nivel(4,1000,1999);
+        nivel5 = new Nivel(5,2000,2999);
+        nivel6 = new Nivel(6,3000,3999);
+        nivel7 = new Nivel(7,4000,4999);
+        nivel8 = new Nivel(8,5000,5999);
+        nivel9 = new Nivel(9,6000,6999);
+        nivel10 = new Nivel(10,7000,7999);
         nivelService.crearNivel(nivel1);
+        nivelService.crearNivel(nivel2);
+        nivelService.crearNivel(nivel3);
+        nivelService.crearNivel(nivel4);
+        nivelService.crearNivel(nivel5);
+        nivelService.crearNivel(nivel6);
+        nivelService.crearNivel(nivel7);
+        nivelService.crearNivel(nivel8);
+        nivelService.crearNivel(nivel9);
+        nivelService.crearNivel(nivel10);
 
         pueblo = new Pueblo();
         pueblo.setNombre("Sporeland");
@@ -147,6 +182,15 @@ public class BichoServiceImplTest {
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
     }
+
+    @Test
+    public void testGetNivel(){
+        //Con 5000 de experiencia deberia estar en el nivel 8.
+        entrenador.agregarExperiencia(5000);
+
+        assertEquals(8, entrenador.getNivel(nivelService.getNivelManager()));
+    }
+
 
     @Test
     public void crearBicho() {
