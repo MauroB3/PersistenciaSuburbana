@@ -20,7 +20,7 @@ public class EspecieTest {
     private Especie especieEvolucion2;
 
     @Mock
-    private CondicionCompuesta condicionEvolucion;
+    private CondicionCompuesta condicionEvolucion1;
 
     @Mock
     private CondicionCompuesta condicionEvolucion2;
@@ -34,9 +34,9 @@ public class EspecieTest {
      @Before
      public void setUp() throws Exception{
         MockitoAnnotations.initMocks(this);
-        especieRaiz = new Especie("Mogo", TipoBicho.FUEGO,condicionEvolucion, 50, 6, 100);
-        especieEvolucion1 = new Especie(especieRaiz,2,condicionEvolucion2,"Gonza", 70, 8, 200);
-        especieEvolucion2 = new Especie(especieRaiz, 3, condicionEvolucion3,"Mauro", 100, 10, 300);
+        especieRaiz = new Especie("Charmander","Charmeleon", TipoBicho.FUEGO, condicionEvolucion1,35,8,100,null);
+        especieEvolucion1 = new Especie("Charmeleon","Charizard",TipoBicho.FUEGO, condicionEvolucion2, 40, 16, 225,  especieRaiz);
+        especieEvolucion2 = new Especie ("Charizard",null, TipoBicho.FUEGO, condicionEvolucion3,85,32,550, especieRaiz);
 
         Bicho bicho1 = especieRaiz.crearBicho(entrenador);
         Bicho bicho2 = especieEvolucion1.crearBicho(entrenador);
@@ -44,29 +44,29 @@ public class EspecieTest {
 
     @Test
     public void testGetNombre(){
-        assertEquals("Mogo", especieRaiz.getNombre());
-        assertEquals("Gonza", especieEvolucion1.getNombre());
-        assertEquals("Mauro", especieEvolucion2.getNombre());
+        assertEquals("Charmander", especieRaiz.getNombre());
+        assertEquals("Charmeleon", especieEvolucion1.getNombre());
+        assertEquals("Charizard", especieEvolucion2.getNombre());
     }
 
     @Test
     public void testGetAltura(){
-        assertEquals(50, especieRaiz.getAltura(),0);
-        assertEquals(70, especieEvolucion1.getAltura(),0);
-        assertEquals(100, especieEvolucion2.getAltura(),0);
+        assertEquals(35, especieRaiz.getAltura(),0);
+        assertEquals(40, especieEvolucion1.getAltura(),0);
+        assertEquals(85, especieEvolucion2.getAltura(),0);
     }
 
     @Test
     public void testGetPeso(){
-        assertEquals(6,especieRaiz.getPeso(),0);
-        assertEquals(8,especieEvolucion1.getPeso(),0);
-        assertEquals(10,especieEvolucion2.getPeso(),0);
+        assertEquals(8,especieRaiz.getPeso(),0);
+        assertEquals(16,especieEvolucion1.getPeso(),0);
+        assertEquals(32,especieEvolucion2.getPeso(),0);
     }
 
 
     @Test
     public void testGetCondicion(){
-        assertEquals(condicionEvolucion, especieRaiz.getCondicionDeEvolucion());
+        assertEquals(condicionEvolucion1, especieRaiz.getCondicionDeEvolucion());
         assertEquals(condicionEvolucion2, especieEvolucion1.getCondicionDeEvolucion());
         assertEquals(condicionEvolucion3, especieEvolucion2.getCondicionDeEvolucion());
     }
@@ -77,7 +77,6 @@ public class EspecieTest {
         assertEquals(1, especieEvolucion1.getCantidadBichos());
     }
 
-
     @Test
     public void testEsSiguienteEvolucion(){
         assertTrue(especieEvolucion1.esSiguienteEvolucion(especieRaiz));
@@ -85,6 +84,6 @@ public class EspecieTest {
 
     @Test
     public void testBuscarSiguienteEvolucion(){
-        assertEquals(especieEvolucion2, especieEvolucion1.buscarSiguienteEvolucion());
+        assertEquals(especieEvolucion2.getNombre(), especieEvolucion1.buscarSiguienteEvolucion().getNombre());
     }
 }

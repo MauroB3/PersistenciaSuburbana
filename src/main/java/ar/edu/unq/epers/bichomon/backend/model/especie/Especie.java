@@ -17,8 +17,10 @@ public class Especie {
  	@Id
 	@Column(name = "Nombre", nullable = false, unique = true, length=190)
 	private String nombre;
-	private int altura;
-	private int peso;
+
+ 	private int altura;
+
+ 	private int peso;
 
 	private int popularidad;
 
@@ -26,6 +28,8 @@ public class Especie {
 
 	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	private Especie especieRaiz;
+
+	private String siguienteEvolucion;
 
 	private int nroEvolucion;
 
@@ -41,16 +45,7 @@ public class Especie {
 	public Especie(){
 	}
 
-	/**
-	 * Este constructor se usa para crear una especie raiz
-	 * ---------------------------------------------------
-	 * @param nombre = nombre de la especie
-	 * @param tipo = tipo de la especie (ver enumerador "TipoBicho")
-	 * @param altura = altura de todos los bichos de esa especie
-	 * @param peso = peso de todos los bichos de esa especie
-	 * @param energiaInicial = energia con la que inician todos los bichos de esa especie
-	 */
-
+	/*
 	public Especie(String nombre, TipoBicho tipo, Condicion condicionDeEvolucion, int altura, int peso, int energiaInicial){
 		this.setEspecieRaiz(this);
 		this.setNombre(nombre);
@@ -62,18 +57,32 @@ public class Especie {
 		this.setEnergiaIncial(energiaInicial);
 		EvolutionHandler.getInstance().agregarEspecie(this);
 	}
+	*/
 
 	/**
-	 * Este constructor se usa para crear una evolucion una especie
-	 * ------------------------------------------------------------
-	 * @param especie = la especie raiz de la especie a crear
-	 * @param nroEvolucion = numero de evolucion de la especie [1..n] siendo 1 el mas debil y n el mas fuerte
-	 * @param nombre = nombre de la especie
-	 * @param altura = altura de todos los bichos de esa especie
-	 * @param peso = peso de todos los bichos de esa especie
-	 * @param energiaInicial = energia con la que inician todos los bichos de esa especie
+	 * Constructor para crear especies sin usar nroEvolucion
+	 * -----------------------------------------------------
+	 * @param nombre = El nombre de la especie a crear.
+	 * @param tipo = Tipo de la especie (ver enumerador "TipoBicho").
+	 * @param condicionDeEvolucion = La condicion necesaria para que la especie pueda evolucionar.
+	 * @param altura = La altura de la especie.
+	 * @param peso = El peso de la especie.
+	 * @param energiaInicial = la energia inicial de la especie.
+	 * @param especieRaiz = La especie raiz a la que pertenece la especie, de ser una especie base se tiene que setear a si mismo.
 	 */
+	public Especie(String nombre, String siguienteEvolucion, TipoBicho tipo, Condicion condicionDeEvolucion, int altura, int peso, int energiaInicial, Especie especieRaiz){
+		this.setNombre(nombre);
+		this.setSiguienteEvolucion(siguienteEvolucion);
+		this.setTipo(tipo);
+		this.setCondicionDeEvolucion(condicionDeEvolucion);
+		this.setAltura(altura);
+		this.setPeso(peso);
+		this.setEnergiaIncial(energiaInicial);
+		this.setEspecieRaiz(especieRaiz);
+		EvolutionHandler.getInstance().agregarEspecie(this);
+	}
 
+	/*
 	public Especie(Especie especie, int nroEvolucion,Condicion condicionDeEvolucion, String nombre, int altura, int peso, int energiaInicial) {
 		this.setEspecieRaiz(especie);
 		this.setNroEvolucion(nroEvolucion);
@@ -85,7 +94,7 @@ public class Especie {
 		this.setEnergiaIncial(energiaInicial);
 		EvolutionHandler.getInstance().agregarEspecie(this);
 	}
-
+	*/
 	public Especie(String nombre) {
 		this.setNombre(nombre);
 	}
@@ -97,6 +106,14 @@ public class Especie {
 
 	public void setCondicionDeEvolucion(Condicion condicionDeEvolucion) {
 		this.condicionDeEvolucion = condicionDeEvolucion;
+	}
+
+	public String getSiguienteEvolucion(){
+		return siguienteEvolucion;
+	}
+
+	public void setSiguienteEvolucion(String siguienteEvolucion){
+		this.siguienteEvolucion = siguienteEvolucion;
 	}
 
 	/**
@@ -183,7 +200,11 @@ public class Especie {
 	}
 
 	public void setEspecieRaiz(Especie especie){
-		this.especieRaiz = especie;
+		if(especie != null) {
+			this.especieRaiz = especie;
+		}else{
+			this.especieRaiz = this;
+		}
 	}
 
 	public int getNroEvolucion(){
@@ -195,6 +216,7 @@ public class Especie {
 	}
 
 	public boolean puedeEvolucionar(Bicho bicho, NivelManager nivelManager){
+		System.out.println("LLEGO A PUEDE EVOLUCIONAR DE ESPECIE");
 		return this.condicionDeEvolucion.cumpleConLaCondicion(bicho, nivelManager);
 	}
 
@@ -203,7 +225,7 @@ public class Especie {
 	}
 
 	public boolean esSiguienteEvolucion(Especie especie) {
-		return this.especieRaiz == especie.getEspecieRaiz() && this.nroEvolucion == especie.getNroEvolucion() + 1;
+		return this.nombre == especie.getSiguienteEvolucion();
 	}
 
 	public void incrementarPopularidad(){

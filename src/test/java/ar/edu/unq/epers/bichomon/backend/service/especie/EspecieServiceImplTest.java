@@ -77,23 +77,23 @@ public class EspecieServiceImplTest {
         service = new EspecieServiceImpl(hibernateEspecieDAO);
         condicion = new CondicionCompuesta();
 
-        pikachu = new Especie("Pikachu", TipoBicho.ELECTRICIDAD, condicion,55,99,100);
-        raichu = new Especie(pikachu,2,condicion,"Raichu",80,110,300);
+        pikachu = new Especie("Pikachu", "Raichu", TipoBicho.ELECTRICIDAD, condicion, 55, 99, 100, null);
+        raichu = new Especie("Raichu", null, TipoBicho.ELECTRICIDAD, condicion, 80, 110, 300, pikachu);
 
-        charmander = new Especie("Charmander", TipoBicho.FUEGO, condicion, 55, 75, 110);
-        charmeleon = new Especie(charmander,2,condicion,"Charmeleon",88,100,300);
-        charizard = new Especie(charmander,3,condicion,"Charizard",120,220,750);
+        charmander = new Especie("Charmander", "Charmeleon", TipoBicho.FUEGO, condicion, 55, 75, 110, null);
+        charmeleon = new Especie("Charmeleon", "Charizard", TipoBicho.FUEGO, condicion, 88, 100, 300, charmander);
+        charizard = new Especie("Charizard", null, TipoBicho.FUEGO, condicion, 120, 220, 750,charmander);
 
-        squirtle = new Especie("Squirtle", TipoBicho.AGUA, condicion, 55, 56, 115 );
-        wartortle = new Especie(squirtle,2,condicion,"Wartortle",70,81,279);
-        blastoise = new Especie(squirtle,3,condicion,"Blastoise",101,110,554);
+        squirtle = new Especie("Squirtle", "Wartortle", TipoBicho.AGUA, condicion, 55, 56, 115,null);
+        wartortle = new Especie("Wartortle", "Blastoise", TipoBicho.AGUA, condicion, 70, 81, 279, squirtle);
+        blastoise = new Especie("Blastoise", null, TipoBicho.AGUA, condicion, 101, 110, 554, squirtle);
 
-        onix = new Especie("Onix",TipoBicho.CHOCOLATE,condicion,257,300,446);
-        articuno = new Especie("Articuno",TipoBicho.CHOCOLATE,condicion,110,85,1551);
-        zapdos = new Especie("Zapdos",TipoBicho.ELECTRICIDAD,condicion,115,71,1551);
-        moltres = new Especie("Moltres",TipoBicho.FUEGO,condicion,105,88,1551);
-        lugia = new Especie("Lugia",TipoBicho.AGUA,condicion,120,91,2641);
-        mewtow = new Especie("MewTwo",TipoBicho.CHOCOLATE,condicion,100,70,9999);
+        onix = new Especie("Onix", null, TipoBicho.CHOCOLATE,condicion,257,300,446, null);
+        articuno = new Especie("Articuno", null, TipoBicho.CHOCOLATE,condicion,110,85,1551, null);
+        zapdos = new Especie("Zapdos", null, TipoBicho.ELECTRICIDAD,condicion,115,71,1551, null);
+        moltres = new Especie("Moltres", null, TipoBicho.FUEGO,condicion,105,88,1551, null);
+        lugia = new Especie("Lugia", null, TipoBicho.AGUA,condicion,120,91,2641, null);
+        mewtow = new Especie("MewTwo", null, TipoBicho.CHOCOLATE,condicion,100,70,9999, null);
 
         especies = new ArrayList<Especie>();
 

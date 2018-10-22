@@ -14,4 +14,8 @@ public abstract class Condicion {
     private int id;
 
     abstract public Boolean cumpleConLaCondicion(Bicho bicho, NivelManager nivelManager);
+
+    public int getID(){
+        return id;
+    }
 }

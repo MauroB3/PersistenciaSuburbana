@@ -77,10 +77,10 @@ public class HibernateEspecieDAO implements EspecieDAO {
     public Especie siguienteEvolucion(Especie especie){
         Session session = Runner.getCurrentSession();
 
-        String hql = "from Especie e where e.nroEvolucion =:numeroEvolucion and e.especieRaiz =:raiz";
+        String hql = "from Especie e where e.nombre =:siguiente and e.especieRaiz =:raiz";
 
         Query<Especie> query = session.createQuery(hql, Especie.class);
-        query.setParameter("numeroEvolucion", especie.getNroEvolucion()+1);
+        query.setParameter("siguiente", especie.getSiguienteEvolucion());
         query.setParameter("raiz", especie.getEspecieRaiz());
         return query.getResultList().stream().findFirst().orElse(null);
     }

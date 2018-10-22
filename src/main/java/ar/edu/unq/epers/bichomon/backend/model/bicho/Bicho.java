@@ -94,6 +94,7 @@ public class Bicho {
     }
 
     public boolean puedeEvolucionar(NivelManager nivelManager){
+		System.out.println("LLEGO A PUEDE EVOLUCIONAR DE BICHO");
 		return this.especie.puedeEvolucionar(this, nivelManager);
 	}
 
@@ -124,5 +125,9 @@ public class Bicho {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+
+	public boolean verdadero(){
+		return true;
 	}
 }

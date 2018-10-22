@@ -112,6 +112,7 @@ public class BichoServiceImplTest {
 
     @Before
     public void setUp(){
+        nivelDAO = new HibernateNivelDAO();
         experienciaDAO = new HibernateExperienciaDAO();
         experienciaService = new ExperienciaServiceImpl(experienciaDAO);
         campeonDAO = new HibernateCampeonDAO();
@@ -119,6 +120,8 @@ public class BichoServiceImplTest {
         condDAO = new HibernateCondicionDAO();
         bichoDAO = new HibernateBichoDAO();
         entrenadorDAO = new HibernateEntrenadorDAO();
+
+        nivelService = new NivelServiceImpl(nivelDAO);
         entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
         especieDAO = new HibernateEspecieDAO();
         especieService = new EspecieServiceImpl(especieDAO);
@@ -127,9 +130,6 @@ public class BichoServiceImplTest {
         condService = new CondicionServiceImpl(condDAO);
         especieService = new EspecieServiceImpl(especieDAO);
         mapaService = new MapaService(ubiDAO, campeonDAO, entrenadorDAO);
-
-        nivelDAO = new HibernateNivelDAO();
-        nivelService = new NivelServiceImpl(nivelDAO);
 
         nivel1 = new Nivel(1,1,99);
         nivel2 = new Nivel(2,100,399);
@@ -159,9 +159,9 @@ public class BichoServiceImplTest {
         guarderia.setNombre("Una guarderia");
 
         condVic = new BasadoEnVictoria(5);
-        especie = new Especie("Onix",TipoBicho.CHOCOLATE, condVic,257,300,9999999);
-        especie2 = new Especie("Charmander", TipoBicho.FUEGO, condVic, 55, 75, 110);
-        especie3 = new Especie(especie2,2,condVic,"Charmeleon",88,100,300);
+        especie = new Especie("Onix", null,TipoBicho.CHOCOLATE, condVic,257,300,9999999, null);
+        especie2 = new Especie("Charmander", "Charmeleon", TipoBicho.FUEGO, condVic, 55, 75, 110, null);
+        especie3 = new Especie("Charmeleon", null, TipoBicho.FUEGO, condVic,88,100,300, especie2);
 
         entrenador = new Entrenador("Spore", guarderia);
         entrenador.agregarExperiencia(10);
