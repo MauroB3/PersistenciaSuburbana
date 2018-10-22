@@ -14,9 +14,7 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.model.experiencia.Experiencia;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.Nivel;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Pueblo;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.condicion.CondicionService;
 import ar.edu.unq.epers.bichomon.backend.service.condicion.CondicionServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
@@ -277,8 +275,8 @@ public class BichoServiceImplTest {
         assertEquals(1, especieService.getEspecie("Onix").getPopularidad());
     }
 
-    @Test
-    public void adoptarBicho() {
+    @Test(expected = BichoNoPuedeSerAdoptado.class)
+    public void noPuedeAdoptarBichoQueYaAbandonoAntes() {
 
         ubicacionService.crearUbicacion(guarderia);
         entrenadorService.guardar(entrenador);
@@ -302,8 +300,63 @@ public class BichoServiceImplTest {
 
         bichoService.buscar(entrenador.nombre());
 
+        bichoService.abandonar(entrenador.nombre(), bicho4.getID());
+
+        bichoService.buscar(entrenador2.nombre()); /** En este punto se espera la exception */
+    }
+
+    @Test
+    public void testAdoptarBicho(){
+        ubicacionService.crearUbicacion(guarderia);
+        entrenadorService.guardar(entrenador2);
+        entrenadorService.guardar(entrenador);
+        especieService.crearEspecie(especie);
+        especieService.crearEspecie(especie2);
+        Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho1);
+        Bicho bicho2 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho2);
+        Bicho bicho3 = especieService.crearBicho("Charmander", entrenador2);
+        bichoService.crearBicho(bicho3);
+        Bicho bicho4 = especieService.crearBicho("Charmander", entrenador2);
+        bichoService.crearBicho(bicho4);
+        ubicacionService.actualizarUbicacion(guarderia);
+        entrenadorService.agregarBicho(entrenador, bicho1);
+        entrenadorService.agregarBicho(entrenador, bicho2);
+        entrenadorService.agregarBicho(entrenador2, bicho3);
+        entrenadorService.agregarBicho(entrenador2, bicho4);
+        bichoService.abandonar(entrenador2.nombre(), bicho4.getID());
+        ubicacionService.actualizarUbicacion(guarderia);
+
+        bichoService.buscar(entrenador.nombre());
+
         assertEquals(3, entrenadorService.recuperar(entrenador.nombre()).cantidadBichos());
         assertEquals(1, entrenadorService.recuperar(entrenador2.nombre()).cantidadBichos());
+    }
+
+    @Test(expected = BichoNoEncontradoException.class)
+    public void noPuedeAdoptarBichoPorqueNoHayBichosEnGuarderia(){
+        ubicacionService.crearUbicacion(guarderia);
+        entrenadorService.guardar(entrenador2);
+        entrenadorService.guardar(entrenador);
+        especieService.crearEspecie(especie);
+        especieService.crearEspecie(especie2);
+        Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho1);
+        Bicho bicho2 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho2);
+        Bicho bicho3 = especieService.crearBicho("Charmander", entrenador2);
+        bichoService.crearBicho(bicho3);
+        Bicho bicho4 = especieService.crearBicho("Charmander", entrenador2);
+        bichoService.crearBicho(bicho4);
+        ubicacionService.actualizarUbicacion(guarderia);
+        entrenadorService.agregarBicho(entrenador, bicho1);
+        entrenadorService.agregarBicho(entrenador, bicho2);
+        entrenadorService.agregarBicho(entrenador2, bicho3);
+        entrenadorService.agregarBicho(entrenador2, bicho4);
+
+
+        bichoService.buscar(entrenador.nombre());
     }
 
     @Test

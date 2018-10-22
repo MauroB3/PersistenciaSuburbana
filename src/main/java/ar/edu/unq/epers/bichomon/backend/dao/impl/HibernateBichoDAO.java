@@ -33,7 +33,7 @@ public class HibernateBichoDAO implements BichoDAO {
     @Override
     public void abandonarBicho(Bicho bicho) {
         Session session = Runner.getCurrentSession();
-        bicho.serAbandonado();
+        //bicho.serAbandonado();
         session.update(bicho);
     }
 

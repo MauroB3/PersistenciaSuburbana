@@ -49,7 +49,6 @@ public class NivelServiceImpl implements NivelService {
 
     @Override
     public NivelManager getNivelManager(){
-        System.out.println("LLEGO HASTA EL NIVEL MANAGER");
         return Runner.runInSession(() -> {
             return new NivelManager(this.recuperarTodos(),10);
         });

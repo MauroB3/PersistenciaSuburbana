@@ -6,11 +6,11 @@ import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Un {@link Bicho} existente en el sistema, el mismo tiene un nombre
@@ -37,12 +37,17 @@ public class Bicho {
 	private int victorias;
 	private boolean estaAbandonado;
 
+	@OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Entrenador> entrenadoresQueMeAbandonaron;
+
+
 	public Bicho(){}
 
 	public Bicho(Especie especie, Entrenador entrenador) {
 		this.entrenador = entrenador;
 		this.especie = especie;
 		this.energia = especie.getEnergiaInicial();
+		this.entrenadoresQueMeAbandonaron = new HashSet<>();
 	}
 
 	/**
@@ -94,7 +99,6 @@ public class Bicho {
     }
 
     public boolean puedeEvolucionar(NivelManager nivelManager){
-		System.out.println("LLEGO A PUEDE EVOLUCIONAR DE BICHO");
 		return this.especie.puedeEvolucionar(this, nivelManager);
 	}
 
@@ -110,7 +114,8 @@ public class Bicho {
 		return id;
 	}
 
-	public void serAbandonado(){
+	public void serAbandonado(Entrenador entrenador){
+		this.entrenadoresQueMeAbandonaron.add(entrenador);
 		this.estaAbandonado = true;
 	}
 
@@ -127,7 +132,7 @@ public class Bicho {
 		return Objects.hash(id);
 	}
 
-	public boolean verdadero(){
-		return true;
+	public boolean noFueAbandonadoAntesPor(Entrenador entrenador){
+		return !entrenadoresQueMeAbandonaron.contains(entrenador);
 	}
 }

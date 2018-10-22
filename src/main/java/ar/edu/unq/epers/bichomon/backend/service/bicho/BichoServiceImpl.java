@@ -126,9 +126,6 @@ public class BichoServiceImpl implements BichoService{
     public boolean puedeEvolucionar(String entrenador, int idBicho) {
         return Runner.runInSession(() -> {
             Bicho bicho = bichoDAO.recuperar(idBicho);
-            System.out.println("ID del bicho encontrado deberia ser 12 = " + bicho.getID());
-            System.out.println("El nombre de la especie del bicho es = " + bicho.getEspecie().getNombre());
-            System.out.println("El ID de la condicion de la especie es = " + bicho.getEspecie().getCondicionDeEvolucion().getID());
             return bicho.puedeEvolucionar(nivelService.getNivelManager())&& this.tieneSiguienteEvolucion(bicho.getEspecie());
         });
     }
