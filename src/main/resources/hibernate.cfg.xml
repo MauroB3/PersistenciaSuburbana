@@ -7,7 +7,6 @@
 		<!-- Database connection settings -->
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="connection.url">jdbc:mysql://localhost:3306/epers_ejemplo_hibernate?serverTimezone=UTC</property>
-		<!-- jdbc:mysql://localhost:3306/bichomon?serverTimezone=UTC&user=root&password=root" -->
 		<property name="connection.username">root</property>
 		<property name="connection.password">1k3R1</property>
 
@@ -20,8 +19,7 @@
 		<!-- Echo all executed SQL to stdout -->
 		<property name="show_sql">true</property>
 
-		<property name="hibernate.hbm2ddl.auto">create</property>
-		<!--<property name="hibernate.hbm2ddl.auto">create-drop</property> -->
+		<property name="hibernate.hbm2ddl.auto">create-drop</property>
 
 		<mapping class="ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador" />
 		<mapping class="ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho" />
@@ -38,5 +36,6 @@
 		<mapping class="ar.edu.unq.epers.bichomon.backend.model.condicion.BasadoEnEnergia" />
 		<mapping class="ar.edu.unq.epers.bichomon.backend.model.condicion.BasadoEnEdad" />
 		<mapping class="ar.edu.unq.epers.bichomon.backend.model.experiencia.Experiencia" />
+
 	</session-factory>
 </hibernate-configuration>

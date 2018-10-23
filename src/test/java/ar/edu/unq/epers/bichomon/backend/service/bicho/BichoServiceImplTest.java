@@ -14,9 +14,7 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.model.experiencia.Experiencia;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.Nivel;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Pueblo;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.condicion.CondicionService;
 import ar.edu.unq.epers.bichomon.backend.service.condicion.CondicionServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
@@ -76,6 +74,24 @@ public class BichoServiceImplTest {
 
     private Nivel nivel1;
 
+    private Nivel nivel2;
+
+    private Nivel nivel3;
+
+    private Nivel nivel4;
+
+    private Nivel nivel5;
+
+    private Nivel nivel6;
+
+    private Nivel nivel7;
+
+    private Nivel nivel8;
+
+    private Nivel nivel9;
+
+    private Nivel nivel10;
+
     private Especie especie;
 
     private Especie especie2;
@@ -94,14 +110,16 @@ public class BichoServiceImplTest {
 
     @Before
     public void setUp(){
+        nivelDAO = new HibernateNivelDAO();
         experienciaDAO = new HibernateExperienciaDAO();
         experienciaService = new ExperienciaServiceImpl(experienciaDAO);
         campeonDAO = new HibernateCampeonDAO();
         ubiDAO = new HibernateUbicacionDAO();
         condDAO = new HibernateCondicionDAO();
-        nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         bichoDAO = new HibernateBichoDAO();
         entrenadorDAO = new HibernateEntrenadorDAO();
+
+        nivelService = new NivelServiceImpl(nivelDAO);
         entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
         especieDAO = new HibernateEspecieDAO();
         especieService = new EspecieServiceImpl(especieDAO);
@@ -111,11 +129,26 @@ public class BichoServiceImplTest {
         especieService = new EspecieServiceImpl(especieDAO);
         mapaService = new MapaService(ubiDAO, campeonDAO, entrenadorDAO);
 
-        nivelDAO = new HibernateNivelDAO();
-        nivelService = new NivelServiceImpl(nivelDAO);
-
         nivel1 = new Nivel(1,1,99);
+        nivel2 = new Nivel(2,100,399);
+        nivel3 = new Nivel(3,400,999);
+        nivel4 = new Nivel(4,1000,1999);
+        nivel5 = new Nivel(5,2000,2999);
+        nivel6 = new Nivel(6,3000,3999);
+        nivel7 = new Nivel(7,4000,4999);
+        nivel8 = new Nivel(8,5000,5999);
+        nivel9 = new Nivel(9,6000,6999);
+        nivel10 = new Nivel(10,7000,7999);
         nivelService.crearNivel(nivel1);
+        nivelService.crearNivel(nivel2);
+        nivelService.crearNivel(nivel3);
+        nivelService.crearNivel(nivel4);
+        nivelService.crearNivel(nivel5);
+        nivelService.crearNivel(nivel6);
+        nivelService.crearNivel(nivel7);
+        nivelService.crearNivel(nivel8);
+        nivelService.crearNivel(nivel9);
+        nivelService.crearNivel(nivel10);
 
         pueblo = new Pueblo();
         pueblo.setNombre("Sporeland");
@@ -124,9 +157,9 @@ public class BichoServiceImplTest {
         guarderia.setNombre("Una guarderia");
 
         condVic = new BasadoEnVictoria(5);
-        especie = new Especie("Onix",TipoBicho.CHOCOLATE, condVic,257,300,9999999);
-        especie2 = new Especie("Charmander", TipoBicho.FUEGO, condVic, 55, 75, 110);
-        especie3 = new Especie(especie2,2,condVic,"Charmeleon",88,100,300);
+        especie = new Especie("Onix", null,TipoBicho.CHOCOLATE, condVic,257,300,9999999, null);
+        especie2 = new Especie("Charmander", "Charmeleon", TipoBicho.FUEGO, condVic, 55, 75, 110, null);
+        especie3 = new Especie("Charmeleon", null, TipoBicho.FUEGO, condVic,88,100,300, especie2);
 
         entrenador = new Entrenador("Spore", guarderia);
         entrenador.agregarExperiencia(10);
@@ -147,14 +180,22 @@ public class BichoServiceImplTest {
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
     }
-    
+
+    @Test
+    public void testGetNivel(){
+        //Con 5000 de experiencia deberia estar en el nivel 8.
+        entrenador.agregarExperiencia(5000);
+
+        assertEquals(8, entrenador.getNivel(nivelService.getNivelManager()));
+    }
+
+
     @Test
     public void crearBicho() {
         especieService.crearEspecie(especie);
         Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho1);
 
-        assertEquals(9999999, bichoService.getBicho(bicho1.getID()).getEnergia());
     }
 
     @Test
@@ -234,10 +275,40 @@ public class BichoServiceImplTest {
         assertEquals(1, especieService.getEspecie("Onix").getPopularidad());
     }
 
-    @Test
-    public void adoptarBicho() {
+    @Test(expected = BichoNoPuedeSerAdoptado.class)
+    public void noPuedeAdoptarBichoQueYaAbandonoAntes() {
 
         ubicacionService.crearUbicacion(guarderia);
+        entrenadorService.guardar(entrenador);
+        especieService.crearEspecie(especie);
+        especieService.crearEspecie(especie2);
+        Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho1);
+        Bicho bicho2 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho2);
+        Bicho bicho3 = especieService.crearBicho("Charmander", entrenador2);
+        bichoService.crearBicho(bicho3);
+        Bicho bicho4 = especieService.crearBicho("Charmander", entrenador2);
+        bichoService.crearBicho(bicho4);
+        ubicacionService.actualizarUbicacion(guarderia);
+        entrenadorService.agregarBicho(entrenador, bicho1);
+        entrenadorService.agregarBicho(entrenador, bicho2);
+        entrenadorService.agregarBicho(entrenador2, bicho3);
+        entrenadorService.agregarBicho(entrenador2, bicho4);
+        bichoService.abandonar(entrenador2.nombre(), bicho4.getID());
+        ubicacionService.actualizarUbicacion(guarderia);
+
+        bichoService.buscar(entrenador.nombre());
+
+        bichoService.abandonar(entrenador.nombre(), bicho4.getID());
+
+        bichoService.buscar(entrenador2.nombre()); /** En este punto se espera la exception */
+    }
+
+    @Test
+    public void testAdoptarBicho(){
+        ubicacionService.crearUbicacion(guarderia);
+        entrenadorService.guardar(entrenador2);
         entrenadorService.guardar(entrenador);
         especieService.crearEspecie(especie);
         especieService.crearEspecie(especie2);
@@ -263,12 +334,37 @@ public class BichoServiceImplTest {
         assertEquals(1, entrenadorService.recuperar(entrenador2.nombre()).cantidadBichos());
     }
 
+    @Test(expected = BichoNoEncontradoException.class)
+    public void noPuedeAdoptarBichoPorqueNoHayBichosEnGuarderia(){
+        ubicacionService.crearUbicacion(guarderia);
+        entrenadorService.guardar(entrenador2);
+        entrenadorService.guardar(entrenador);
+        especieService.crearEspecie(especie);
+        especieService.crearEspecie(especie2);
+        Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho1);
+        Bicho bicho2 = especieService.crearBicho("Onix", entrenador);
+        bichoService.crearBicho(bicho2);
+        Bicho bicho3 = especieService.crearBicho("Charmander", entrenador2);
+        bichoService.crearBicho(bicho3);
+        Bicho bicho4 = especieService.crearBicho("Charmander", entrenador2);
+        bichoService.crearBicho(bicho4);
+        ubicacionService.actualizarUbicacion(guarderia);
+        entrenadorService.agregarBicho(entrenador, bicho1);
+        entrenadorService.agregarBicho(entrenador, bicho2);
+        entrenadorService.agregarBicho(entrenador2, bicho3);
+        entrenadorService.agregarBicho(entrenador2, bicho4);
+
+
+        bichoService.buscar(entrenador.nombre());
+    }
+
     @Test
     public void duelo(){
         especieService.crearEspecie(especie);
         especieService.crearEspecie(especie3);
-        Bicho bichoCampeon = especieService.crearBicho("Charmeleon", entrenador2);
         Bicho bichoRetador = especieService.crearBicho("Onix", entrenador);
+        Bicho bichoCampeon  = especieService.crearBicho("Charmeleon", entrenador2);
 
         bichoService.crearBicho(bichoCampeon);
         bichoService.crearBicho(bichoRetador);
@@ -281,9 +377,21 @@ public class BichoServiceImplTest {
         mapaService.mover("Spore","Cobra Kai");
         mapaService.mover("Mauro", "Cobra Kai");
 
+        assertEquals(10, entrenador2.getExperiencia());
+        assertEquals(10, entrenador.getExperiencia());
+
+        System.out.println("Energia Onix = " + bichoRetador.getEnergia());
+        System.out.println("Energia Charmeleon = " + bichoCampeon.getEnergia());
+
         ResultadoCombate resultado = bichoService.duelo("Spore", bichoRetador.getID());
 
         assertEquals(bichoRetador.getID(), resultado.getGanador().getID());
+
+        entrenador = entrenadorService.recuperar(entrenador.nombre());
+        entrenador2 = entrenadorService.recuperar(entrenador2.nombre());
+        assertEquals(20, entrenador.getExperiencia());
+        assertEquals(20, entrenador2.getExperiencia());
+
     }
 
     @Test(expected = EntrenadorNoPuedeAbandonarException.class)

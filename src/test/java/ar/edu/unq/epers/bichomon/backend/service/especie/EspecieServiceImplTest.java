@@ -77,23 +77,23 @@ public class EspecieServiceImplTest {
         service = new EspecieServiceImpl(hibernateEspecieDAO);
         condicion = new CondicionCompuesta();
 
-        pikachu = new Especie("Pikachu", TipoBicho.ELECTRICIDAD, condicion,55,99,100);
-        raichu = new Especie(pikachu,2,condicion,"Raichu",80,110,300);
+        pikachu = new Especie("Pikachu", "Raichu", TipoBicho.ELECTRICIDAD, condicion, 55, 99, 100, null);
+        raichu = new Especie("Raichu", null, TipoBicho.ELECTRICIDAD, condicion, 80, 110, 300, pikachu);
 
-        charmander = new Especie("Charmander", TipoBicho.FUEGO, condicion, 55, 75, 110);
-        charmeleon = new Especie(charmander,2,condicion,"Charmeleon",88,100,300);
-        charizard = new Especie(charmander,3,condicion,"Charizard",120,220,750);
+        charmander = new Especie("Charmander", "Charmeleon", TipoBicho.FUEGO, condicion, 55, 75, 110, null);
+        charmeleon = new Especie("Charmeleon", "Charizard", TipoBicho.FUEGO, condicion, 88, 100, 300, charmander);
+        charizard = new Especie("Charizard", null, TipoBicho.FUEGO, condicion, 120, 220, 750,charmander);
 
-        squirtle = new Especie("Squirtle", TipoBicho.AGUA, condicion, 55, 56, 115 );
-        wartortle = new Especie(squirtle,2,condicion,"Wartortle",70,81,279);
-        blastoise = new Especie(squirtle,3,condicion,"Blastoise",101,110,554);
+        squirtle = new Especie("Squirtle", "Wartortle", TipoBicho.AGUA, condicion, 55, 56, 115,null);
+        wartortle = new Especie("Wartortle", "Blastoise", TipoBicho.AGUA, condicion, 70, 81, 279, squirtle);
+        blastoise = new Especie("Blastoise", null, TipoBicho.AGUA, condicion, 101, 110, 554, squirtle);
 
-        onix = new Especie("Onix",TipoBicho.CHOCOLATE,condicion,257,300,446);
-        articuno = new Especie("Articuno",TipoBicho.CHOCOLATE,condicion,110,85,1551);
-        zapdos = new Especie("Zapdos",TipoBicho.ELECTRICIDAD,condicion,115,71,1551);
-        moltres = new Especie("Moltres",TipoBicho.FUEGO,condicion,105,88,1551);
-        lugia = new Especie("Lugia",TipoBicho.AGUA,condicion,120,91,2641);
-        mewtow = new Especie("MewTwo",TipoBicho.CHOCOLATE,condicion,100,70,9999);
+        onix = new Especie("Onix", null, TipoBicho.CHOCOLATE,condicion,257,300,446, null);
+        articuno = new Especie("Articuno", null, TipoBicho.CHOCOLATE,condicion,110,85,1551, null);
+        zapdos = new Especie("Zapdos", null, TipoBicho.ELECTRICIDAD,condicion,115,71,1551, null);
+        moltres = new Especie("Moltres", null, TipoBicho.FUEGO,condicion,105,88,1551, null);
+        lugia = new Especie("Lugia", null, TipoBicho.AGUA,condicion,120,91,2641, null);
+        mewtow = new Especie("MewTwo", null, TipoBicho.CHOCOLATE,condicion,100,70,9999, null);
 
         especies = new ArrayList<Especie>();
 
@@ -114,7 +114,7 @@ public class EspecieServiceImplTest {
 
         /*---------------------------------------------------------------------------*/
         Bicho bicho1 = service.crearBicho("Pikachu", entrenador);
-        bicho1.serAbandonado();
+        bicho1.serAbandonado(entrenador);
         bichoService.crearBicho(bicho1);
         Bicho bicho2 = service.crearBicho("Pikachu", entrenador);
         bichoService.crearBicho(bicho2);
@@ -125,7 +125,7 @@ public class EspecieServiceImplTest {
         Bicho bicho5 = service.crearBicho("Pikachu", entrenador);
         bichoService.crearBicho(bicho5);
         Bicho bicho6 = service.crearBicho("Pikachu", entrenador);
-        bicho6.serAbandonado();
+        bicho6.serAbandonado(entrenador);
         bichoService.crearBicho(bicho6);
         Bicho bicho7 = service.crearBicho("Pikachu", entrenador);
         bichoService.crearBicho(bicho7);
@@ -151,10 +151,10 @@ public class EspecieServiceImplTest {
 
         /*---------------------------------------------------------------------------*/
         Bicho bicho17 = service.crearBicho("Charmander", entrenador);
-        bicho17.serAbandonado();
+        bicho17.serAbandonado(entrenador);
         bichoService.crearBicho(bicho17);
         Bicho bicho18 = service.crearBicho("Charmander", entrenador);
-        bicho18.serAbandonado();
+        bicho18.serAbandonado(entrenador);
         bichoService.crearBicho(bicho18);
         Bicho bicho19 = service.crearBicho("Charmander", entrenador);
         bichoService.crearBicho(bicho19);
@@ -167,7 +167,7 @@ public class EspecieServiceImplTest {
         Bicho bicho23 = service.crearBicho("Charmander", entrenador);
         bichoService.crearBicho(bicho23);
         Bicho bicho24 = service.crearBicho("Charmander", entrenador);
-        bicho24.serAbandonado();
+        bicho24.serAbandonado(entrenador);
         bichoService.crearBicho(bicho24);
 
         Bicho bicho25 = service.crearBicho("Charmeleon", entrenador);
@@ -202,7 +202,7 @@ public class EspecieServiceImplTest {
 
         /*---------------------------------------------------------------------------*/
         Bicho bicho39 = service.crearBicho("Squirtle", entrenador);
-        bicho39.serAbandonado();
+        bicho39.serAbandonado(entrenador);
         bichoService.crearBicho(bicho39);
 
         Bicho bicho40 = service.crearBicho("Wartortle", entrenador);
@@ -254,7 +254,7 @@ public class EspecieServiceImplTest {
         Bicho bicho62 = service.crearBicho("Moltres", entrenador);
         bichoService.crearBicho(bicho62);
         Bicho bicho63 = service.crearBicho("Lugia", entrenador);
-        bicho63.serAbandonado();
+        bicho63.serAbandonado(entrenador);
         bichoService.crearBicho(bicho63);
         /*---------------------------------------------------------------------------*/
         Bicho bicho64 = service.crearBicho("Onix", entrenador);
@@ -272,7 +272,7 @@ public class EspecieServiceImplTest {
         Bicho bicho70 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho70);
         Bicho bicho71 = service.crearBicho("Onix", entrenador);
-        bicho71.serAbandonado();
+        bicho71.serAbandonado(entrenador);
         bichoService.crearBicho(bicho71);
         Bicho bicho72 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho72);
@@ -287,12 +287,12 @@ public class EspecieServiceImplTest {
         Bicho bicho77 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho77);
         Bicho bicho78 = service.crearBicho("Onix", entrenador);
-        bicho78.serAbandonado();
+        bicho78.serAbandonado(entrenador);
         bichoService.crearBicho(bicho78);
         Bicho bicho79 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho79);
         Bicho bicho80 = service.crearBicho("Onix", entrenador);
-        bicho80.serAbandonado();
+        bicho80.serAbandonado(entrenador);
         bichoService.crearBicho(bicho80);
         Bicho bicho81 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho81);
@@ -307,12 +307,12 @@ public class EspecieServiceImplTest {
         Bicho bicho86 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho86);
         Bicho bicho87 = service.crearBicho("Onix", entrenador);
-        bicho87.serAbandonado();
+        bicho87.serAbandonado(entrenador);
         bichoService.crearBicho(bicho87);
         Bicho bicho88 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho88);
         Bicho bicho89 = service.crearBicho("Onix", entrenador);
-        bicho89.serAbandonado();
+        bicho89.serAbandonado(entrenador);
         bichoService.crearBicho(bicho89);
         Bicho bicho90 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho90);

@@ -25,10 +25,11 @@ public class Guarderia extends Ubicacion {
         bichosAbandonados.add(unBicho);
     }
 
+    //bicho.getEntrenador().nombre() != entrenador.nombre() &&
     private ArrayList<Bicho> getBichosPosiblesPara(Entrenador entrenador) {
         ArrayList<Bicho> bichosPosibles = new ArrayList<>();
         for(Bicho bicho : bichosAbandonados) {
-            if(bicho.getEntrenador() != entrenador) {
+            if(bicho.noFueAbandonadoAntesPor(entrenador)) {
                 bichosPosibles.add(bicho);
             }
         }
@@ -44,13 +45,20 @@ public class Guarderia extends Ubicacion {
     public Bicho bichoEncontrado(Entrenador entrenador) {
         if(this.getCantidadBichosAbandonados() > 0) {
             ArrayList<Bicho> bichosPosibles = getBichosPosiblesPara(entrenador);
-            int numRandom = (int) Math.random() * (bichosAbandonados.size() - 1);
-            Bicho bicho = bichosPosibles.get(numRandom);
-            bichosAbandonados.remove(bicho);
-            return bicho;
+            return this.bichoPosibleAleatorio(bichosPosibles.size(), bichosPosibles);
         }
         else {
             throw new BichoNoEncontradoException("bichos abandonados", this.getNombre());
+        }
+    }
+
+    private Bicho bichoPosibleAleatorio(int numero, ArrayList<Bicho> bichosPosibles){
+        if(numero > 0){
+            Bicho bicho = bichosPosibles.get((int) Math.random() * (bichosAbandonados.size() - 1));
+            bichosAbandonados.remove(bicho);
+            return bicho;
+        }else{
+            throw new BichoNoPuedeSerAdoptado();
         }
     }
 

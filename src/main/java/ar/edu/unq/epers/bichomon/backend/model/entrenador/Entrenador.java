@@ -125,6 +125,7 @@ public class Entrenador {
     }
 
     public void abandonarBicho(Bicho bicho) {
+        bicho.serAbandonado(this);
         this.bichos.remove(bicho);
     }
 
