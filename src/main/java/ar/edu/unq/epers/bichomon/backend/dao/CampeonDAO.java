@@ -1,6 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.dao;
 
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface CampeonDAO {
 
     public List<Campeon> recuperarCampeonesNoActuales();
 
-}
+    public List<Entrenador> campeones();
+
+    }

@@ -22,25 +22,9 @@ public class LeaderboardService {
         this.especieDAO = especieDAO;
     }
 
-    public List<Campeon> campeones() {
+    public List<Entrenador> campeones() {
         return Runner.runInSession( () -> {
-            return this.campeonDAO.recuperarTodos();
-        });
-    }
-
-    public List<Entrenador> recuperarCampeonesActuales() {
-        return Runner.runInSession( () -> {
-            List<Campeon> campeonesActuales = this.campeonDAO.recuperarCampeonesActuales();
-
-            List<Entrenador> entrenadoresConCampeonActual = new ArrayList<>();
-            //Elimino los repetidos manteniendo el orden
-            for(Campeon campeon : campeonesActuales) {
-                if(!entrenadoresConCampeonActual.contains(campeon.getBicho().getEntrenador())) {
-                    entrenadoresConCampeonActual.add(campeon.getBicho().getEntrenador());
-                }
-            }
-
-            return entrenadoresConCampeonActual;
+            return this.campeonDAO.campeones();
         });
     }
 

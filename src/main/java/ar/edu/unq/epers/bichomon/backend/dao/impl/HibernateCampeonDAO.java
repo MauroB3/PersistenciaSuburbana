@@ -3,6 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.dao.impl;
 import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.NoHayCampeonHistoricoException;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import org.hibernate.Session;
@@ -78,6 +79,16 @@ public class HibernateCampeonDAO implements CampeonDAO {
         String hql = "from Campeon c where c.fechaFin is not null order by date(c.fechaFin) - date(c.fechaInicio) desc";
 
         Query<Campeon> query = session.createQuery(hql, Campeon.class);
+
+        return query.getResultList();
+    }
+
+    public List<Entrenador> campeones() {
+        Session session = Runner.getCurrentSession();
+
+        String hql = "select e from Campeon c join c.bicho.entrenador as e where c.fechaFin is null order by date(c.fechaInicio) asc";
+
+        Query<Entrenador> query = session.createQuery(hql, Entrenador.class);
 
         return query.getResultList();
     }

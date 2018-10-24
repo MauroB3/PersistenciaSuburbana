@@ -146,7 +146,7 @@ public class LeaderboardServiceTest {
         ubicacionService.actualizarUbicacion(dojo2);
         campeonService.actualizarCampeon(dojo2.actualizarYRetornarCampeon(bicho6, fechaInicio6));
         ubicacionService.actualizarUbicacion(dojo2);
-        List<Entrenador> e = leaderboardService.recuperarCampeonesActuales();
+        List<Entrenador> e = leaderboardService.campeones();
         assertEquals(2, e.size());
         assertEquals("entrenador1", e.get(0).nombre());
         assertEquals("entrenador3", e.get(1).nombre());
