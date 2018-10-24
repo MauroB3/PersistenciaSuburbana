@@ -192,6 +192,7 @@ public class Especie {
 	public Bicho crearBicho(Entrenador entrenador){
 		this.cantidadBichos++;
 		Bicho bicho = new Bicho(this, entrenador);
+		this.incrementarPopularidad();
 		return bicho;
 	}
 

@@ -53,7 +53,6 @@ public class EspecieServiceImpl implements EspecieService {
 		return Runner.runInSession( () -> {
 			Especie especie = especieDAO.recuperar(nombreEspecie);
 			Bicho bicho = especie.crearBicho(entrenador);
-			especie.incrementarPopularidad();
 			especieDAO.actualizar(especie);
 			return bicho;
 		});
