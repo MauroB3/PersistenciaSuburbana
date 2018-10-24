@@ -46,8 +46,9 @@ public class MapaService {
 
     public Campeon campeon(String dojo) {
         return Runner.runInSession( () -> {
-            if (ubicacionDAO.recuperar(dojo).esDojo()) {
-                return campeonDAO.getCampeon(dojo);
+            Ubicacion ubicacion = ubicacionDAO.recuperar(dojo);
+            if (ubicacion.esDojo()) {
+                return ubicacion.getCampeon();
             } else {
                 throw new UbicacionIncorrectaException(dojo, "dojo");
             }
