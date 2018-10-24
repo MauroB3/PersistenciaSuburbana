@@ -25,9 +25,10 @@ public class HibernateCampeonDAO implements CampeonDAO {
         Session session = Runner.getCurrentSession();
 
         try {
-            String hql = "from Campeon c where c.fechaFin is not null order by date(c.fechaFin) - date(c.fechaInicio) desc";
+            String hql = "from Campeon c where c.fechaFin is not null and c.dojo.Nombre =:nombreUbicacion order by date(c.fechaFin) - date(c.fechaInicio) desc";
 
             Query<Campeon> query = session.createQuery(hql, Campeon.class);
+            query.setParameter("nombreUbicacion", nombreUbicacion);
 
             Campeon campeon = query.setMaxResults(1).getSingleResult();
 

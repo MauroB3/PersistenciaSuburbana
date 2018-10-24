@@ -36,6 +36,7 @@ public class MapaServiceTest {
     private EntrenadorService entrenadorService;
 
     private Dojo dojo;
+    private Dojo dojo2;
     private Guarderia guarderia;
 
     private Especie especie1 = new Especie("Pikachu");
@@ -73,6 +74,9 @@ public class MapaServiceTest {
 
         dojo = new Dojo();
         dojo.setNombre("un dojo");
+
+        dojo2 = new Dojo();
+        dojo2.setNombre("otro dojo");
 
         guarderia = new Guarderia();
         guarderia.setNombre("Una guarderia");
@@ -119,10 +123,10 @@ public class MapaServiceTest {
 
     @Test
     public void campeonHistorico() {
+        ubicacionService.crearUbicacion(dojo);
         bichoService.crearBicho(bicho1);
         bichoService.crearBicho(bicho2);
         bichoService.crearBicho(bicho3);
-        ubicacionService.crearUbicacion(dojo);
         campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho1, fechaInicio1));
         ubicacionService.actualizarUbicacion(dojo);
         campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho2, fechaInicio2));
@@ -135,9 +139,15 @@ public class MapaServiceTest {
     @Test(expected = NoHayCampeonHistoricoException.class)
     public void noHayCampeonHistorico() {
         bichoService.crearBicho(bicho1);
-        ubicacionService.crearUbicacion(dojo);
+        bichoService.crearBicho(bicho1);
+        bichoService.crearBicho(bicho2);
+        bichoService.crearBicho(bicho3);
         campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho1, fechaInicio1));
         ubicacionService.actualizarUbicacion(dojo);
+        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho2, fechaInicio2));
+        ubicacionService.actualizarUbicacion(dojo2);
+        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho3, fechaInicio3));
+        ubicacionService.actualizarUbicacion(dojo2);
 
         mapaService.campeonHistorico("Un dojo");
     }
