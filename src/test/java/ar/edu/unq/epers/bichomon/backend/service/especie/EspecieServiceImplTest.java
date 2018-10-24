@@ -8,6 +8,7 @@ import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
@@ -61,6 +62,8 @@ public class EspecieServiceImplTest {
 
     private Entrenador entrenador;
 
+    private Dojo dojo;
+
     @Mock
     private NivelServiceImpl nivelService;
 
@@ -76,6 +79,9 @@ public class EspecieServiceImplTest {
         bichoService = new BichoServiceImpl(new HibernateBichoDAO(), new HibernateEntrenadorDAO(), hibernateEspecieDAO, nivelService, new HibernateUbicacionDAO(), new HibernateExperienciaDAO());
         service = new EspecieServiceImpl(hibernateEspecieDAO);
         condicion = new CondicionCompuesta();
+        dojo = new Dojo();
+        dojo.setNombre("Sporeland");
+        entrenador = new Entrenador("Spore", dojo);
 
         pikachu = new Especie("Pikachu", "Raichu", TipoBicho.ELECTRICIDAD, condicion, 55, 99, 100, null);
         raichu = new Especie("Raichu", null, TipoBicho.ELECTRICIDAD, condicion, 80, 110, 300, pikachu);
@@ -114,7 +120,6 @@ public class EspecieServiceImplTest {
 
         /*---------------------------------------------------------------------------*/
         Bicho bicho1 = service.crearBicho("Pikachu", entrenador);
-        bicho1.serAbandonado(entrenador);
         bichoService.crearBicho(bicho1);
         Bicho bicho2 = service.crearBicho("Pikachu", entrenador);
         bichoService.crearBicho(bicho2);
@@ -125,7 +130,6 @@ public class EspecieServiceImplTest {
         Bicho bicho5 = service.crearBicho("Pikachu", entrenador);
         bichoService.crearBicho(bicho5);
         Bicho bicho6 = service.crearBicho("Pikachu", entrenador);
-        bicho6.serAbandonado(entrenador);
         bichoService.crearBicho(bicho6);
         Bicho bicho7 = service.crearBicho("Pikachu", entrenador);
         bichoService.crearBicho(bicho7);
@@ -151,10 +155,8 @@ public class EspecieServiceImplTest {
 
         /*---------------------------------------------------------------------------*/
         Bicho bicho17 = service.crearBicho("Charmander", entrenador);
-        bicho17.serAbandonado(entrenador);
         bichoService.crearBicho(bicho17);
         Bicho bicho18 = service.crearBicho("Charmander", entrenador);
-        bicho18.serAbandonado(entrenador);
         bichoService.crearBicho(bicho18);
         Bicho bicho19 = service.crearBicho("Charmander", entrenador);
         bichoService.crearBicho(bicho19);
@@ -167,7 +169,6 @@ public class EspecieServiceImplTest {
         Bicho bicho23 = service.crearBicho("Charmander", entrenador);
         bichoService.crearBicho(bicho23);
         Bicho bicho24 = service.crearBicho("Charmander", entrenador);
-        bicho24.serAbandonado(entrenador);
         bichoService.crearBicho(bicho24);
 
         Bicho bicho25 = service.crearBicho("Charmeleon", entrenador);
@@ -202,7 +203,6 @@ public class EspecieServiceImplTest {
 
         /*---------------------------------------------------------------------------*/
         Bicho bicho39 = service.crearBicho("Squirtle", entrenador);
-        bicho39.serAbandonado(entrenador);
         bichoService.crearBicho(bicho39);
 
         Bicho bicho40 = service.crearBicho("Wartortle", entrenador);
@@ -254,7 +254,6 @@ public class EspecieServiceImplTest {
         Bicho bicho62 = service.crearBicho("Moltres", entrenador);
         bichoService.crearBicho(bicho62);
         Bicho bicho63 = service.crearBicho("Lugia", entrenador);
-        bicho63.serAbandonado(entrenador);
         bichoService.crearBicho(bicho63);
         /*---------------------------------------------------------------------------*/
         Bicho bicho64 = service.crearBicho("Onix", entrenador);
@@ -272,7 +271,6 @@ public class EspecieServiceImplTest {
         Bicho bicho70 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho70);
         Bicho bicho71 = service.crearBicho("Onix", entrenador);
-        bicho71.serAbandonado(entrenador);
         bichoService.crearBicho(bicho71);
         Bicho bicho72 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho72);
@@ -287,12 +285,10 @@ public class EspecieServiceImplTest {
         Bicho bicho77 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho77);
         Bicho bicho78 = service.crearBicho("Onix", entrenador);
-        bicho78.serAbandonado(entrenador);
         bichoService.crearBicho(bicho78);
         Bicho bicho79 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho79);
         Bicho bicho80 = service.crearBicho("Onix", entrenador);
-        bicho80.serAbandonado(entrenador);
         bichoService.crearBicho(bicho80);
         Bicho bicho81 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho81);
@@ -307,12 +303,10 @@ public class EspecieServiceImplTest {
         Bicho bicho86 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho86);
         Bicho bicho87 = service.crearBicho("Onix", entrenador);
-        bicho87.serAbandonado(entrenador);
         bichoService.crearBicho(bicho87);
         Bicho bicho88 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho88);
         Bicho bicho89 = service.crearBicho("Onix", entrenador);
-        bicho89.serAbandonado(entrenador);
         bichoService.crearBicho(bicho89);
         Bicho bicho90 = service.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho90);

@@ -38,7 +38,8 @@ public class Bicho {
 	private boolean estaAbandonado;
 
 	@OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Entrenador> entrenadoresQueMeAbandonaron;
+	@Column()
+	private Set<Entrenador> entrenadoresQueMeAbandonaron = new HashSet<Entrenador>();
 
 
 	public Bicho(){}
@@ -47,7 +48,6 @@ public class Bicho {
 		this.entrenador = entrenador;
 		this.especie = especie;
 		this.energia = especie.getEnergiaInicial();
-		this.entrenadoresQueMeAbandonaron = new HashSet<>();
 	}
 
 	/**

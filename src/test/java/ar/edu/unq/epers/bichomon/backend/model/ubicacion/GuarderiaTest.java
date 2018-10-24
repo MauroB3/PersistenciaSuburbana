@@ -49,6 +49,9 @@ public class GuarderiaTest {
         when(bicho1.getEntrenador()).thenReturn(entrenador1);
         when(bicho2.getEntrenador()).thenReturn(entrenador2);
         when(bicho3.getEntrenador()).thenReturn(entrenador2);
+        when(bicho1.noFueAbandonadoAntesPor(entrenador2)).thenReturn(true);
+        when(bicho2.noFueAbandonadoAntesPor(entrenador2)).thenReturn(true);
+        when(bicho3.noFueAbandonadoAntesPor(entrenador2)).thenReturn(true);
     }
 
     @Test
