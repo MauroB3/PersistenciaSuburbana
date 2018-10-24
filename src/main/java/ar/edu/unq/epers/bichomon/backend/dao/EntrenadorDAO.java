@@ -14,4 +14,6 @@ public interface EntrenadorDAO {
 
     public List<Entrenador> recuperarTodos();
 
+    public List<Entrenador> lideres();
+
 }

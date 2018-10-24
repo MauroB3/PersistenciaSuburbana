@@ -30,16 +30,7 @@ public class LeaderboardService {
 
     public List<Entrenador> lideres() {
         return Runner.runInSession( () -> {
-            List<Entrenador> entrenadores = this.entrenadorDAO.recuperarTodos();
-
-            Collections.sort(entrenadores, new Comparator<Entrenador>() {
-                @Override
-                public int compare(Entrenador o1, Entrenador o2) {
-                    return new Integer(o2.getPoderTotal()).compareTo(new Integer(o1.getPoderTotal()));
-                }
-            });
-
-           return entrenadores;
+            return this.entrenadorDAO.lideres();
         });
     }
 

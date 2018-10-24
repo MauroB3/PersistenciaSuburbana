@@ -55,4 +55,14 @@ public class HibernateEntrenadorDAO implements EntrenadorDAO {
         session.update(entrenador);
     }
 
+    public List<Entrenador> lideres() {
+        Session session = Runner.getCurrentSession();
+
+        String hql = "select e from Entrenador as e join e.bichos as b group by e order by sum(b.energia) desc";
+
+        Query<Entrenador> query = session.createQuery(hql, Entrenador.class).setMaxResults(10);
+
+        return query.getResultList();
+    }
+
 }

@@ -49,6 +49,7 @@ public class LeaderboardServiceTest {
     private Entrenador entrenador1;
     private Entrenador entrenador2;
     private Entrenador entrenador3;
+    private Entrenador entrenador4;
 
     private Bicho bicho1;
     private Bicho bicho2;
@@ -87,6 +88,7 @@ public class LeaderboardServiceTest {
         entrenador1 = new Entrenador("entrenador1", dojo1);
         entrenador2 = new Entrenador("entrenador2", dojo2);
         entrenador3 = new Entrenador("entrenador3", dojo2);
+        entrenador4 = new Entrenador("entrenador4", dojo2);
 
         bicho1 = new Bicho(especie1, entrenador1);
         bicho1.setEnergia(10);
@@ -107,6 +109,7 @@ public class LeaderboardServiceTest {
         entrenadorService.guardar(entrenador1);
         entrenadorService.guardar(entrenador2);
         entrenadorService.guardar(entrenador3);
+        entrenadorService.guardar(entrenador4);
         bichoService.crearBicho(bicho1);
         bichoService.crearBicho(bicho2);
         bichoService.crearBicho(bicho3);
@@ -157,11 +160,11 @@ public class LeaderboardServiceTest {
 
         List<Entrenador> l = leaderboardService.lideres();
         assertEquals(3,l.size());
-        assertEquals("entrenador2", leaderboardService.lideres().get(0).nombre());
-        assertEquals(100, leaderboardService.lideres().get(0).getPoderTotal());
-        assertEquals("entrenador1", leaderboardService.lideres().get(1).nombre());
-        assertEquals(20, leaderboardService.lideres().get(1).getPoderTotal());
+        assertEquals("entrenador2",l.get(0).nombre());
+        assertEquals(100, l.get(0).getPoderTotal());
+        assertEquals("entrenador1", l.get(1).nombre());
+        assertEquals(20, l.get(1).getPoderTotal());
         assertEquals("entrenador3", leaderboardService.lideres().get(2).nombre());
-        assertEquals(10, leaderboardService.lideres().get(2).getPoderTotal());
+        assertEquals(10, l.get(2).getPoderTotal());
     }
 }
