@@ -138,7 +138,8 @@ public class MapaServiceTest {
 
     @Test(expected = NoHayCampeonHistoricoException.class)
     public void noHayCampeonHistorico() {
-        bichoService.crearBicho(bicho1);
+        ubicacionService.crearUbicacion(dojo);
+        ubicacionService.crearUbicacion(dojo2);
         bichoService.crearBicho(bicho1);
         bichoService.crearBicho(bicho2);
         bichoService.crearBicho(bicho3);
@@ -149,6 +150,7 @@ public class MapaServiceTest {
         campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho3, fechaInicio3));
         ubicacionService.actualizarUbicacion(dojo2);
 
+        assertEquals("Charmander", mapaService.campeonHistorico("otro dojo").getEspecie().getNombre());
         mapaService.campeonHistorico("Un dojo");
     }
 }

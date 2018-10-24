@@ -36,7 +36,7 @@ public class HibernateCampeonDAO implements CampeonDAO {
 
         }
         catch (NoResultException nre) {
-            throw new NoHayCampeonHistoricoException();
+            throw new NoHayCampeonHistoricoException(nombreUbicacion);
         }
 
     }
