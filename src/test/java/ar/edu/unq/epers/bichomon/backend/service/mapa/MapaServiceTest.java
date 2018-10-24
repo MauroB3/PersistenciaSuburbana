@@ -3,6 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.service.mapa;
 import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.campeon.NoHayCampeonHistoricoException;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
@@ -11,7 +12,6 @@ import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
-import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
@@ -81,7 +81,6 @@ public class MapaServiceTest {
 
     }
 
-
     @After
     public void cleanUp(){
         //Destroy cierra la session factory y fuerza a que, la proxima vez, una nueva tenga
@@ -131,5 +130,15 @@ public class MapaServiceTest {
         campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho3, fechaInicio3));
         ubicacionService.actualizarUbicacion(dojo);
         assertEquals("Pikachu", mapaService.campeonHistorico("Un dojo").getEspecie().getNombre());
+    }
+
+    @Test(expected = NoHayCampeonHistoricoException.class)
+    public void noHayCampeonHistorico() {
+        bichoService.crearBicho(bicho1);
+        ubicacionService.crearUbicacion(dojo);
+        campeonService.actualizarCampeon(dojo.actualizarYRetornarCampeon(bicho1, fechaInicio1));
+        ubicacionService.actualizarUbicacion(dojo);
+
+        mapaService.campeonHistorico("Un dojo");
     }
 }

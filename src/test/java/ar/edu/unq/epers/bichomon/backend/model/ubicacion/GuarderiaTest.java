@@ -68,7 +68,7 @@ public class GuarderiaTest {
         guarderia.abandonarBicho(bicho2);
         guarderia.abandonarBicho(bicho3);
         assertEquals(3, guarderia.getBichosAbandonados().size());
-        Bicho bichoEncontrado = guarderia.bichoEncontrado(entrenador1);
+        Bicho bichoEncontrado = guarderia.bichoEncontrado(entrenador2);
         assertEquals(2, guarderia.getBichosAbandonados().size());
     }
 
