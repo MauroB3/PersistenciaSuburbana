@@ -11,7 +11,6 @@ import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
 import java.util.List;
-import static java.time.temporal.ChronoUnit.DAYS;
 
 public class HibernateCampeonDAO implements CampeonDAO {
 
@@ -58,29 +57,6 @@ public class HibernateCampeonDAO implements CampeonDAO {
         List<Campeon> lista = query.getResultList();
 
         return lista;
-    }
-
-    public List<Campeon> recuperarCampeonesActuales() {
-        Session session = Runner.getCurrentSession();
-
-        String hql = "from Campeon campeon where campeon.fechaFin is null order by date(fechaInicio) asc";
-
-        Query<Campeon> query = session.createQuery(hql, Campeon.class);
-
-        List<Campeon> lista = query.getResultList();
-
-        return lista;
-    }
-
-
-    public List<Campeon> recuperarCampeonesNoActuales() {
-        Session session = Runner.getCurrentSession();
-
-        String hql = "from Campeon c where c.fechaFin is not null order by date(c.fechaFin) - date(c.fechaInicio) desc";
-
-        Query<Campeon> query = session.createQuery(hql, Campeon.class);
-
-        return query.getResultList();
     }
 
     public List<Entrenador> campeones() {

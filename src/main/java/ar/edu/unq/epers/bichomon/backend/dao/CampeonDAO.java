@@ -15,10 +15,6 @@ public interface CampeonDAO {
 
     public List<Campeon> recuperarTodos();
 
-    public List<Campeon> recuperarCampeonesActuales();
-
-    public List<Campeon> recuperarCampeonesNoActuales();
-
     public List<Entrenador> campeones();
 
     }
