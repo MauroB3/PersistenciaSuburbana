@@ -5,6 +5,7 @@ import ar.edu.unq.epers.bichomon.backend.model.duelo.Ataque;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoNoPuedeEvolucionarException;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.annotations.Cascade;
 
@@ -95,12 +96,18 @@ public class Bicho {
 	    this.entrenador = entrenador;
     }
 
-    public void evolucionar(Especie especie){
-		this.especie = especie;
+    public void evolucionar(Especie especie, NivelManager manager){
+		if(puedeEvolucionar(manager)) {
+			this.especie.decrementarPopularidad();
+			this.especie = especie;
+			this.especie.incrementarPopularidad();
+		}else {
+			throw new BichoNoPuedeEvolucionarException(this.especie.getNombre());
+		}
     }
 
     public boolean puedeEvolucionar(NivelManager nivelManager){
-		return this.especie.puedeEvolucionar(this, nivelManager);
+		return this.especie.puedeEvolucionar(this, nivelManager) && this.especie.tieneSiguienteEvolucion();
 	}
 
 	public Ataque atacar(Bicho bicho) {

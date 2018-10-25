@@ -45,20 +45,6 @@ public class Especie {
 	public Especie(){
 	}
 
-	/*
-	public Especie(String nombre, TipoBicho tipo, Condicion condicionDeEvolucion, int altura, int peso, int energiaInicial){
-		this.setEspecieRaiz(this);
-		this.setNombre(nombre);
-		this.setTipo(tipo);
-		this.setCondicionDeEvolucion(condicionDeEvolucion);
-		this.setNroEvolucion(1);
-		this.setAltura(altura);
-		this.setPeso(peso);
-		this.setEnergiaIncial(energiaInicial);
-		EvolutionHandler.getInstance().agregarEspecie(this);
-	}
-	*/
-
 	/**
 	 * Constructor para crear especies sin usar nroEvolucion
 	 * -----------------------------------------------------
@@ -82,19 +68,6 @@ public class Especie {
 		EvolutionHandler.getInstance().agregarEspecie(this);
 	}
 
-	/*
-	public Especie(Especie especie, int nroEvolucion,Condicion condicionDeEvolucion, String nombre, int altura, int peso, int energiaInicial) {
-		this.setEspecieRaiz(especie);
-		this.setNroEvolucion(nroEvolucion);
-		this.setCondicionDeEvolucion(condicionDeEvolucion);
-		this.setNombre(nombre);
-		this.setTipo(especie.getTipo());
-		this.setAltura(altura);
-		this.setPeso(peso);
-		this.setEnergiaIncial(energiaInicial);
-		EvolutionHandler.getInstance().agregarEspecie(this);
-	}
-	*/
 	public Especie(String nombre) {
 		this.setNombre(nombre);
 	}
@@ -217,7 +190,6 @@ public class Especie {
 	}
 
 	public boolean puedeEvolucionar(Bicho bicho, NivelManager nivelManager){
-		System.out.println("LLEGO A PUEDE EVOLUCIONAR DE ESPECIE");
 		return this.condicionDeEvolucion.cumpleConLaCondicion(bicho, nivelManager);
 	}
 
@@ -239,5 +211,9 @@ public class Especie {
 
 	public int getPopularidad(){
 		return this.popularidad;
+	}
+
+	public boolean tieneSiguienteEvolucion(){
+		return siguienteEvolucion != null;
 	}
 }

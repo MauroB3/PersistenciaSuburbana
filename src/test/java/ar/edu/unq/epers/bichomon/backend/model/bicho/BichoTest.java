@@ -56,14 +56,14 @@ public class BichoTest {
         assertEquals(especieAgua, bicho.getEspecie());
     }
 
-    @Test //Controlar
+    @Test
     public void testGetEnergia(){
         bicho.setEnergia(100);
 
         assertEquals(100,bicho.getEnergia());
     }
 
-    @Test //Controlar
+    @Test
     public void testGetFechaDeCaptura(){
         bicho.setFechaDeCaptura(LocalDate.now());
 
@@ -87,14 +87,18 @@ public class BichoTest {
     @Test
     public void testEvolucionar(){
         when(especieAgua.buscarSiguienteEvolucion()).thenReturn(especieAguaEvolucion);
+        when(especieAgua.puedeEvolucionar(bicho, nivelManager)).thenReturn(true);
+        when(especieAgua.tieneSiguienteEvolucion()).thenReturn(true);
 
-        bicho.evolucionar(especieAguaEvolucion);
+        bicho.evolucionar(especieAguaEvolucion, nivelManager);
+
         assertEquals(especieAguaEvolucion, bicho.getEspecie());
     }
 
     @Test
     public void testPuedeEvolucionar(){
         when(especieAgua.puedeEvolucionar(bicho, nivelManager)).thenReturn(true);
+        when(especieAgua.tieneSiguienteEvolucion()).thenReturn(true);
 
         assertTrue(bicho.puedeEvolucionar(nivelManager));
     }

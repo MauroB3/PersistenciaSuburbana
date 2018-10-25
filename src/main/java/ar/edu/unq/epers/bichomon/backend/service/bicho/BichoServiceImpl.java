@@ -106,19 +106,10 @@ public class BichoServiceImpl implements BichoService{
     public Bicho evolucionar(String entrenador, int idBicho) {
         return Runner.runInSession(() -> {
             Bicho bicho = bichoDAO.recuperar(idBicho);
-            Especie especie = especieDAO.recuperar(bicho.getEspecie().getNombre());
-            if(puedeEvolucionar(entrenador, bicho.getID())){
-                Entrenador entrenadorBicho = entrenadorDAO.recuperar(entrenador);
-                especie.decrementarPopularidad();
-                bicho.evolucionar(especieDAO.siguienteEvolucion(bicho.getEspecie()));
-                bicho.getEspecie().incrementarPopularidad();
-                bichoDAO.actualizar(bicho);
-                especieDAO.actualizar(especie);
-                /* Se aumenta la experiencia a ambos entrenadores */
-                entrenadorBicho.agregarExperiencia(experienciaDAO.obtenerExperiencia("Evolucion"));
-            }else{
-                throw new BichoNoPuedeEvolucionarException(bicho.getEspecie().getNombre());
-            }
+            bicho.evolucionar(especieDAO.siguienteEvolucion(bicho.getEspecie()), nivelService.getNivelManager());
+            /* si no logra pasar el if del modelo no le incrementa la experiencia al entrenador */
+            Entrenador entrenadorBicho = entrenadorDAO.recuperar(entrenador);
+            entrenadorBicho.agregarExperiencia(experienciaDAO.obtenerExperiencia("Evolucion"));
             return bicho;
         });
     }
