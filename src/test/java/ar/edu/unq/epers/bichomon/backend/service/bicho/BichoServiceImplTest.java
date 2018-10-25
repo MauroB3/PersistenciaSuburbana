@@ -181,6 +181,7 @@ public class BichoServiceImplTest {
         SessionFactoryProvider.destroy();
     }
 
+
     @Test
     public void testGetNivel(){
         //Con 5000 de experiencia deberia estar en el nivel 8.

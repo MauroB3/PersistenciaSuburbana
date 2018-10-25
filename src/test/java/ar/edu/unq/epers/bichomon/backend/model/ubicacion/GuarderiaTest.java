@@ -78,7 +78,7 @@ public class GuarderiaTest {
     @Test(expected = BichoNoEncontradoException.class)
     public void testBuscarEnDojoSinCampeon() {
         assertEquals(0, guarderia.getCantidadBichosAbandonados());
-        Bicho bichoEncontrado = guarderia.buscar(entrenador1, nivelManager);
+        Bicho bichoEncontrado = guarderia.buscar(entrenador1, nivelManager, 100);
     }
 
 

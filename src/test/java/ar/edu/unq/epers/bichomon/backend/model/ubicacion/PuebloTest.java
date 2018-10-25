@@ -91,7 +91,7 @@ public class PuebloTest {
     public void testBuscarEnDojoSinCampeon() {
         assertEquals(0, pueblo.getEspeciesQueHabitan().size());
         pueblo.sumarPoblacion();
-        Bicho bichoEncontrado = pueblo.buscar(entrenador, nivelManager);
+        Bicho bichoEncontrado = pueblo.buscar(entrenador, nivelManager, 100);
     }
 
 }

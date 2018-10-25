@@ -54,23 +54,8 @@ public class BichoServiceImpl implements BichoService{
     public Bicho buscar(String entrenador) {
         return Runner.runInSession( () -> {
             Entrenador entrenador1 = entrenadorDAO.recuperar(entrenador);
-            Bicho bichoEncontrado = entrenador1.ubicacion().buscar(entrenador1, nivelService.getNivelManager());
-
-            if(bichoEncontrado != null) {
-                bichoEncontrado.serAdoptado(entrenador1);
-                entrenadorDAO.agregarBicho(entrenador1.nombre(), bichoEncontrado);
-                bichoEncontrado.getEspecie().incrementarPopularidad();
-                bichoDAO.actualizar(bichoEncontrado);
-                /* Se aumenta la experiencia a ambos entrenadores */
-                entrenador1.agregarExperiencia(experienciaDAO.obtenerExperiencia("Captura"));
-                entrenadorDAO.actualizar(entrenador1);
-
-                return bichoEncontrado;
-            }
-            else {
-                return null;
-            }
-
+            Bicho bichoEncontrado = entrenador1.ubicacion().buscar(entrenador1, nivelService.getNivelManager(), experienciaDAO.obtenerExperiencia("Captura"));
+            return bichoEncontrado;
         });
     }
 
@@ -80,23 +65,7 @@ public class BichoServiceImpl implements BichoService{
         Runner.runInSession( () -> {
             Bicho bicho = this.bichoDAO.recuperar(nroBicho);
             Entrenador entrenador = this.entrenadorDAO.recuperar(nombreEntrenador);
-            NivelManager nivelManager = nivelService.getNivelManager();
-            if(entrenador.ubicacion().esGuarderia()) {
-                if(entrenador.puedeAbandonarBicho()) {
-                    entrenador.abandonarBicho(bicho);
-                    entrenador.ubicacion().abandonarBicho(bicho);
-                    entrenadorDAO.actualizar(entrenador);
-                    bichoDAO.abandonarBicho(bicho);
-                    bicho.getEspecie().decrementarPopularidad();
-                    bichoDAO.actualizar(bicho);
-                }
-                else {
-                    throw new EntrenadorNoPuedeAbandonarException(nombreEntrenador);
-                }
-            }
-            else {
-                throw new UbicacionIncorrectaException(entrenador.ubicacion().getNombre(), "guarderia");
-            }
+            entrenador.abandonarBicho(bicho);
             return null;
         });
 
@@ -129,12 +98,8 @@ public class BichoServiceImpl implements BichoService{
     public boolean puedeEvolucionar(String entrenador, int idBicho) {
         return Runner.runInSession(() -> {
             Bicho bicho = bichoDAO.recuperar(idBicho);
-            return bicho.puedeEvolucionar(nivelService.getNivelManager())&& this.tieneSiguienteEvolucion(bicho.getEspecie());
+            return bicho.puedeEvolucionar(nivelService.getNivelManager());
         });
-    }
-
-    private boolean tieneSiguienteEvolucion(Especie especie){
-        return especieDAO.siguienteEvolucion(especie) != null;
     }
 
     @Override

@@ -59,7 +59,7 @@ public class DojoTest {
     @Test(expected = BichoNoEncontradoException.class)
     public void testBuscarEnDojoSinCampeon() {
         assertNull(dojo.getCampeon());
-        Bicho bichoEncontrado = dojo.buscar(entrenador, nivelManager);
+        Bicho bichoEncontrado = dojo.buscar(entrenador, nivelManager, 100);
     }
 
     @Test

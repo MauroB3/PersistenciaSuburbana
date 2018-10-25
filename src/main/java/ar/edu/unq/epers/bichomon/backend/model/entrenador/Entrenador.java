@@ -8,6 +8,8 @@ import java.util.Objects;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
+import ar.edu.unq.epers.bichomon.backend.service.bicho.EntrenadorNoPuedeAbandonarException;
+import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionIncorrectaException;
 
 import javax.persistence.*;
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -105,6 +107,7 @@ public class Entrenador {
     }
 
     public void agregarBicho(Bicho bicho) {
+        bicho.serAdoptado(this);
         this.bichos.add(bicho);
     }
 
@@ -125,8 +128,19 @@ public class Entrenador {
     }
 
     public void abandonarBicho(Bicho bicho) {
-        bicho.serAbandonado(this);
-        this.bichos.remove(bicho);
+        if(this.ubicacion().esGuarderia()) {
+            if(this.puedeAbandonarBicho()) {
+                bicho.serAbandonado(this);
+                this.bichos.remove(bicho);
+                this.ubicacion().abandonarBicho(bicho);
+            }
+            else {
+                throw new EntrenadorNoPuedeAbandonarException(this.Nombre);
+            }
+        }
+        else {
+            throw new UbicacionIncorrectaException(this.ubicacion().getNombre(), "guarderia");
+        }
     }
 
 }

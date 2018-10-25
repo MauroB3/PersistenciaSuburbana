@@ -91,6 +91,7 @@ public class Bicho {
 	}
 
 	public void serAdoptado(Entrenador entrenador){
+		this.especie.incrementarPopularidad();
 	    this.entrenador = entrenador;
     }
 
@@ -117,6 +118,7 @@ public class Bicho {
 	public void serAbandonado(Entrenador entrenador){
 		this.entrenadoresQueMeAbandonaron.add(entrenador);
 		this.estaAbandonado = true;
+		this.especie.decrementarPopularidad();
 	}
 
 	@Override

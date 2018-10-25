@@ -39,9 +39,12 @@ public abstract class Ubicacion {
         Nombre = nombre;
     }
 
-    public Bicho buscar(Entrenador entrenador, NivelManager nivelManager) {
+    public Bicho buscar(Entrenador entrenador, NivelManager nivelManager, int experiencia) {
         if (busquedaExitosa(entrenador, nivelManager)) {
-            return bichoEncontrado(entrenador);
+            Bicho bichoEncontrado = bichoEncontrado(entrenador);
+            entrenador.agregarBicho(bichoEncontrado);
+            entrenador.agregarExperiencia(experiencia);
+            return bichoEncontrado;
         } else {
             return null;
         }
