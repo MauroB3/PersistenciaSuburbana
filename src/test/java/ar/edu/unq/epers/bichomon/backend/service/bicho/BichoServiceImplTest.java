@@ -381,9 +381,6 @@ public class BichoServiceImplTest {
         assertEquals(10, entrenador2.getExperiencia());
         assertEquals(10, entrenador.getExperiencia());
 
-        System.out.println("Energia Onix = " + bichoRetador.getEnergia());
-        System.out.println("Energia Charmeleon = " + bichoCampeon.getEnergia());
-
         ResultadoCombate resultado = bichoService.duelo("Spore", bichoRetador.getID());
 
         assertEquals(bichoRetador.getID(), resultado.getGanador().getID());

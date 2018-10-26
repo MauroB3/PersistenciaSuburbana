@@ -2,6 +2,8 @@ package ar.edu.unq.epers.bichomon.backend.model.duelo;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
+import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +27,18 @@ public class DueloTest {
 
     @Mock
     private Campeon campeon;
+
+    @Mock
+    private Entrenador entrenadorDelCampeon;
+
+    @Mock
+    private Entrenador entrenadorDelRetador;
+
+    @Mock
+    private Especie especieAgua;
+
+    @Mock
+    private Especie especieFuego;
 
     @Mock
     private Bicho bichoRetador;
@@ -138,6 +152,9 @@ public class DueloTest {
         when(resultado.cantidadDeAtaques()).thenReturn(10);
 
         duelo = new Duelo(dojo, bichoRetador);
+
+        when(bichoCampeon.getEntrenador()).thenReturn(entrenadorDelCampeon);
+        when(bichoRetador.getEntrenador()).thenReturn(entrenadorDelRetador);
     }
 
     @Test
@@ -152,6 +169,9 @@ public class DueloTest {
         bichoRetadorMock.setEnergia(1300);
         bichoCampeonMock.setEnergia(1);
 
+        bichoCampeonMock.setEntrenador(entrenadorDelCampeon);
+        bichoRetadorMock.setEntrenador(entrenadorDelRetador);
+
         Dojo dojo2 = new Dojo();
 
 
@@ -159,7 +179,7 @@ public class DueloTest {
 
         Duelo dueloN = new Duelo(dojo2, bichoRetadorMock);
 
-        assertTrue(dueloN.pelear().getGanador().getEnergia() > 1300);
+        assertTrue(dueloN.pelear(10).getGanador().getEnergia() > 1300);
     }
 
     @Test
@@ -179,7 +199,7 @@ public class DueloTest {
     public void terminarPelea() {
         duelo.setAtaques(ataques);
 
-        assertEquals(resultado.getGanador(), duelo.terminarPelea().getGanador());
+        assertEquals(resultado.getGanador(), duelo.terminarPelea(10).getGanador());
         verify(bichoRetador,times(1)).incrementarEnergia();
         verify(bichoCampeon,times(1)).incrementarEnergia();
         verify(bichoRetador,times(1)).incrementarVictorias();

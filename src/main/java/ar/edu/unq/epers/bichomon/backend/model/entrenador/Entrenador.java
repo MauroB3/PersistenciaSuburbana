@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
+import ar.edu.unq.epers.bichomon.backend.model.duelo.Duelo;
+import ar.edu.unq.epers.bichomon.backend.model.duelo.ResultadoCombate;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.EntrenadorNoPuedeAbandonarException;
@@ -101,7 +103,32 @@ public class Entrenador {
         ulimaCaptura = LocalDate.now();
     }
 
-    /** Para testear */
+
+
+
+
+    public ResultadoCombate duelo(Bicho bicho, int experiencia){
+        if(ubicacion.esDojo()){
+            Duelo duelo = new Duelo(ubicacion, bicho);
+
+            return duelo.pelear(experiencia);
+
+        }else{
+            throw new UbicacionIncorrectaException(ubicacion.getNombre(), "Dojo");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     public int cantidadBichos(){
         return bichos.size();
     }

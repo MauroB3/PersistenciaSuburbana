@@ -22,19 +22,19 @@ public class Duelo {
         ataques = new ArrayList<Ataque>();
     }
 
-    public ResultadoCombate pelear(){
+    public ResultadoCombate pelear(int experiencia){
         /** Deben ser 10 turnos si o si */
         int turnos = 1;
         while (!this.debeTerminarLaPelea() && !this.pasoLos10Turnos(turnos)){
             ataques.add(bicho.atacar(campeon));
             if(!this.debeTerminarLaPelea()) {
-                return this.terminarPelea();
+                return this.terminarPelea(experiencia);
             }else{
                 ataques.add(campeon.atacar(bicho));
             }
         }
         /** Si el duelo llega hasta aca el campeon gano y no debe ser descoronado */
-        return this.terminarPelea();
+        return this.terminarPelea(experiencia);
     }
 
     public boolean debeTerminarLaPelea(){
@@ -45,9 +45,12 @@ public class Duelo {
         return n > 10;
     }
 
-    public ResultadoCombate terminarPelea(){
+    public ResultadoCombate terminarPelea(int experiencia){
         campeon.incrementarEnergia();
         bicho.incrementarEnergia();
+        //IncrementarExperienciaAEntrenadores
+        campeon.getEntrenador().agregarExperiencia(experiencia);
+        bicho.getEntrenador().agregarExperiencia(experiencia);
         //CoronarCampeon
         campeon = this.ganador();
         campeon.incrementarVictorias();

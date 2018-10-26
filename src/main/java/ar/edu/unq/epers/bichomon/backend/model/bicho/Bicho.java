@@ -96,11 +96,12 @@ public class Bicho {
 	    this.entrenador = entrenador;
     }
 
-    public void evolucionar(Especie especie, NivelManager manager){
+    public void evolucionar(Especie especie, NivelManager manager, int experiencia){
 		if(puedeEvolucionar(manager)) {
 			this.especie.decrementarPopularidad();
 			this.especie = especie;
 			this.especie.incrementarPopularidad();
+			this.getEntrenador().agregarExperiencia(experiencia);
 		}else {
 			throw new BichoNoPuedeEvolucionarException(this.especie.getNombre());
 		}
@@ -117,6 +118,8 @@ public class Bicho {
 	public void incrementarEnergia(){
 		this.energia += (Math.random() * 5) + 1;
 	}
+
+	public void setEntrenador(Entrenador entrenador){ this.entrenador = entrenador; }
 
 	public int getID() {
 		return id;

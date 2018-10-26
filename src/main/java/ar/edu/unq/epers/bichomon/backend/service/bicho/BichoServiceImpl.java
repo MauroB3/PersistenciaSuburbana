@@ -75,23 +75,10 @@ public class BichoServiceImpl implements BichoService{
     public ResultadoCombate duelo(String entrenador, int bicho) {
         return Runner.runInSession(() -> {
            Entrenador ent = entrenadorDAO.recuperar(entrenador);
-           if(ent.ubicacion().esDojo()){
-               Entrenador entrenadorCampeon = entrenadorDAO.recuperar(ent.ubicacion().getCampeon().getBicho().getEntrenador().nombre());
-               ent.agregarExperiencia(experienciaDAO.obtenerExperiencia("Combate"));
-               entrenadorCampeon.agregarExperiencia(experienciaDAO.obtenerExperiencia("Combate"));
-               Bicho bichoRetador = bichoDAO.recuperar(bicho);
-               Ubicacion dojo = ent.ubicacion();
-               Duelo duelo = new Duelo(dojo, bichoRetador);
-
-               entrenadorDAO.actualizar(ent);
-               entrenadorDAO.actualizar(entrenadorCampeon);
-
-               ResultadoCombate resultado = duelo.pelear();
-               ubicacionDAO.actualizarCampeon(dojo, resultado.getGanador());
-               return resultado;
-           }else{
-               throw new UbicacionIncorrectaException(ent.ubicacion().getNombre(), "Dojo");
-           }
+           Bicho bichoRetador = bichoDAO.recuperar(bicho);
+           ResultadoCombate resultado = ent.duelo(bichoRetador, experienciaDAO.obtenerExperiencia("Combate"));
+           ubicacionDAO.actualizarCampeon(ent.ubicacion(), resultado.getGanador());
+           return resultado;
         });
     }
 
@@ -106,10 +93,7 @@ public class BichoServiceImpl implements BichoService{
     public Bicho evolucionar(String entrenador, int idBicho) {
         return Runner.runInSession(() -> {
             Bicho bicho = bichoDAO.recuperar(idBicho);
-            bicho.evolucionar(especieDAO.siguienteEvolucion(bicho.getEspecie()), nivelService.getNivelManager());
-            /* si no logra pasar el if del modelo no le incrementa la experiencia al entrenador */
-            Entrenador entrenadorBicho = entrenadorDAO.recuperar(entrenador);
-            entrenadorBicho.agregarExperiencia(experienciaDAO.obtenerExperiencia("Evolucion"));
+            bicho.evolucionar(especieDAO.siguienteEvolucion(bicho.getEspecie()), nivelService.getNivelManager(), experienciaDAO.obtenerExperiencia("Evolucion"));
             return bicho;
         });
     }

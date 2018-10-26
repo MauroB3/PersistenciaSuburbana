@@ -90,7 +90,7 @@ public class BichoTest {
         when(especieAgua.puedeEvolucionar(bicho, nivelManager)).thenReturn(true);
         when(especieAgua.tieneSiguienteEvolucion()).thenReturn(true);
 
-        bicho.evolucionar(especieAguaEvolucion, nivelManager);
+        bicho.evolucionar(especieAguaEvolucion, nivelManager, 5);
 
         assertEquals(especieAguaEvolucion, bicho.getEspecie());
     }
