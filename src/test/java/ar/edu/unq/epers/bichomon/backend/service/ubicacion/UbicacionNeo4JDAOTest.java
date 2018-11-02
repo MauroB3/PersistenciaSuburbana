@@ -5,6 +5,8 @@ import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
+import java.util.List;
 
 public class UbicacionNeo4JDAOTest {
 
@@ -37,9 +39,37 @@ public class UbicacionNeo4JDAOTest {
         guarderia2.setNombre("Guarderia2");
         this.dao.crearUbicacion(guarderia2);
 
-        this.dao.conectarUbicaciones(guarderia1, guarderia2, "tierra");
+        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), "tierra");
 
     }
 
+    @Test
+    public void conectados() {
+        Ubicacion guarderia1 = new Guarderia();
+        guarderia1.setNombre("Guarderia1");
+        this.dao.crearUbicacion(guarderia1);
+
+        Ubicacion guarderia2 = new Guarderia();
+        guarderia2.setNombre("Guarderia2");
+        this.dao.crearUbicacion(guarderia2);
+
+        Ubicacion guarderia3 = new Guarderia();
+        guarderia3.setNombre("Guarderia3");
+        this.dao.crearUbicacion(guarderia3);
+
+        Ubicacion guarderia4 = new Guarderia();
+        guarderia4.setNombre("Guarderia4");
+        this.dao.crearUbicacion(guarderia4);
+
+        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), "tierra");
+        this.dao.conectar(guarderia1.getNombre(), guarderia3.getNombre(), "aire");
+        this.dao.conectar(guarderia1.getNombre(), guarderia4.getNombre(), "tierra");
+
+        List<String> ubicaciones = this.dao.conectados(guarderia1.getNombre(), "tierra");
+        assertEquals(2, ubicaciones.size());
+        assertTrue(ubicaciones.contains(guarderia2.getNombre()));
+        assertFalse(ubicaciones.contains(guarderia3.getNombre()));
+        assertTrue(ubicaciones.contains(guarderia4.getNombre()));
+    }
 
 }
