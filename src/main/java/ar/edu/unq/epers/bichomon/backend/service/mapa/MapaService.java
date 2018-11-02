@@ -29,8 +29,6 @@ public class MapaService {
             Ubicacion ubicacionNueva = ubicacionDAO.recuperar(ubicacion);
             Ubicacion ubicacionAnterior = entrenadorR.ubicacion();
             entrenadorR.mover(ubicacionNueva);
-            ubicacionNueva.sumarPoblacion();
-            ubicacionAnterior.restarPoblacion();
             ubicacionDAO.actualizar(ubicacionNueva);
             ubicacionDAO.actualizar(ubicacionAnterior);
             entrenadorDAO.actualizar(entrenadorR);

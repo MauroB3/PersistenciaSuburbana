@@ -41,6 +41,8 @@ public class Entrenador {
 
     private int exp = 0; //Siempr empieza en 0 de experiencia
 
+    private int monedas;
+
     private LocalDate ulimaCaptura;
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -64,7 +66,12 @@ public class Entrenador {
         return this.ubicacion;
     }
 
-    public void mover(Ubicacion ubicacion) { this.ubicacion = ubicacion; }
+    public void mover(Ubicacion ubicacion) {
+        Ubicacion anterior = this.ubicacion;
+        this.ubicacion = ubicacion;
+        anterior.restarPoblacion();
+        this.ubicacion.sumarPoblacion();
+    }
 
     public boolean puedeCapturarBicho(NivelManager nivelManager) {
         return this.capacidadMaxima(nivelManager) > bichos.size();
@@ -103,10 +110,6 @@ public class Entrenador {
         ulimaCaptura = LocalDate.now();
     }
 
-
-
-
-
     public ResultadoCombate duelo(Bicho bicho, int experiencia){
         if(ubicacion.esDojo()){
             Duelo duelo = new Duelo(ubicacion, bicho);
@@ -117,17 +120,6 @@ public class Entrenador {
             throw new UbicacionIncorrectaException(ubicacion.getNombre(), "Dojo");
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
     public int cantidadBichos(){
         return bichos.size();
@@ -168,6 +160,14 @@ public class Entrenador {
         else {
             throw new UbicacionIncorrectaException(this.ubicacion().getNombre(), "guarderia");
         }
+    }
+
+    public void agregarMonedas(int monedas) {
+        this.monedas += monedas;
+    }
+
+    public int getMonedas() {
+        return this.monedas;
     }
 
 }
