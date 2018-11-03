@@ -61,9 +61,14 @@ public class UbicacionNeo4JDAOTest {
         guarderia4.setNombre("Guarderia4");
         this.dao.crearUbicacion(guarderia4);
 
+        Ubicacion guarderia5 = new Guarderia();
+        guarderia5.setNombre("Guarderia5");
+        this.dao.crearUbicacion(guarderia5);
+
         this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), "tierra");
         this.dao.conectar(guarderia1.getNombre(), guarderia3.getNombre(), "aire");
         this.dao.conectar(guarderia1.getNombre(), guarderia4.getNombre(), "tierra");
+        this.dao.conectar(guarderia4.getNombre(), guarderia5.getNombre(), "tierra");
 
         List<String> ubicaciones = this.dao.conectados(guarderia1.getNombre(), "tierra");
         assertEquals(2, ubicaciones.size());
@@ -72,4 +77,34 @@ public class UbicacionNeo4JDAOTest {
         assertTrue(ubicaciones.contains(guarderia4.getNombre()));
     }
 
+    @Test
+    public void todasLasUbicacionesConectadas() {
+        Ubicacion guarderia1 = new Guarderia();
+        guarderia1.setNombre("Guarderia1");
+        this.dao.crearUbicacion(guarderia1);
+
+        Ubicacion guarderia2 = new Guarderia();
+        guarderia2.setNombre("Guarderia2");
+        this.dao.crearUbicacion(guarderia2);
+
+        Ubicacion guarderia3 = new Guarderia();
+        guarderia3.setNombre("Guarderia3");
+        this.dao.crearUbicacion(guarderia3);
+
+        Ubicacion guarderia4 = new Guarderia();
+        guarderia4.setNombre("Guarderia4");
+        this.dao.crearUbicacion(guarderia4);
+
+        Ubicacion guarderia5 = new Guarderia();
+        guarderia5.setNombre("Guarderia5");
+        this.dao.crearUbicacion(guarderia5);
+
+        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), "tierra");
+        this.dao.conectar(guarderia1.getNombre(), guarderia3.getNombre(), "aire");
+        this.dao.conectar(guarderia1.getNombre(), guarderia4.getNombre(), "tierra");
+        this.dao.conectar(guarderia4.getNombre(), guarderia5.getNombre(), "mar");
+
+        assertEquals(3, this.dao.todasLasUbicacionesConectadas(guarderia1.getNombre()).size());
+
+    }
 }

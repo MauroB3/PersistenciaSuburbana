@@ -11,7 +11,7 @@ public class UbicacionNeo4JDAO {
     private Driver driver;
 
     public UbicacionNeo4JDAO() {
-        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "tiranosaurio0" ) );
+        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "1k3R1" ) );
     }
 
     public void crearUbicacion(Ubicacion ubicacion) {
@@ -45,11 +45,31 @@ public class UbicacionNeo4JDAO {
         Session session = this.driver.session();
 
         try {
-            String query = "MATCH (origen)-[r]->(destino) " +
-                    "WHERE r.medio = {medio} " +
-                    "RETURN destino";
+            String query = "match (n:Ubicacion {nombre: {nombreOrigen}})" +
+                    "match (n)-[r:Camino]->(x)" +
+                    "where r.medio = {medio}" +
+                    "return x";
             StatementResult result = session.run(query, Values.parameters("nombreOrigen", ubicacion,
                     "medio", tipoCamino));
+
+            return result.list(record -> {
+                Value hijo = record.get(0);
+                String nombre = hijo.get("nombre").asString();
+                return nombre;
+            });
+        } finally {
+            session.close();
+        }
+    }
+
+    public List<String> todasLasUbicacionesConectadas(String ubicacion){
+        Session session = this.driver.session();
+
+        try {
+            String query = "match (n:Ubicacion {nombre: {nombreOrigen}})" +
+                    "match (n)-[r:Camino]->(x)" +
+                    "return x";
+            StatementResult result = session.run(query, Values.parameters("nombreOrigen", ubicacion));
 
             return result.list(record -> {
                 Value hijo = record.get(0);
