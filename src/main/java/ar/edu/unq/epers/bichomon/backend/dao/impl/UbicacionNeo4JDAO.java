@@ -2,8 +2,10 @@ package ar.edu.unq.epers.bichomon.backend.dao.impl;
 
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.CostoCamino;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.UbicacionMuyLejanaException;
 import org.neo4j.driver.v1.*;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class UbicacionNeo4JDAO {
@@ -62,25 +64,32 @@ public class UbicacionNeo4JDAO {
         }
     }
 
-    public List<String> todasLasUbicacionesConectadas(String ubicacion){
+    public int getCostoEntreUbicacionesLindantes(String origen, String destino) {
         Session session = this.driver.session();
 
         try {
-            String query = "match (n:Ubicacion {nombre: {nombreOrigen}})" +
-                    "match (n)-[r:Camino]->(x)" +
-                    "return x";
-            StatementResult result = session.run(query, Values.parameters("nombreOrigen", ubicacion));
+            String query = 	"MATCH (o:Ubicacion {nombre: {nombreOrigen}})" +
+                    "MATCH (d:Ubicacion {nombre: {nombreDestino}})" +
+                    "MATCH (o)-[r:Camino]->(d)" +
+                    "RETURN r.costo as costo";
 
-            return result.list(record -> {
-                Value hijo = record.get(0);
-                String nombre = hijo.get("nombre").asString();
-                return nombre;
-            });
-        } finally {
+            StatementResult result = session.run(query, Values.parameters("nombreOrigen",  origen, "nombreDestino", destino));
+
+            if(!result.hasNext()) {
+                throw new UbicacionMuyLejanaException(origen, destino);
+            }
+            else {
+                int costo = result.next().get("costo").asInt();
+                for(Record record : result.list()) {
+                    if(record.get("costo").asInt() < costo) { costo = record.get("costo").asInt(); }
+                }
+                return costo;
+            }
+        }
+        finally {
             session.close();
         }
     }
-
 
 
 }
