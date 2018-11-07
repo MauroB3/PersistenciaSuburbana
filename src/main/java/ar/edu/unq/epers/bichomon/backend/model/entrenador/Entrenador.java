@@ -9,6 +9,7 @@ import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.Duelo;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.ResultadoCombate;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.CaminoMuyCostosoException;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.EntrenadorNoPuedeAbandonarException;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionIncorrectaException;
@@ -66,11 +67,17 @@ public class Entrenador {
         return this.ubicacion;
     }
 
-    public void mover(Ubicacion ubicacion) {
-        Ubicacion anterior = this.ubicacion;
-        this.ubicacion = ubicacion;
-        anterior.restarPoblacion();
-        this.ubicacion.sumarPoblacion();
+    public void mover(Ubicacion destino, int costo) {
+        if(this.monedas >= costo) {
+            Ubicacion anterior = this.ubicacion;
+            this.ubicacion = destino;
+            anterior.restarPoblacion();
+            this.ubicacion.sumarPoblacion();
+            this.restarMonedas(costo);
+        }
+        else {
+            throw new CaminoMuyCostosoException(this.nombre(), destino.getNombre());
+        }
     }
 
     public boolean puedeCapturarBicho(NivelManager nivelManager) {
@@ -168,6 +175,14 @@ public class Entrenador {
 
     public int getMonedas() {
         return this.monedas;
+    }
+
+    public void restarMonedas(int monedas) {
+        this.monedas -= monedas;
+    }
+
+    public void setMonedas(int monedas) {
+        this.monedas = monedas;
     }
 
 }

@@ -91,5 +91,16 @@ public class UbicacionNeo4JDAO {
         }
     }
 
+    public void destroy() {
+        Session session = this.driver.session();
+
+        try {
+            String query = "match (n) detach delete (n)";
+            session.run(query);
+        } finally {
+            session.close();
+        }
+    }
+
 
 }

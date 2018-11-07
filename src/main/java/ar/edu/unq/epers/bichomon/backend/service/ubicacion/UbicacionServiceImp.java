@@ -45,4 +45,5 @@ public class UbicacionServiceImp {
             return ubicacionDAO.recuperarTodos();
         });
     }
+
 }

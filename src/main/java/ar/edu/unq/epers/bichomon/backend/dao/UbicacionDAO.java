@@ -19,6 +19,8 @@ public interface UbicacionDAO {
 
     List<Ubicacion> recuperarTodos();
 
+    List<Ubicacion> recuperarTodos(List<String> nombresDeUbicaciones);
+
     int getCantidadEntrenadores(String nombreUbicacion);
 
     void actualizarCampeon(Ubicacion dojo, Bicho bicho);

@@ -72,6 +72,8 @@ public class BichoServiceImplTest {
 
     private HibernateNivelDAO nivelDAO;
 
+    private UbicacionNeo4JDAO ubicacionNeo4JDAO;
+
     private Nivel nivel1;
 
     private Nivel nivel2;
@@ -127,7 +129,7 @@ public class BichoServiceImplTest {
         bichoService = new BichoServiceImpl(bichoDAO, entrenadorDAO, especieDAO, nivelService, ubiDAO, experienciaDAO);
         condService = new CondicionServiceImpl(condDAO);
         especieService = new EspecieServiceImpl(especieDAO);
-        mapaService = new MapaService(ubiDAO, campeonDAO, entrenadorDAO);
+        mapaService = new MapaService(ubiDAO, campeonDAO, entrenadorDAO, ubicacionNeo4JDAO);
 
         nivel1 = new Nivel(1,1,99);
         nivel2 = new Nivel(2,100,399);
