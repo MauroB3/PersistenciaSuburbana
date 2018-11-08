@@ -13,7 +13,7 @@ public class UbicacionNeo4JDAO {
     private Driver driver;
 
     public UbicacionNeo4JDAO() {
-        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "1k3R1" ) );
+        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "root" ) );
     }
 
     public void crearUbicacion(Ubicacion ubicacion) {
@@ -87,6 +87,26 @@ public class UbicacionNeo4JDAO {
             }
         }
         finally {
+            session.close();
+        }
+    }
+
+    public int getCostoCaminoMasCorto(String origen, String destino){
+        Session session = this.driver.session();
+
+        try{
+            String query = "MATCH (o:Ubicacion {nombre: {nombreOrigen}}) " +
+                    "MATCH (d:Ubicacion {nombre: {nombreDestino}}) " +
+                    "MATCH p = shortestPath((o)-[Camino*]->(d)) " +
+                    "WITH REDUCE(costo = 0, camino in rels(p) | costo + toInt(camino.costo)) " +
+                    "AS sumaCosto " +
+                    "RETURN sumaCosto";
+
+            StatementResult result = session.run(query, Values.parameters("nombreOrigen", origen, "nombreDestino", destino));
+
+            return result.peek().get("sumaCosto").asInt();
+
+        } finally {
             session.close();
         }
     }

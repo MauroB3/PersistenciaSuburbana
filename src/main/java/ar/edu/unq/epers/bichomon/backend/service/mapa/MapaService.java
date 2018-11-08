@@ -40,6 +40,21 @@ public class MapaService {
         });
     }
 
+    public void moverMasCorto(String entrenador, String destino){
+        Runner.runInSession(() -> {
+
+            Entrenador ent = entrenadorDAO.recuperar(entrenador);
+            Ubicacion ubicacion = ubicacionDAO.recuperar(destino);
+
+            int costo = ubicacionNeo4JDAO.getCostoCaminoMasCorto(ent.ubicacion().getNombre(), ubicacion.getNombre());
+
+            ent.mover(ubicacion, costo);
+
+            return null;
+        });
+
+    }
+
     public int cantidadEntrenadores(String ubicacion) {
         return Runner.runInSession( () -> {
             return ubicacionDAO.getCantidadEntrenadores(ubicacion);

@@ -37,7 +37,10 @@ public class MapaServiceTest {
 
     private Dojo dojo;
     private Dojo dojo2;
+    private Dojo dojo3;
     private Guarderia guarderia;
+    private Guarderia guarderia2;
+    private Guarderia guarderia3;
 
     private Especie especie1 = new Especie("Pikachu");
     private Especie especie2 = new Especie("Charmander");
@@ -77,8 +80,17 @@ public class MapaServiceTest {
         dojo2 = new Dojo();
         dojo2.setNombre("otro dojo");
 
+        dojo3 = new Dojo();
+        dojo3.setNombre("tercer dojo");
+
         guarderia = new Guarderia();
         guarderia.setNombre("Una guarderia");
+
+        guarderia2 = new Guarderia();
+        guarderia2.setNombre("Otra guarderia");
+
+        guarderia3 = new Guarderia();
+        guarderia3.setNombre("tercer guarderia");
 
         entrenador = new Entrenador("entrenador", dojo);
     }
@@ -109,6 +121,32 @@ public class MapaServiceTest {
         assertEquals(0, ubicacionService.getUbicacion("Un dojo").getPoblacion());
         assertEquals(4, this.entrenadorService.recuperar(entrenador.nombre()).getMonedas());
         assertEquals("Una guarderia", this.entrenadorService.recuperar(entrenador.nombre()).ubicacion().getNombre());
+    }
+
+    @Test
+    public void moverMasCorto() {
+        mapaService.crearUbicacion(dojo);
+        mapaService.crearUbicacion(dojo2);
+        mapaService.crearUbicacion(dojo3);
+        mapaService.crearUbicacion(guarderia);
+        mapaService.crearUbicacion(guarderia2);
+        mapaService.crearUbicacion(guarderia3);
+
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia2.getNombre(), "tierra");
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo3.getNombre(), "aire");
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo3.getNombre(), "mar");
+        ubicacionNeo4JDAO.conectar(guarderia2.getNombre(), guarderia3.getNombre(), "tierra");
+        ubicacionNeo4JDAO.conectar(guarderia3.getNombre(), dojo2.getNombre(), "tierra");
+        ubicacionNeo4JDAO.conectar(dojo2.getNombre(), guarderia.getNombre(), "tierra");
+        ubicacionNeo4JDAO.conectar(dojo3.getNombre(), guarderia.getNombre(), "aire");
+
+
+        entrenador.setMonedas(20);
+        entrenadorService.guardar(entrenador);
+
+        mapaService.moverMasCorto(entrenador.nombre(), guarderia.getNombre());
+
+        assertEquals(13, entrenadorService.recuperar(entrenador.nombre()).getMonedas(),0);
     }
 
     @Test(expected = UbicacionMuyLejanaException.class)

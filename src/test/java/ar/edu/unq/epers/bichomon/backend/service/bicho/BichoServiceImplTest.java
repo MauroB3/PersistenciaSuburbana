@@ -54,6 +54,8 @@ public class BichoServiceImplTest {
 
     private HibernateUbicacionDAO ubiDAO;
 
+    private UbicacionNeo4JDAO ubicacionNeo4JDAO;
+
     private CondicionService condService;
 
     private BichoServiceImpl bichoService;
@@ -71,8 +73,6 @@ public class BichoServiceImplTest {
     private NivelServiceImpl nivelService;
 
     private HibernateNivelDAO nivelDAO;
-
-    private UbicacionNeo4JDAO ubicacionNeo4JDAO;
 
     private Nivel nivel1;
 
@@ -120,6 +120,7 @@ public class BichoServiceImplTest {
         condDAO = new HibernateCondicionDAO();
         bichoDAO = new HibernateBichoDAO();
         entrenadorDAO = new HibernateEntrenadorDAO();
+        ubicacionNeo4JDAO = new UbicacionNeo4JDAO();
 
         nivelService = new NivelServiceImpl(nivelDAO);
         entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
@@ -167,6 +168,9 @@ public class BichoServiceImplTest {
         entrenador.agregarExperiencia(10);
         entrenador2 = new Entrenador("Mauro", guarderia);
         entrenador2.agregarExperiencia(10);
+
+        entrenador.setMonedas(10);
+        entrenador2.setMonedas(10);
 
         experienciaService.crearExperiencia("Combate", 10);
         experienciaService.crearExperiencia("Captura", 10);
@@ -376,9 +380,14 @@ public class BichoServiceImplTest {
         dojo.setNombre("Cobra Kai");
         Campeon campeon = dojo.actualizarYRetornarCampeon(bichoCampeon,LocalDate.now());
 
-        ubicacionService.crearUbicacion(dojo);
-        mapaService.mover("Spore","Cobra Kai");
-        mapaService.mover("Mauro", "Cobra Kai");
+        mapaService.crearUbicacion(dojo);
+        //mapaService.crearUbicacion(guarderia);
+
+        mapaService.conectar(guarderia.getNombre(), dojo.getNombre(), "tierra");
+        mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), "tierra");
+
+        mapaService.mover(entrenador.nombre(), dojo.getNombre());
+        mapaService.mover(entrenador2.nombre(), dojo.getNombre());
 
         assertEquals(10, entrenador2.getExperiencia());
         assertEquals(10, entrenador.getExperiencia());
