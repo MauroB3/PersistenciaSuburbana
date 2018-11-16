@@ -8,6 +8,7 @@ import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
+import ar.edu.unq.epers.bichomon.backend.service.feed.FeedService;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionIncorrectaException;
 
@@ -20,12 +21,14 @@ public class MapaService {
     private CampeonDAO campeonDAO;
     private EntrenadorDAO entrenadorDAO;
     private UbicacionNeo4JDAO ubicacionNeo4JDAO;
+    private FeedService feedService;
 
-    public MapaService(UbicacionDAO ubicacionDAO, CampeonDAO campeonDAO, EntrenadorDAO entrenadorDAO, UbicacionNeo4JDAO ubicacionNeo4JDAO) {
+    public MapaService(UbicacionDAO ubicacionDAO, CampeonDAO campeonDAO, EntrenadorDAO entrenadorDAO, UbicacionNeo4JDAO ubicacionNeo4JDAO, FeedService feedService) {
         this.ubicacionDAO = ubicacionDAO;
         this.campeonDAO = campeonDAO;
         this.entrenadorDAO = entrenadorDAO;
         this.ubicacionNeo4JDAO = ubicacionNeo4JDAO;
+        this.feedService = feedService;
     }
 
     public void mover(String entrenador, String destino) {
@@ -35,7 +38,11 @@ public class MapaService {
 
             int costo = this.ubicacionNeo4JDAO.getCostoEntreUbicacionesLindantes(entrenadorR.ubicacion().getNombre(), destino);
 
+            this.feedService.guardarArribo(entrenador, destino, entrenadorR.ubicacion().getNombre());
+
             entrenadorR.mover(ubicacionNueva, costo);
+
+
             return null;
         });
     }

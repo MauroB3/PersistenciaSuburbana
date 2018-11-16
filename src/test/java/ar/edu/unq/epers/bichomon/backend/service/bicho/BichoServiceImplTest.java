@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
 import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
+import ar.edu.unq.epers.bichomon.backend.dao.mongodb.EventoDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.BasadoEnVictoria;
@@ -20,6 +21,7 @@ import ar.edu.unq.epers.bichomon.backend.service.condicion.CondicionServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.experiencia.ExperienciaServiceImpl;
+import ar.edu.unq.epers.bichomon.backend.service.feed.FeedService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
@@ -55,6 +57,8 @@ public class BichoServiceImplTest {
     private HibernateUbicacionDAO ubiDAO;
 
     private UbicacionNeo4JDAO ubicacionNeo4JDAO;
+
+    private FeedService feedService;
 
     private CondicionService condService;
 
@@ -121,6 +125,7 @@ public class BichoServiceImplTest {
         bichoDAO = new HibernateBichoDAO();
         entrenadorDAO = new HibernateEntrenadorDAO();
         ubicacionNeo4JDAO = new UbicacionNeo4JDAO();
+        feedService = new FeedService(new EventoDAO());
 
         nivelService = new NivelServiceImpl(nivelDAO);
         entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
@@ -130,7 +135,7 @@ public class BichoServiceImplTest {
         bichoService = new BichoServiceImpl(bichoDAO, entrenadorDAO, especieDAO, nivelService, ubiDAO, experienciaDAO);
         condService = new CondicionServiceImpl(condDAO);
         especieService = new EspecieServiceImpl(especieDAO);
-        mapaService = new MapaService(ubiDAO, campeonDAO, entrenadorDAO, ubicacionNeo4JDAO);
+        mapaService = new MapaService(ubiDAO, campeonDAO, entrenadorDAO, ubicacionNeo4JDAO, feedService);
 
         nivel1 = new Nivel(1,1,99);
         nivel2 = new Nivel(2,100,399);

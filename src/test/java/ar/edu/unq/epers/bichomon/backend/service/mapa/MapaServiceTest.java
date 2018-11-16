@@ -2,6 +2,7 @@ package ar.edu.unq.epers.bichomon.backend.service.mapa;
 
 import ar.edu.unq.epers.bichomon.backend.dao.BichoDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
+import ar.edu.unq.epers.bichomon.backend.dao.mongodb.EventoDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.NoHayCampeonHistoricoException;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
@@ -11,6 +12,7 @@ import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
+import ar.edu.unq.epers.bichomon.backend.service.feed.FeedService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
@@ -34,6 +36,8 @@ public class MapaServiceTest {
     private HibernateEntrenadorDAO entrenadorDAO;
     private EntrenadorService entrenadorService;
     private UbicacionNeo4JDAO ubicacionNeo4JDAO;
+    private FeedService feedService;
+    private EventoDAO eventoDAO;
 
     private Dojo dojo;
     private Dojo dojo2;
@@ -70,8 +74,10 @@ public class MapaServiceTest {
         campeonService = new CampeonService(campeonDAO);
         entrenadorDAO = new HibernateEntrenadorDAO();
         ubicacionNeo4JDAO = new UbicacionNeo4JDAO();
+        eventoDAO = new EventoDAO();
+        feedService = new FeedService(eventoDAO);
         bichoService = new BichoServiceImpl(new HibernateBichoDAO(), entrenadorDAO, new HibernateEspecieDAO(), nivelService, ubicacionDAO, new HibernateExperienciaDAO());
-        mapaService = new MapaService(ubicacionDAO, campeonDAO, entrenadorDAO, ubicacionNeo4JDAO);
+        mapaService = new MapaService(ubicacionDAO, campeonDAO, entrenadorDAO, ubicacionNeo4JDAO, feedService);
         entrenadorService = new EntrenadorService(entrenadorDAO,nivelService);
 
         dojo = new Dojo();
@@ -104,6 +110,7 @@ public class MapaServiceTest {
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
         ubicacionNeo4JDAO.destroy();
+        //this.eventoDAO.deleteAll();
     }
 
     @Test
