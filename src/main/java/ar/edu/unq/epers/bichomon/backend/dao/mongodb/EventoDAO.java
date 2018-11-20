@@ -12,7 +12,7 @@ public class EventoDAO extends GenericMongoDAO<Evento> {
 		super(Evento.class);
 	}
 
-	public List<Evento> getArribosDeEntrenador(String entrenadorNombre) {
+	public List<Evento> getEventosDeEntrenador(String entrenadorNombre) {
 		return this.find("{ entrenador: # }", entrenadorNombre);
 	}
 
