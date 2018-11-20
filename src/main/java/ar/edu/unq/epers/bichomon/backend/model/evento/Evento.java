@@ -22,6 +22,7 @@ public abstract class Evento {
         this.entrenador = entrenador;
         this.tipoEvento = tipoEvento;
         this.ubicacion = ubicacion;
+        this.fecha = LocalDate.now();
     }
 
     public String getId() {

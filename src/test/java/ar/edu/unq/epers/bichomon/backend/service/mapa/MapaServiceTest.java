@@ -76,7 +76,7 @@ public class MapaServiceTest {
         ubicacionNeo4JDAO = new UbicacionNeo4JDAO();
         eventoDAO = new EventoDAO();
         feedService = new FeedService(eventoDAO);
-        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), entrenadorDAO, new HibernateEspecieDAO(), nivelService, ubicacionDAO, new HibernateExperienciaDAO());
+        bichoService = new BichoServiceImpl(new HibernateBichoDAO(), entrenadorDAO, new HibernateEspecieDAO(), nivelService, ubicacionDAO, new HibernateExperienciaDAO(), feedService);
         mapaService = new MapaService(ubicacionDAO, campeonDAO, entrenadorDAO, ubicacionNeo4JDAO, feedService);
         entrenadorService = new EntrenadorService(entrenadorDAO,nivelService);
 
