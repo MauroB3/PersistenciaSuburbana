@@ -132,7 +132,7 @@ public class BichoServiceImplTest {
         especieDAO = new HibernateEspecieDAO();
         especieService = new EspecieServiceImpl(especieDAO);
         ubicacionService = new UbicacionServiceImp(ubiDAO);
-        bichoService = new BichoServiceImpl(bichoDAO, entrenadorDAO, especieDAO, nivelService, ubiDAO, experienciaDAO);
+        bichoService = new BichoServiceImpl(bichoDAO, entrenadorDAO, especieDAO, nivelService, ubiDAO, experienciaDAO, feedService);
         condService = new CondicionServiceImpl(condDAO);
         especieService = new EspecieServiceImpl(especieDAO);
         mapaService = new MapaService(ubiDAO, campeonDAO, entrenadorDAO, ubicacionNeo4JDAO, feedService);

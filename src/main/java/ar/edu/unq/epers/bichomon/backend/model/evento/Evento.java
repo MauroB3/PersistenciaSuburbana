@@ -3,6 +3,7 @@ package ar.edu.unq.epers.bichomon.backend.model.evento;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -23,7 +24,7 @@ public class Evento {
         this.entrenador = entrenador;
         this.tipoEvento = tipoEvento;
         this.ubicacion = ubicacion;
-        //this.fecha = LocalDate.now();
+        this.fecha = Date.from(Instant.now());
     }
 
     public String getId() {

@@ -12,6 +12,7 @@ import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.especie.EspecieService;
+import ar.edu.unq.epers.bichomon.backend.service.feed.FeedService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionIncorrectaException;
@@ -24,14 +25,16 @@ public class BichoServiceImpl implements BichoService{
     private NivelServiceImpl nivelService;
     private HibernateUbicacionDAO ubicacionDAO;
     private HibernateExperienciaDAO experienciaDAO;
+    private FeedService feedService;
 
-    public BichoServiceImpl(HibernateBichoDAO bichoDAO, HibernateEntrenadorDAO entrenadorDAO, HibernateEspecieDAO especieDAO, NivelServiceImpl nivelService, HibernateUbicacionDAO ubicacionDAO, HibernateExperienciaDAO experienciaDAO) {
+    public BichoServiceImpl(HibernateBichoDAO bichoDAO, HibernateEntrenadorDAO entrenadorDAO, HibernateEspecieDAO especieDAO, NivelServiceImpl nivelService, HibernateUbicacionDAO ubicacionDAO, HibernateExperienciaDAO experienciaDAO, FeedService feedService) {
         this.bichoDAO = bichoDAO;
         this.entrenadorDAO = entrenadorDAO;
         this.especieDAO = especieDAO;
         this.nivelService = nivelService;
         this.ubicacionDAO = ubicacionDAO;
         this.experienciaDAO = experienciaDAO;
+        this.feedService = feedService;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class BichoServiceImpl implements BichoService{
         return Runner.runInSession( () -> {
             Entrenador entrenador1 = entrenadorDAO.recuperar(entrenador);
             Bicho bichoEncontrado = entrenador1.ubicacion().buscar(entrenador1, nivelService.getNivelManager(), experienciaDAO.obtenerExperiencia("Captura"));
+            feedService.guardarCaptura(entrenador1.nombre(), bichoEncontrado.getEspecie().getNombre(), entrenador1.ubicacion().getNombre());
             return bichoEncontrado;
         });
     }
@@ -77,6 +81,7 @@ public class BichoServiceImpl implements BichoService{
            Entrenador ent = entrenadorDAO.recuperar(entrenador);
            Bicho bichoRetador = bichoDAO.recuperar(bicho);
            ResultadoCombate resultado = ent.duelo(bichoRetador, experienciaDAO.obtenerExperiencia("Combate"));
+           feedService.guardarCoronacion(resultado.getGanador().getEntrenador().nombre(), ent.ubicacion().getCampeon().getBicho().getEntrenador().nombre(), resultado.getGanador().getEntrenador().ubicacion().getNombre());
            ubicacionDAO.actualizarCampeon(ent.ubicacion(), resultado.getGanador());
            return resultado;
         });

@@ -16,4 +16,14 @@ public class FeedService {
         this.eventoDAO.save(eventoAGuardar);
     }
 
+    public void guardarCaptura(String nombreEntrenador, String nombreEspecieBicho, String nombreUbicacionOrigen){
+        Evento evento = new Captura(nombreEntrenador, nombreEspecieBicho, nombreUbicacionOrigen);
+        this.eventoDAO.save(evento);
+    }
+
+    public void guardarCoronacion(String nombreEntrenadorCoronado, String nombreEntrenadorDescoronado, String nombreUbicacionOrigen){
+        Evento evento = new Coronacion(nombreEntrenadorCoronado, nombreEntrenadorDescoronado, nombreUbicacionOrigen);
+        this.eventoDAO.save(evento);
+    }
+
 }
