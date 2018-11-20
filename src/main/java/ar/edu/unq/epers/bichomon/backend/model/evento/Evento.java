@@ -4,8 +4,9 @@ import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import java.time.LocalDate;
+import java.util.Date;
 
-public abstract class Evento {
+public class Evento {
 
     @MongoId
     @MongoObjectId
@@ -14,7 +15,7 @@ public abstract class Evento {
     private String entrenador;
     private String tipoEvento;
     private String ubicacion;
-    private LocalDate fecha;
+    private Date fecha;
 
     protected Evento() { }
 
@@ -22,6 +23,7 @@ public abstract class Evento {
         this.entrenador = entrenador;
         this.tipoEvento = tipoEvento;
         this.ubicacion = ubicacion;
+        //this.fecha = LocalDate.now();
     }
 
     public String getId() {
@@ -32,16 +34,12 @@ public abstract class Evento {
         return entrenador;
     }
 
-    public String getTipo() {
-        return tipoEvento;
-    }
+     public String getTipo() { return tipoEvento; }
 
     public String getUbicacion() {
         return ubicacion;
     }
 
-    public String getFecha() {
-        return fecha.toString();
-    }
+    public String getFecha() { return fecha.toString(); }
 
 }
