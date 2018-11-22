@@ -70,6 +70,7 @@ public class BichoServiceImpl implements BichoService{
             Bicho bicho = this.bichoDAO.recuperar(nroBicho);
             Entrenador entrenador = this.entrenadorDAO.recuperar(nombreEntrenador);
             entrenador.abandonarBicho(bicho);
+            feedService.guardarAbandono(nombreEntrenador, bicho.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
             return null;
         });
 

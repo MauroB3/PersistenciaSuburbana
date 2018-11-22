@@ -33,4 +33,9 @@ public class FeedService {
         this.eventoDAO.save(evento);
     }
 
+    public void guardarAbandono(String nombreEntrenador, String nombreEspecieBichoAbandonado, String nombreUbicacionOrigen){
+        Evento evento = new Abandono(nombreEntrenador, nombreEspecieBichoAbandonado, nombreUbicacionOrigen);
+        this.eventoDAO.save(evento);
+    }
+
 }

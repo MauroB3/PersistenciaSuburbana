@@ -47,6 +47,7 @@ public class FeedServiceTest {
         this.bicho = new Bicho(especie, entrenador);
     }
 
+
     @After
     public void cleanUp() {
         this.eventoDAO.deleteAll();
@@ -78,6 +79,15 @@ public class FeedServiceTest {
         List<Evento> eventoList = this.feedService.getEventosDeEntrenador(entrenador);
         assertEquals(1, eventoList.size());
         assertEquals("Coronacion", eventoList.get(0).getTipo());
+    }
+
+    @Test
+    public void guardarYRecuperarAbandono(){
+        this.feedService.guardarAbandono(entrenador.nombre(), especie.getNombre(), dojo.getNombre());
+
+        List<Evento> ls = this.feedService.getEventosDeEntrenador(entrenador);
+        assertEquals(1, ls.size());
+        assertEquals("Abandono", ls.get(0).getTipo());
     }
 
 }
