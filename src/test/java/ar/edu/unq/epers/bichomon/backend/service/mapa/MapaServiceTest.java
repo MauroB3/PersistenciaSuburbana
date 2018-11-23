@@ -111,7 +111,7 @@ public class MapaServiceTest {
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
         ubicacionNeo4JDAO.destroy();
-        //this.eventoDAO.deleteAll();
+        this.eventoDAO.deleteAll();
     }
 
     @Test

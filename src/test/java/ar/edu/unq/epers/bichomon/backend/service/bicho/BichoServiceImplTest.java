@@ -1,20 +1,15 @@
 package ar.edu.unq.epers.bichomon.backend.service.bicho;
 
-import ar.edu.unq.epers.bichomon.backend.dao.CampeonDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.impl.*;
-import ar.edu.unq.epers.bichomon.backend.dao.mongodb.EventoDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.BasadoEnVictoria;
 import ar.edu.unq.epers.bichomon.backend.model.condicion.Condicion;
-import ar.edu.unq.epers.bichomon.backend.model.duelo.Duelo;
 import ar.edu.unq.epers.bichomon.backend.model.duelo.ResultadoCombate;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
-import ar.edu.unq.epers.bichomon.backend.model.experiencia.Experiencia;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.Nivel;
-import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.condicion.CondicionService;
 import ar.edu.unq.epers.bichomon.backend.service.condicion.CondicionServiceImpl;
@@ -30,15 +25,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
-import org.mockito.cglib.core.Local;
-
 import java.time.LocalDate;
-
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class BichoServiceImplTest {
 
@@ -58,6 +48,7 @@ public class BichoServiceImplTest {
 
     private UbicacionNeo4JDAO ubicacionNeo4JDAO;
 
+    @Mock
     private FeedService feedService;
 
     private CondicionService condService;
@@ -116,6 +107,8 @@ public class BichoServiceImplTest {
 
     @Before
     public void setUp(){
+        MockitoAnnotations.initMocks(this);
+
         nivelDAO = new HibernateNivelDAO();
         experienciaDAO = new HibernateExperienciaDAO();
         experienciaService = new ExperienciaServiceImpl(experienciaDAO);
@@ -125,7 +118,6 @@ public class BichoServiceImplTest {
         bichoDAO = new HibernateBichoDAO();
         entrenadorDAO = new HibernateEntrenadorDAO();
         ubicacionNeo4JDAO = new UbicacionNeo4JDAO();
-        feedService = new FeedService(new EventoDAO(), entrenadorService, ubicacionNeo4JDAO);
 
         nivelService = new NivelServiceImpl(nivelDAO);
         entrenadorService = new EntrenadorService(entrenadorDAO);
@@ -190,6 +182,7 @@ public class BichoServiceImplTest {
         //Al tener hibernate configurado con esto <property name="hibernate.hbm2ddl.auto">create-drop</property>
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
         SessionFactoryProvider.destroy();
+        ubicacionNeo4JDAO.destroy();
     }
 
 
@@ -285,6 +278,7 @@ public class BichoServiceImplTest {
         assertEquals(1, entrenadorService.recuperar("Spore").cantidadBichos());
         assertEquals(1, ubicacionService.getUbicacion("Una guarderia").getCantidadBichosAbandonados());
         assertEquals(1, especieService.getEspecie("Onix").getPopularidad());
+        verify(feedService, times(1)).guardarAbandono(entrenador.nombre(), bicho1.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
     }
 
     @Test(expected = BichoNoPuedeSerAdoptado.class)
@@ -344,6 +338,7 @@ public class BichoServiceImplTest {
 
         assertEquals(3, entrenadorService.recuperar(entrenador.nombre()).cantidadBichos());
         assertEquals(1, entrenadorService.recuperar(entrenador2.nombre()).cantidadBichos());
+        verify(feedService, times(1)).guardarCaptura(entrenador.nombre(), "Charmander", guarderia.getNombre());
     }
 
     @Test(expected = BichoNoEncontradoException.class)
@@ -406,6 +401,7 @@ public class BichoServiceImplTest {
         assertEquals(20, entrenador.getExperiencia());
         assertEquals(20, entrenador2.getExperiencia());
 
+        //verify(feedService, times(1)).guardarCoronacion(entrenador.nombre(), entrenador2.nombre(), dojo.getNombre());
     }
 
     @Test(expected = EntrenadorNoPuedeAbandonarException.class)
