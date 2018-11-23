@@ -7,7 +7,6 @@ import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.NoHayCampeonHistoricoException;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.campeon.CampeonService;
@@ -19,6 +18,9 @@ import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
 
 import org.junit.*;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 
@@ -36,7 +38,6 @@ public class MapaServiceTest {
     private HibernateEntrenadorDAO entrenadorDAO;
     private EntrenadorService entrenadorService;
     private UbicacionNeo4JDAO ubicacionNeo4JDAO;
-    private FeedService feedService;
     private EventoDAO eventoDAO;
 
     private Dojo dojo;
@@ -51,7 +52,7 @@ public class MapaServiceTest {
     private Especie especie3 = new Especie("Squirtle");
 
     @Mock
-    private NivelManager nivelManager;
+    private FeedService feedService;
 
     private Entrenador entrenador;
 
@@ -67,6 +68,7 @@ public class MapaServiceTest {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         ubicacionDAO = new HibernateUbicacionDAO();
         ubicacionService = new UbicacionServiceImp(ubicacionDAO);
@@ -75,7 +77,6 @@ public class MapaServiceTest {
         entrenadorDAO = new HibernateEntrenadorDAO();
         ubicacionNeo4JDAO = new UbicacionNeo4JDAO();
         eventoDAO = new EventoDAO();
-        feedService = new FeedService(eventoDAO, entrenadorService, ubicacionNeo4JDAO);
         bichoService = new BichoServiceImpl(new HibernateBichoDAO(), entrenadorDAO, new HibernateEspecieDAO(), nivelService, ubicacionDAO, new HibernateExperienciaDAO(), feedService);
         mapaService = new MapaService(ubicacionDAO, campeonDAO, entrenadorDAO, ubicacionNeo4JDAO, feedService);
         entrenadorService = new EntrenadorService(entrenadorDAO);
@@ -128,6 +129,7 @@ public class MapaServiceTest {
         assertEquals(0, ubicacionService.getUbicacion("Un dojo").getPoblacion());
         assertEquals(4, this.entrenadorService.recuperar(entrenador.nombre()).getMonedas());
         assertEquals("Una guarderia", this.entrenadorService.recuperar(entrenador.nombre()).ubicacion().getNombre());
+        verify(feedService, times(1)).guardarArribo("entrenador", "Una guarderia", "un dojo");
     }
 
     @Test
