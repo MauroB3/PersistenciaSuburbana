@@ -189,6 +189,21 @@ public class MapaServiceTest {
     }
 
     @Test(expected = UbicacionMuyLejanaException.class)
+    public void moverMasCortoArrojaException() {
+        mapaService.crearUbicacion(dojo);
+        mapaService.crearUbicacion(dojo2);
+        mapaService.crearUbicacion(dojo3);
+
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo2.getNombre(), "tierra");
+
+        entrenador.setMonedas(20);
+        entrenadorService.guardar(entrenador);
+
+        mapaService.moverMasCorto(entrenador.nombre(), dojo3.getNombre());
+    }
+
+
+    @Test(expected = UbicacionMuyLejanaException.class)
     public void ubicacionMuyLejana() {
         mapaService.crearUbicacion(dojo);
         mapaService.crearUbicacion(dojo2);
