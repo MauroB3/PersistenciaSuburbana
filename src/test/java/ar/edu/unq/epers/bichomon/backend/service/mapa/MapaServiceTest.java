@@ -130,6 +130,20 @@ public class MapaServiceTest {
         mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), "tierra");
     }
 
+    @Test
+    public void testConectados() {
+        mapaService.crearUbicacion(dojo);
+        mapaService.crearUbicacion(dojo2);
+        mapaService.crearUbicacion(dojo3);
+        mapaService.crearUbicacion(guarderia);
+
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo2.getNombre(), "tierra");
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo3.getNombre(), "tierra");
+        ubicacionNeo4JDAO.conectar(dojo2.getNombre(), guarderia.getNombre(), "tierra");
+
+        assertEquals(2, mapaService.conectados(dojo.getNombre(), "tierra").size());
+    }
+
 
 
 

@@ -47,7 +47,7 @@ public class HibernateUbicacionDAO implements UbicacionDAO {
     public List<Ubicacion> recuperarTodos(List<String> nombresDeUbicaciones) {
         Session session = Runner.getCurrentSession();
 
-        String hql = 	"from Ubicacion u where u.nombre in :nombresDeUbicacion";
+        String hql = 	"from Ubicacion u where u.Nombre in :nombresDeUbicacion";
 
         Query<Ubicacion> query = session.createQuery(hql, Ubicacion.class).setParameter("nombresDeUbicacion", nombresDeUbicaciones);
 
