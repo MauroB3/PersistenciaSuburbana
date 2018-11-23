@@ -14,6 +14,7 @@ import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.feed.FeedService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
+import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionNoExistente;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
 
 import org.junit.*;
@@ -115,6 +116,35 @@ public class MapaServiceTest {
     }
 
     @Test
+    public void testConectar() {
+        mapaService.crearUbicacion(dojo);
+        mapaService.crearUbicacion(guarderia);
+
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
+
+        assertEquals(CostoCamino.valueOf("tierra").getValue(), ubicacionNeo4JDAO.getCostoEntreUbicacionesLindantes(dojo.getNombre(), guarderia.getNombre()));
+    }
+
+    @Test(expected = UbicacionNoExistente.class)
+    public void testConectarArrojaException() {
+        mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
+    }
+
+    @Test
+    public void testConectados() {
+        mapaService.crearUbicacion(dojo);
+        mapaService.crearUbicacion(dojo2);
+        mapaService.crearUbicacion(dojo3);
+        mapaService.crearUbicacion(guarderia);
+
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo3.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(dojo2.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
+
+        assertEquals(2, mapaService.conectados(dojo.getNombre(), CostoCamino.tierra).size());
+    }
+
+    @Test
     public void mover() {
         mapaService.crearUbicacion(dojo);
         mapaService.crearUbicacion(guarderia);
@@ -181,7 +211,6 @@ public class MapaServiceTest {
 
         mapaService.mover("entrenador", "otro dojo");
     }
-
 
 
     @Test

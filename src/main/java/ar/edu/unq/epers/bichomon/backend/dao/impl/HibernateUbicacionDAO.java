@@ -5,6 +5,7 @@ import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
+import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionNoExistente;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -46,7 +47,7 @@ public class HibernateUbicacionDAO implements UbicacionDAO {
     public List<Ubicacion> recuperarTodos(List<String> nombresDeUbicaciones) {
         Session session = Runner.getCurrentSession();
 
-        String hql = 	"from Ubicacion u where u.nombre in :nombresDeUbicacion";
+        String hql = 	"from Ubicacion u where u.Nombre in :nombresDeUbicacion";
 
         Query<Ubicacion> query = session.createQuery(hql, Ubicacion.class).setParameter("nombresDeUbicacion", nombresDeUbicaciones);
 

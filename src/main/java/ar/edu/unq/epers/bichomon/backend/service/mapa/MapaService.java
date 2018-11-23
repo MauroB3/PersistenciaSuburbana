@@ -12,6 +12,7 @@ import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.feed.FeedService;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionIncorrectaException;
+import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionNoExistente;
 
 import java.util.List;
 
@@ -103,8 +104,15 @@ public class MapaService {
 
     public void conectar(String ubicacion1, String ubicacion2, CostoCamino costoCamino) {
         Runner.runInSession( () -> {
-            this.ubicacionNeo4JDAO.conectar(ubicacion1, ubicacion2, costoCamino);
-
+            if(null == this.ubicacionDAO.recuperar(ubicacion1)) {
+                throw new UbicacionNoExistente(ubicacion1);
+            }
+            else if(null == this.ubicacionDAO.recuperar(ubicacion2)) {
+                throw new UbicacionNoExistente(ubicacion2);
+            }
+            else {
+                this.ubicacionNeo4JDAO.conectar(ubicacion1, ubicacion2, costoCamino);
+            }
             return null;
         });
     }
