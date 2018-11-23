@@ -55,6 +55,8 @@ public class MapaService {
 
             int costo = ubicacionNeo4JDAO.getCostoCaminoMasCorto(ent.ubicacion().getNombre(), ubicacion.getNombre());
 
+            this.feedService.guardarArribo(entrenador, destino, ent.ubicacion().getNombre());
+
             ent.mover(ubicacion, costo);
 
             return null;

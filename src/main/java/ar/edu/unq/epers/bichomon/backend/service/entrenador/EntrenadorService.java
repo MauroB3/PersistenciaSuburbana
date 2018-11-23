@@ -12,7 +12,7 @@ public class EntrenadorService {
 
     private HibernateEntrenadorDAO entrenadorDAO;
 
-    public EntrenadorService(HibernateEntrenadorDAO entrenadorDAO, NivelServiceImpl nivelService) {
+    public EntrenadorService(HibernateEntrenadorDAO entrenadorDAO) {
         this.entrenadorDAO = entrenadorDAO;
     }
 

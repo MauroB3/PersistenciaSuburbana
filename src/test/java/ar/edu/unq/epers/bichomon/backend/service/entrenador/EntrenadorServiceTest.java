@@ -32,7 +32,7 @@ public class EntrenadorServiceTest {
     public void setUp() {
         nivelService = new NivelServiceImpl(new HibernateNivelDAO());
         entrenadorDAO = new HibernateEntrenadorDAO();
-        entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
+        entrenadorService = new EntrenadorService(entrenadorDAO);
         dojo = new Dojo();
         dojo.setNombre("Un dojo");
         entrenador = new Entrenador("Spore", dojo);

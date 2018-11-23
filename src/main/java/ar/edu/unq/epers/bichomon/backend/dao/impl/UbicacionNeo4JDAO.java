@@ -13,7 +13,7 @@ public class UbicacionNeo4JDAO {
     private Driver driver;
 
     public UbicacionNeo4JDAO() {
-        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "root" ) );
+        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "1k3R1" ) );
     }
 
     public void crearUbicacion(Ubicacion ubicacion) {
@@ -53,6 +53,25 @@ public class UbicacionNeo4JDAO {
                     "return x";
             StatementResult result = session.run(query, Values.parameters("nombreOrigen", ubicacion,
                     "medio", tipoCamino));
+
+            return result.list(record -> {
+                Value hijo = record.get(0);
+                String nombre = hijo.get("nombre").asString();
+                return nombre;
+            });
+        } finally {
+            session.close();
+        }
+    }
+
+    public List<String> conectados(String ubicacion){
+        Session session = this.driver.session();
+
+        try {
+            String query = "match (n:Ubicacion {nombre: {nombreOrigen}})" +
+                    "match (n)-[r:Camino]->(x)" +
+                    "return x";
+            StatementResult result = session.run(query, Values.parameters("nombreOrigen", ubicacion));
 
             return result.list(record -> {
                 Value hijo = record.get(0);

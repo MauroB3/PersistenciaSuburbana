@@ -62,6 +62,19 @@ public class GenericMongoDAO<T> {
 		iterable.forEach(x -> result.add(x));
 		return result;
 	}
+
+	public List<T> findInOrder(String query, String order, Object... parameters) {
+		try {
+			MongoCursor<T> all = this.mongoCollection.find(query, parameters).sort(order).as(this.entityType);
+
+			List<T> result = this.copyToList(all);
+			all.close();
+
+			return result;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 }
 

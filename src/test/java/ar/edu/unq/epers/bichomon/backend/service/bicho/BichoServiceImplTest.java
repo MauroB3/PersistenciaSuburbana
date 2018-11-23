@@ -125,10 +125,10 @@ public class BichoServiceImplTest {
         bichoDAO = new HibernateBichoDAO();
         entrenadorDAO = new HibernateEntrenadorDAO();
         ubicacionNeo4JDAO = new UbicacionNeo4JDAO();
-        feedService = new FeedService(new EventoDAO());
+        feedService = new FeedService(new EventoDAO(), entrenadorService, ubicacionNeo4JDAO);
 
         nivelService = new NivelServiceImpl(nivelDAO);
-        entrenadorService = new EntrenadorService(entrenadorDAO, nivelService);
+        entrenadorService = new EntrenadorService(entrenadorDAO);
         especieDAO = new HibernateEspecieDAO();
         especieService = new EspecieServiceImpl(especieDAO);
         ubicacionService = new UbicacionServiceImp(ubiDAO);

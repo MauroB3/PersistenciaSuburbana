@@ -11,6 +11,7 @@ import ar.edu.unq.epers.bichomon.backend.model.especie.TipoBicho;
 import ar.edu.unq.epers.bichomon.backend.model.nivel.NivelManager;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
 import ar.edu.unq.epers.bichomon.backend.service.bicho.BichoServiceImpl;
+import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.feed.FeedService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
@@ -77,7 +78,7 @@ public class EspecieServiceImplTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        feedService = new FeedService(new EventoDAO());
+        feedService = new FeedService(new EventoDAO(), new EntrenadorService(new HibernateEntrenadorDAO()), new UbicacionNeo4JDAO() );
         when(nivelService.getNivelManager()).thenReturn(nivelManager);
         when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
         hibernateEspecieDAO = new HibernateEspecieDAO();

@@ -75,10 +75,10 @@ public class MapaServiceTest {
         entrenadorDAO = new HibernateEntrenadorDAO();
         ubicacionNeo4JDAO = new UbicacionNeo4JDAO();
         eventoDAO = new EventoDAO();
-        feedService = new FeedService(eventoDAO);
+        feedService = new FeedService(eventoDAO, entrenadorService, ubicacionNeo4JDAO);
         bichoService = new BichoServiceImpl(new HibernateBichoDAO(), entrenadorDAO, new HibernateEspecieDAO(), nivelService, ubicacionDAO, new HibernateExperienciaDAO(), feedService);
         mapaService = new MapaService(ubicacionDAO, campeonDAO, entrenadorDAO, ubicacionNeo4JDAO, feedService);
-        entrenadorService = new EntrenadorService(entrenadorDAO,nivelService);
+        entrenadorService = new EntrenadorService(entrenadorDAO);
 
         dojo = new Dojo();
         dojo.setNombre("un dojo");

@@ -2,17 +2,17 @@ package ar.edu.unq.epers.bichomon.backend.model.evento;
 
 public class Arribo extends Evento {
 
-    private String ubicacionOrigen;
+    private String ubicacionDestino;
 
     protected Arribo() {}
 
     public Arribo(String entrenador, String ubicacionDestino, String ubicacionOrigen) {
-        super(entrenador, "Arribo", ubicacionDestino);
-        this.ubicacionOrigen = ubicacionOrigen;
+        super(entrenador, "Arribo", ubicacionOrigen);
+        this.ubicacionDestino = ubicacionDestino;
     }
 
-    public String getUbicacionOrigen() {
-        return ubicacionOrigen;
+    public String getUbicacionDestino() {
+        return ubicacionDestino;
     }
 
 }
