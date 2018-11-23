@@ -11,10 +11,7 @@ import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
 import ar.edu.unq.epers.bichomon.backend.model.evento.Arribo;
 import ar.edu.unq.epers.bichomon.backend.model.evento.Evento;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Dojo;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Pueblo;
-import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
@@ -128,9 +125,9 @@ public class FeedServiceTest {
     public void feedEntrenadorTest() {
         entrenador.mover(dojo, 0);
 
-        mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), "tierra");
-        mapaService.conectar(dojo.getNombre(), pueblo.getNombre(), "tierra");
-        mapaService.conectar(pueblo.getNombre(), dojo2.getNombre(), "tierra");
+        mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
+        mapaService.conectar(dojo.getNombre(), pueblo.getNombre(), CostoCamino.tierra);
+        mapaService.conectar(pueblo.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
 
         this.feedService.guardarCaptura(entrenador.nombre(), bicho.getEspecie().getNombre(), pueblo.getNombre());
         this.feedService.guardarAbandono(entrenador.nombre(), especie.getNombre(), dojo.getNombre());
@@ -146,9 +143,9 @@ public class FeedServiceTest {
     public void feedUbicacionTest() {
         entrenador.mover(dojo, 0);
 
-        mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), "tierra");
-        mapaService.conectar(dojo.getNombre(), pueblo.getNombre(), "tierra");
-        mapaService.conectar(pueblo.getNombre(), dojo2.getNombre(), "tierra");
+        mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
+        mapaService.conectar(dojo.getNombre(), pueblo.getNombre(), CostoCamino.tierra);
+        mapaService.conectar(pueblo.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
 
         this.feedService.guardarCaptura(entrenador.nombre(), bicho.getEspecie().getNombre(), pueblo.getNombre());
         this.feedService.guardarAbandono(entrenador.nombre(), especie.getNombre(), dojo.getNombre());

@@ -41,7 +41,7 @@ public class UbicacionNeo4JDAOTest {
         guarderia2.setNombre("Guarderia2");
         this.dao.crearUbicacion(guarderia2);
 
-        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), "tierra");
+        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), CostoCamino.tierra);
 
     }
 
@@ -67,12 +67,12 @@ public class UbicacionNeo4JDAOTest {
         guarderia5.setNombre("Guarderia5");
         this.dao.crearUbicacion(guarderia5);
 
-        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), "tierra");
-        this.dao.conectar(guarderia1.getNombre(), guarderia3.getNombre(), "aire");
-        this.dao.conectar(guarderia1.getNombre(), guarderia4.getNombre(), "tierra");
-        this.dao.conectar(guarderia4.getNombre(), guarderia5.getNombre(), "tierra");
+        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), CostoCamino.tierra);
+        this.dao.conectar(guarderia1.getNombre(), guarderia3.getNombre(), CostoCamino.tierra);
+        this.dao.conectar(guarderia1.getNombre(), guarderia4.getNombre(), CostoCamino.tierra);
+        this.dao.conectar(guarderia4.getNombre(), guarderia5.getNombre(), CostoCamino.tierra);
 
-        List<String> ubicaciones = this.dao.conectados(guarderia1.getNombre(), "tierra");
+        List<String> ubicaciones = this.dao.conectados(guarderia1.getNombre(), CostoCamino.tierra);
         assertEquals(2, ubicaciones.size());
         assertTrue(ubicaciones.contains(guarderia2.getNombre()));
         assertFalse(ubicaciones.contains(guarderia3.getNombre()));
@@ -89,8 +89,8 @@ public class UbicacionNeo4JDAOTest {
         guarderia2.setNombre("Guarderia2");
         this.dao.crearUbicacion(guarderia2);
 
-        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), "aire");
-        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), "tierra");
+        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), CostoCamino.aire);
+        this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), CostoCamino.tierra);
 
         assertEquals(CostoCamino.valueOf("tierra").getValue(), this.dao.getCostoEntreUbicacionesLindantes(guarderia1.getNombre(), guarderia2.getNombre()));
     }
@@ -109,8 +109,8 @@ public class UbicacionNeo4JDAOTest {
         guarderia5.setNombre("Guarderia5");
         this.dao.crearUbicacion(guarderia5);
 
-        this.dao.conectar(guarderia1.getNombre(), guarderia4.getNombre(), "tierra");
-        this.dao.conectar(guarderia4.getNombre(), guarderia5.getNombre(), "tierra");
+        this.dao.conectar(guarderia1.getNombre(), guarderia4.getNombre(), CostoCamino.tierra);
+        this.dao.conectar(guarderia4.getNombre(), guarderia5.getNombre(), CostoCamino.tierra);
 
         this.dao.getCostoEntreUbicacionesLindantes(guarderia1.getNombre(), guarderia5.getNombre());
     }

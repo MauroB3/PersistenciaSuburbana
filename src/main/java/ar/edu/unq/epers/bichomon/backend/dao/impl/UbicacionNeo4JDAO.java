@@ -27,7 +27,7 @@ public class UbicacionNeo4JDAO {
         }
     }
 
-    public void conectar(String origen, String destino, String tipoCamino) {
+    public void conectar(String origen, String destino, CostoCamino costoCamino) {
         Session session = this.driver.session();
 
         try {
@@ -36,14 +36,14 @@ public class UbicacionNeo4JDAO {
                     "MERGE (origen)-[r:Camino {medio: {medio}, costo: {costo}}]->(destino) ";
             session.run(query, Values.parameters("nombreOrigen", origen,
                     "nombreDestino", destino,
-                    "medio", tipoCamino,
-                    "costo", CostoCamino.valueOf(tipoCamino).getValue()));
+                    "medio", costoCamino.name(),
+                    "costo", costoCamino.getValue()));
         } finally {
             session.close();
         }
     }
 
-    public List<String> conectados(String ubicacion, String tipoCamino){
+    public List<String> conectados(String ubicacion, CostoCamino costoCamino){
         Session session = this.driver.session();
 
         try {
@@ -52,7 +52,7 @@ public class UbicacionNeo4JDAO {
                     "where r.medio = {medio}" +
                     "return x";
             StatementResult result = session.run(query, Values.parameters("nombreOrigen", ubicacion,
-                    "medio", tipoCamino));
+                    "medio", costoCamino.name()));
 
             return result.list(record -> {
                 Value hijo = record.get(0);

@@ -99,7 +99,7 @@ public class BichoServiceImpl implements BichoService{
     public Bicho evolucionar(String entrenador, int idBicho) {
         return Runner.runInSession(() -> {
             Bicho bicho = bichoDAO.recuperar(idBicho);
-            bicho.evolucionar(especieDAO.siguienteEvolucion(bicho.getEspecie()), nivelService.getNivelManager(), experienciaDAO.obtenerExperiencia("Evolucion"));
+            bicho.evolucionar(nivelService.getNivelManager(), experienciaDAO.obtenerExperiencia("Evolucion"));
             return bicho;
         });
     }

@@ -7,6 +7,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.UbicacionNeo4JDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.CostoCamino;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.feed.FeedService;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
@@ -100,18 +101,18 @@ public class MapaService {
         });
     }
 
-    public void conectar(String ubicacion1, String ubicacion2, String tipoCamino) {
+    public void conectar(String ubicacion1, String ubicacion2, CostoCamino costoCamino) {
         Runner.runInSession( () -> {
-            this.ubicacionNeo4JDAO.conectar(ubicacion1, ubicacion2, tipoCamino);
+            this.ubicacionNeo4JDAO.conectar(ubicacion1, ubicacion2, costoCamino);
 
             return null;
         });
     }
 
-    public List<Ubicacion> conectados(String nombreUbicacion, String tipoCamino) {
+    public List<Ubicacion> conectados(String nombreUbicacion, CostoCamino costoCamino) {
         return Runner.runInSession(() -> {
 
-            List<String> nombresDeUbicaciones = this.ubicacionNeo4JDAO.conectados(nombreUbicacion, tipoCamino);
+            List<String> nombresDeUbicaciones = this.ubicacionNeo4JDAO.conectados(nombreUbicacion, costoCamino);
 
             return this.ubicacionDAO.recuperarTodos(nombresDeUbicaciones);
         });

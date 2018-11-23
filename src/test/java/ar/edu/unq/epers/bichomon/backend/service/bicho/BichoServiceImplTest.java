@@ -383,8 +383,8 @@ public class BichoServiceImplTest {
         mapaService.crearUbicacion(dojo);
 
 
-        mapaService.conectar(guarderia.getNombre(), dojo.getNombre(), "tierra");
-        mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), "tierra");
+        mapaService.conectar(guarderia.getNombre(), dojo.getNombre(), CostoCamino.tierra);
+        mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
 
         mapaService.mover(entrenador.nombre(), dojo.getNombre());
         mapaService.mover(entrenador2.nombre(), dojo.getNombre());

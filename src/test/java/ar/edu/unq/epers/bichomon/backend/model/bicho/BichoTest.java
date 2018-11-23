@@ -43,6 +43,8 @@ public class BichoTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        when(especieAgua.getNombre()).thenReturn("Squirtle");
+        when(especieAgua.getSiguienteEvolucion()).thenReturn("Wartortle");
         when(nivelService.getNivelManager()).thenReturn(nivelManager);
         when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
         bicho = new Bicho(especieAgua, entrenador);
@@ -90,9 +92,9 @@ public class BichoTest {
         when(especieAgua.puedeEvolucionar(bicho, nivelManager)).thenReturn(true);
         when(especieAgua.tieneSiguienteEvolucion()).thenReturn(true);
 
-        bicho.evolucionar(especieAguaEvolucion, nivelManager, 5);
+        bicho.evolucionar(nivelManager, 5);
 
-        assertEquals(especieAguaEvolucion, bicho.getEspecie());
+        assertEquals(especieAgua.getSiguienteEvolucion(), bicho.getEspecie().getNombre());
     }
 
     @Test
