@@ -194,7 +194,7 @@ public class MapaServiceTest {
         mapaService.crearUbicacion(dojo2);
         mapaService.crearUbicacion(dojo3);
 
-        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo2.getNombre(), "tierra");
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
 
         entrenador.setMonedas(20);
         entrenadorService.guardar(entrenador);
