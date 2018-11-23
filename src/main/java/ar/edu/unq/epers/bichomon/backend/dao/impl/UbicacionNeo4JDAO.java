@@ -13,7 +13,7 @@ public class UbicacionNeo4JDAO {
     private Driver driver;
 
     public UbicacionNeo4JDAO() {
-        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "1k3R1" ) );
+        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "root", "root") );
     }
 
     public void crearUbicacion(Ubicacion ubicacion) {

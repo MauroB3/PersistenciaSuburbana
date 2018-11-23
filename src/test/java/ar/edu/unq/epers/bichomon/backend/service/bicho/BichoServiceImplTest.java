@@ -156,6 +156,8 @@ public class BichoServiceImplTest {
         guarderia = new Guarderia();
         guarderia.setNombre("Una guarderia");
 
+        mapaService.crearUbicacion(guarderia);
+
         condVic = new BasadoEnVictoria(5);
         especie = new Especie("Onix", null,TipoBicho.CHOCOLATE, condVic,257,300,9999999, null);
         especie2 = new Especie("Charmander", "Charmeleon", TipoBicho.FUEGO, condVic, 55, 75, 110, null);
@@ -381,7 +383,7 @@ public class BichoServiceImplTest {
         Campeon campeon = dojo.actualizarYRetornarCampeon(bichoCampeon,LocalDate.now());
 
         mapaService.crearUbicacion(dojo);
-        //mapaService.crearUbicacion(guarderia);
+
 
         mapaService.conectar(guarderia.getNombre(), dojo.getNombre(), "tierra");
         mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), "tierra");
@@ -401,7 +403,7 @@ public class BichoServiceImplTest {
         assertEquals(20, entrenador.getExperiencia());
         assertEquals(20, entrenador2.getExperiencia());
 
-        //verify(feedService, times(1)).guardarCoronacion(entrenador.nombre(), entrenador2.nombre(), dojo.getNombre());
+        verify(feedService, times(1)).guardarCoronacion(entrenador.nombre(), entrenador2.nombre(), dojo.getNombre());
     }
 
     @Test(expected = EntrenadorNoPuedeAbandonarException.class)
