@@ -14,6 +14,7 @@ import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.feed.FeedService;
 import ar.edu.unq.epers.bichomon.backend.service.nivel.NivelServiceImpl;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
+import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionNoExistente;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionServiceImp;
 
 import org.junit.*;
@@ -115,6 +116,24 @@ public class MapaServiceTest {
     }
 
     @Test
+    public void testConectar() {
+        mapaService.crearUbicacion(dojo);
+        mapaService.crearUbicacion(guarderia);
+
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), "tierra");
+
+        assertEquals(CostoCamino.valueOf("tierra").getValue(), ubicacionNeo4JDAO.getCostoEntreUbicacionesLindantes(dojo.getNombre(), guarderia.getNombre()));
+    }
+
+    @Test(expected = UbicacionNoExistente.class)
+    public void testConectarArrojaException() {
+        mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), "tierra");
+    }
+
+
+
+
+    @Test
     public void mover() {
         mapaService.crearUbicacion(dojo);
         mapaService.crearUbicacion(guarderia);
@@ -181,7 +200,6 @@ public class MapaServiceTest {
 
         mapaService.mover("entrenador", "otro dojo");
     }
-
 
 
     @Test
