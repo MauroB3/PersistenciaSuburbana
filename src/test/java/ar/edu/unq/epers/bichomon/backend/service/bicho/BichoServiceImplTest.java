@@ -263,7 +263,6 @@ public class BichoServiceImplTest {
     @Test
     public void abandonarBicho() {
 
-        ubicacionService.crearUbicacion(guarderia);
         entrenadorService.guardar(entrenador);
         especieService.crearEspecie(especie);
         especieService.crearEspecie(especie2);
@@ -286,7 +285,6 @@ public class BichoServiceImplTest {
     @Test(expected = BichoNoPuedeSerAdoptado.class)
     public void noPuedeAdoptarBichoQueYaAbandonoAntes() {
 
-        ubicacionService.crearUbicacion(guarderia);
         entrenadorService.guardar(entrenador);
         especieService.crearEspecie(especie);
         especieService.crearEspecie(especie2);
@@ -315,7 +313,7 @@ public class BichoServiceImplTest {
 
     @Test
     public void testAdoptarBicho(){
-        ubicacionService.crearUbicacion(guarderia);
+
         entrenadorService.guardar(entrenador2);
         entrenadorService.guardar(entrenador);
         especieService.crearEspecie(especie);
@@ -345,7 +343,7 @@ public class BichoServiceImplTest {
 
     @Test(expected = BichoNoEncontradoException.class)
     public void noPuedeAdoptarBichoPorqueNoHayBichosEnGuarderia(){
-        ubicacionService.crearUbicacion(guarderia);
+
         entrenadorService.guardar(entrenador2);
         entrenadorService.guardar(entrenador);
         especieService.crearEspecie(especie);
@@ -408,7 +406,7 @@ public class BichoServiceImplTest {
 
     @Test(expected = EntrenadorNoPuedeAbandonarException.class)
     public void entrenadorNoPuedeAbandonarException() {
-        ubicacionService.crearUbicacion(guarderia);
+
         entrenadorService.guardar(entrenador);
         especieService.crearEspecie(especie);
         Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
