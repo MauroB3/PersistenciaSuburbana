@@ -122,7 +122,7 @@ public class MapaServiceTest {
 
         ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
 
-        assertEquals(CostoCamino.valueOf("tierra").getValue(), ubicacionNeo4JDAO.getCostoEntreUbicacionesLindantes(dojo.getNombre(), guarderia.getNombre()));
+        assertEquals(CostoCamino.valueOf("tierra").getValue(), ubicacionNeo4JDAO.getCostoEntreUbicaciones(dojo.getNombre(), guarderia.getNombre()));
     }
 
     @Test(expected = UbicacionNoExistente.class)
@@ -148,7 +148,9 @@ public class MapaServiceTest {
     public void mover() {
         mapaService.crearUbicacion(dojo);
         mapaService.crearUbicacion(guarderia);
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.aire);
         ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.mar);
         entrenador.setMonedas(5);
         entrenadorService.guardar(entrenador);
 
@@ -160,6 +162,22 @@ public class MapaServiceTest {
         assertEquals(4, this.entrenadorService.recuperar(entrenador.nombre()).getMonedas());
         assertEquals("Una guarderia", this.entrenadorService.recuperar(entrenador.nombre()).ubicacion().getNombre());
         verify(feedService, times(1)).guardarArribo("entrenador", "Una guarderia", "un dojo");
+    }
+
+    @Test
+    public void moverConMasDeUnSalto() {
+        mapaService.crearUbicacion(dojo);
+        mapaService.crearUbicacion(dojo2);
+        mapaService.crearUbicacion(guarderia);
+
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.aire);
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(dojo2.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
+        entrenador.setMonedas(5);
+        entrenadorService.guardar(entrenador);
+
+        mapaService.mover("entrenador", "Una guarderia");
+        assertEquals(3, this.entrenadorService.recuperar(entrenador.nombre()).getMonedas());
     }
 
     @Test

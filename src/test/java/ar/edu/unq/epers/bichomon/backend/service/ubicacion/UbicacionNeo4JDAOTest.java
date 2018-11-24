@@ -80,7 +80,7 @@ public class UbicacionNeo4JDAOTest {
     }
 
     @Test
-    public void costoEntreUbicacionesLindantes() {
+    public void costoEntreUbicaciones() {
         Ubicacion guarderia1 = new Guarderia();
         guarderia1.setNombre("Guarderia1");
         this.dao.crearUbicacion(guarderia1);
@@ -92,7 +92,7 @@ public class UbicacionNeo4JDAOTest {
         this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), CostoCamino.aire);
         this.dao.conectar(guarderia1.getNombre(), guarderia2.getNombre(), CostoCamino.tierra);
 
-        assertEquals(CostoCamino.valueOf("tierra").getValue(), this.dao.getCostoEntreUbicacionesLindantes(guarderia1.getNombre(), guarderia2.getNombre()));
+        assertEquals(CostoCamino.valueOf("tierra").getValue(), this.dao.getCostoEntreUbicaciones(guarderia1.getNombre(), guarderia2.getNombre()));
     }
 
     @Test(expected = UbicacionMuyLejanaException.class)
@@ -112,7 +112,7 @@ public class UbicacionNeo4JDAOTest {
         this.dao.conectar(guarderia1.getNombre(), guarderia4.getNombre(), CostoCamino.tierra);
         this.dao.conectar(guarderia4.getNombre(), guarderia5.getNombre(), CostoCamino.tierra);
 
-        this.dao.getCostoEntreUbicacionesLindantes(guarderia1.getNombre(), guarderia5.getNombre());
+        this.dao.getCostoEntreUbicaciones(guarderia1.getNombre(), guarderia5.getNombre());
     }
 
 

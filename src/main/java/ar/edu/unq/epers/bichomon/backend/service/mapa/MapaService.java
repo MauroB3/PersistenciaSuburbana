@@ -39,7 +39,7 @@ public class MapaService {
             Entrenador entrenadorR = entrenadorDAO.recuperar(entrenador);
             Ubicacion ubicacionNueva = ubicacionDAO.recuperar(destino);
 
-            int costo = this.ubicacionNeo4JDAO.getCostoEntreUbicacionesLindantes(entrenadorR.ubicacion().getNombre(), destino);
+            int costo = this.ubicacionNeo4JDAO.getCostoEntreUbicaciones(entrenadorR.ubicacion().getNombre(), destino);
 
             this.feedService.guardarArribo(entrenador, destino, entrenadorR.ubicacion().getNombre());
 

@@ -13,7 +13,7 @@ public class UbicacionNeo4JDAO {
     private Driver driver;
 
     public UbicacionNeo4JDAO() {
-        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "root", "root") );
+        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "1k3R1") );
     }
 
     public void crearUbicacion(Ubicacion ubicacion) {
@@ -83,14 +83,15 @@ public class UbicacionNeo4JDAO {
         }
     }
 
-    public int getCostoEntreUbicacionesLindantes(String origen, String destino) {
+    public int getCostoEntreUbicaciones(String origen, String destino) {
         Session session = this.driver.session();
 
         try {
             String query = 	"MATCH (o:Ubicacion {nombre: {nombreOrigen}})" +
                     "MATCH (d:Ubicacion {nombre: {nombreDestino}})" +
-                    "MATCH (o)-[r:Camino]->(d)" +
-                    "RETURN r.costo as costo";
+                    "MATCH p = (o)-[Camino*]->(d)" +
+                    "RETURN reduce(costoTotal = 0, c in rels(p) | costoTotal + toInt(c.costo)) as costo";
+
 
             StatementResult result = session.run(query, Values.parameters("nombreOrigen",  origen, "nombreDestino", destino));
 
@@ -98,11 +99,7 @@ public class UbicacionNeo4JDAO {
                 throw new UbicacionMuyLejanaException(origen, destino);
             }
             else {
-                int costo = result.next().get("costo").asInt();
-                for(Record record : result.list()) {
-                    if(record.get("costo").asInt() < costo) { costo = record.get("costo").asInt(); }
-                }
-                return costo;
+                return result.next().get("costo").asInt();
             }
         }
         finally {
