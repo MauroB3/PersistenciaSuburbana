@@ -116,7 +116,7 @@ public class MapaServiceTest {
     }
 
     @Test
-    public void testConectar() {
+    public void testConectar() throws Exception {
         mapaService.crearUbicacion(dojo);
         mapaService.crearUbicacion(guarderia);
 
@@ -147,37 +147,27 @@ public class MapaServiceTest {
     @Test
     public void mover() {
         mapaService.crearUbicacion(dojo);
-        mapaService.crearUbicacion(guarderia);
-        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.aire);
-        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
-        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.mar);
-        entrenador.setMonedas(5);
-        entrenadorService.guardar(entrenador);
-
-        assertEquals(1, dojo.getPoblacion());
-        assertEquals(5, entrenador.getMonedas());
-        mapaService.mover("entrenador", "Una guarderia");
-        assertEquals(1, ubicacionService.getUbicacion("Una guarderia").getPoblacion());
-        assertEquals(0, ubicacionService.getUbicacion("Un dojo").getPoblacion());
-        assertEquals(4, this.entrenadorService.recuperar(entrenador.nombre()).getMonedas());
-        assertEquals("Una guarderia", this.entrenadorService.recuperar(entrenador.nombre()).ubicacion().getNombre());
-        verify(feedService, times(1)).guardarArribo("entrenador", "Una guarderia", "un dojo");
-    }
-
-    @Test
-    public void moverConMasDeUnSalto() {
-        mapaService.crearUbicacion(dojo);
         mapaService.crearUbicacion(dojo2);
+        mapaService.crearUbicacion(dojo3);
         mapaService.crearUbicacion(guarderia);
+        mapaService.crearUbicacion(guarderia2);
+        mapaService.crearUbicacion(guarderia3);
 
-        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.aire);
-        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia2.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo3.getNombre(), CostoCamino.aire);
+        ubicacionNeo4JDAO.conectar(guarderia2.getNombre(), guarderia3.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(guarderia3.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
         ubicacionNeo4JDAO.conectar(dojo2.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
-        entrenador.setMonedas(5);
+        ubicacionNeo4JDAO.conectar(dojo3.getNombre(), guarderia.getNombre(), CostoCamino.aire);
+        entrenador.setMonedas(20);
         entrenadorService.guardar(entrenador);
 
-        mapaService.mover("entrenador", "Una guarderia");
-        assertEquals(3, this.entrenadorService.recuperar(entrenador.nombre()).getMonedas());
+        mapaService.mover(entrenador.nombre(), guarderia.getNombre());
+
+        assertEquals(16, entrenadorService.recuperar(entrenador.nombre()).getMonedas(), 0);
+        assertEquals(1 , ubicacionService.getUbicacion(guarderia.getNombre()).getPoblacion());
+        assertEquals(guarderia.getNombre(), entrenadorService.recuperar(entrenador.nombre()).ubicacion().getNombre());
+
     }
 
     @Test
@@ -191,7 +181,7 @@ public class MapaServiceTest {
 
         ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia2.getNombre(), CostoCamino.tierra);
         ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo3.getNombre(), CostoCamino.aire);
-        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo3.getNombre(), CostoCamino.mar);
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo3.getNombre(), CostoCamino.mar); //Camino que debe tomar
         ubicacionNeo4JDAO.conectar(guarderia2.getNombre(), guarderia3.getNombre(), CostoCamino.tierra);
         ubicacionNeo4JDAO.conectar(guarderia3.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
         ubicacionNeo4JDAO.conectar(dojo2.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
@@ -227,22 +217,22 @@ public class MapaServiceTest {
         mapaService.crearUbicacion(dojo2);
         mapaService.crearUbicacion(guarderia);
         ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
-        ubicacionNeo4JDAO.conectar(dojo2.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
         entrenador.setMonedas(5);
         entrenadorService.guardar(entrenador);
 
-        mapaService.mover("entrenador", "Una guarderia");
+        mapaService.mover(entrenador.nombre(), guarderia.getNombre());
     }
 
     @Test(expected = CaminoMuyCostosoException.class)
     public void caminoMuyCostoso() {
         mapaService.crearUbicacion(dojo);
         mapaService.crearUbicacion(dojo2);
-        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo2.getNombre(), CostoCamino.aire);
+        mapaService.conectar(dojo.getNombre(), dojo2.getNombre(), CostoCamino.aire);
+        mapaService.conectar(dojo2.getNombre(), dojo.getNombre(), CostoCamino.aire);
         entrenador.setMonedas(1);
         entrenadorService.guardar(entrenador);
 
-        mapaService.mover("entrenador", "otro dojo");
+        mapaService.mover(entrenador.nombre(), dojo2.getNombre());
     }
 
 

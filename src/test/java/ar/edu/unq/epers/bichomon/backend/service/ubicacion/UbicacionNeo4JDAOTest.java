@@ -5,6 +5,7 @@ import ar.edu.unq.epers.bichomon.backend.model.ubicacion.CostoCamino;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Guarderia;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.UbicacionMuyLejanaException;
+import jdk.nashorn.internal.runtime.ECMAException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -73,14 +74,15 @@ public class UbicacionNeo4JDAOTest {
         this.dao.conectar(guarderia4.getNombre(), guarderia5.getNombre(), CostoCamino.tierra);
 
         List<String> ubicaciones = this.dao.conectados(guarderia1.getNombre(), CostoCamino.tierra);
-        assertEquals(2, ubicaciones.size());
+        assertEquals(3, ubicaciones.size());
         assertTrue(ubicaciones.contains(guarderia2.getNombre()));
-        assertFalse(ubicaciones.contains(guarderia3.getNombre()));
         assertTrue(ubicaciones.contains(guarderia4.getNombre()));
+        assertTrue(ubicaciones.contains(guarderia3.getNombre()));
+        assertFalse(ubicaciones.contains(guarderia5.getNombre()));
     }
 
     @Test
-    public void costoEntreUbicaciones() {
+    public void costoEntreUbicaciones() throws Exception {
         Ubicacion guarderia1 = new Guarderia();
         guarderia1.setNombre("Guarderia1");
         this.dao.crearUbicacion(guarderia1);
@@ -95,25 +97,7 @@ public class UbicacionNeo4JDAOTest {
         assertEquals(CostoCamino.valueOf("tierra").getValue(), this.dao.getCostoEntreUbicaciones(guarderia1.getNombre(), guarderia2.getNombre()));
     }
 
-    @Test(expected = UbicacionMuyLejanaException.class)
-    public void ubicacionMuyLejana() {
-        Ubicacion guarderia1 = new Guarderia();
-        guarderia1.setNombre("Guarderia1");
-        this.dao.crearUbicacion(guarderia1);
 
-        Ubicacion guarderia4 = new Guarderia();
-        guarderia4.setNombre("Guarderia4");
-        this.dao.crearUbicacion(guarderia4);
-
-        Ubicacion guarderia5 = new Guarderia();
-        guarderia5.setNombre("Guarderia5");
-        this.dao.crearUbicacion(guarderia5);
-
-        this.dao.conectar(guarderia1.getNombre(), guarderia4.getNombre(), CostoCamino.tierra);
-        this.dao.conectar(guarderia4.getNombre(), guarderia5.getNombre(), CostoCamino.tierra);
-
-        this.dao.getCostoEntreUbicaciones(guarderia1.getNombre(), guarderia5.getNombre());
-    }
 
 
 }

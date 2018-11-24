@@ -156,6 +156,7 @@ public class BichoServiceImplTest {
         guarderia = new Guarderia();
         guarderia.setNombre("Una guarderia");
 
+        mapaService.crearUbicacion(pueblo);
         mapaService.crearUbicacion(guarderia);
 
         condVic = new BasadoEnVictoria(5);
@@ -309,6 +310,10 @@ public class BichoServiceImplTest {
         bichoService.abandonar(entrenador.nombre(), bicho4.getID());
 
         bichoService.buscar(entrenador2.nombre()); /** En este punto se espera la exception */
+
+        verify(feedService, times(1)).guardarAbandono(entrenador2.nombre(), bicho4.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
+        verify(feedService, times(1)).guardarCaptura(entrenador.nombre(), bicho4.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
+        verify(feedService, times(1)).guardarAbandono(entrenador.nombre(), bicho4.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
     }
 
     @Test
@@ -368,6 +373,7 @@ public class BichoServiceImplTest {
 
     @Test
     public void duelo(){
+
         especieService.crearEspecie(especie);
         especieService.crearEspecie(especie3);
         Bicho bichoRetador = especieService.crearBicho("Onix", entrenador);
@@ -378,10 +384,10 @@ public class BichoServiceImplTest {
 
         Dojo dojo = new Dojo();
         dojo.setNombre("Cobra Kai");
+
         Campeon campeon = dojo.actualizarYRetornarCampeon(bichoCampeon,LocalDate.now());
 
         mapaService.crearUbicacion(dojo);
-
 
         mapaService.conectar(guarderia.getNombre(), dojo.getNombre(), CostoCamino.tierra);
         mapaService.conectar(dojo.getNombre(), guarderia.getNombre(), CostoCamino.tierra);

@@ -7,6 +7,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.impl.UbicacionNeo4JDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.CaminoMuyCostosoException;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.CostoCamino;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.UbicacionMuyLejanaException;
@@ -39,12 +40,20 @@ public class MapaService {
             Entrenador entrenadorR = entrenadorDAO.recuperar(entrenador);
             Ubicacion ubicacionNueva = ubicacionDAO.recuperar(destino);
 
-            int costo = this.ubicacionNeo4JDAO.getCostoEntreUbicaciones(entrenadorR.ubicacion().getNombre(), destino);
+            try{
+                int costo = this.ubicacionNeo4JDAO.getCostoEntreUbicaciones(entrenadorR.ubicacion().getNombre(), destino);
 
-            this.feedService.guardarArribo(entrenador, destino, entrenadorR.ubicacion().getNombre());
+                this.feedService.guardarArribo(entrenador, destino, entrenadorR.ubicacion().getNombre());
 
-            entrenadorR.mover(ubicacionNueva, costo);
-
+                entrenadorR.mover(ubicacionNueva, costo);
+            }
+            catch (Exception e) {
+                if (e.getClass() != CaminoMuyCostosoException.class) {
+                    throw new UbicacionMuyLejanaException(entrenadorR.ubicacion().getNombre(), destino);
+                } else{
+                    throw new CaminoMuyCostosoException(entrenadorR.nombre(), destino);
+                }
+            }
 
             return null;
         });

@@ -68,10 +68,10 @@ public class FeedServiceTest {
         this.especie = new Especie("Pikachu");
         this.bicho = new Bicho(especie, entrenador);
 
-        ubicacionNeo4JDAO.crearUbicacion(dojo);
-        ubicacionNeo4JDAO.crearUbicacion(dojo2);
-        ubicacionNeo4JDAO.crearUbicacion(guarderia);
-        ubicacionNeo4JDAO.crearUbicacion(pueblo);
+        mapaService.crearUbicacion(dojo);
+        mapaService.crearUbicacion(dojo2);
+        mapaService.crearUbicacion(guarderia);
+        mapaService.crearUbicacion(pueblo);
 
         when(entrenadorService.recuperar(entrenador.nombre())).thenReturn(entrenador);
         when(entrenadorService.recuperar(entrenador2.nombre())).thenReturn(entrenador2);
@@ -81,7 +81,7 @@ public class FeedServiceTest {
     @After
     public void cleanUp() {
         this.eventoDAO.deleteAll();
-        //SessionFactoryProvider.destroy();
+        SessionFactoryProvider.destroy();
         ubicacionNeo4JDAO.destroy();
     }
 
