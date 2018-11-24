@@ -144,9 +144,6 @@ public class MapaServiceTest {
         assertEquals(2, mapaService.conectados(dojo.getNombre(), "tierra").size());
     }
 
-
-
-
     @Test
     public void mover() {
         mapaService.crearUbicacion(dojo);
@@ -190,6 +187,21 @@ public class MapaServiceTest {
 
         assertEquals(13, entrenadorService.recuperar(entrenador.nombre()).getMonedas(),0);
     }
+
+    @Test(expected = UbicacionMuyLejanaException.class)
+    public void moverMasCortoArrojaException() {
+        mapaService.crearUbicacion(dojo);
+        mapaService.crearUbicacion(dojo2);
+        mapaService.crearUbicacion(dojo3);
+
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo2.getNombre(), "tierra");
+
+        entrenador.setMonedas(20);
+        entrenadorService.guardar(entrenador);
+
+        mapaService.moverMasCorto(entrenador.nombre(), dojo3.getNombre());
+    }
+
 
     @Test(expected = UbicacionMuyLejanaException.class)
     public void ubicacionMuyLejana() {

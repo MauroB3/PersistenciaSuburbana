@@ -8,6 +8,7 @@ import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.campeon.Campeon;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.UbicacionMuyLejanaException;
 import ar.edu.unq.epers.bichomon.backend.service.feed.FeedService;
 import ar.edu.unq.epers.bichomon.backend.service.runner.Runner;
 import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionIncorrectaException;
@@ -54,11 +55,16 @@ public class MapaService {
             Entrenador ent = entrenadorDAO.recuperar(entrenador);
             Ubicacion ubicacion = ubicacionDAO.recuperar(destino);
 
-            int costo = ubicacionNeo4JDAO.getCostoCaminoMasCorto(ent.ubicacion().getNombre(), ubicacion.getNombre());
+            try {
+                int costo = ubicacionNeo4JDAO.getCostoCaminoMasCorto(ent.ubicacion().getNombre(), ubicacion.getNombre());
 
-            this.feedService.guardarArribo(entrenador, destino, ent.ubicacion().getNombre());
+                this.feedService.guardarArribo(entrenador, destino, ent.ubicacion().getNombre());
 
-            ent.mover(ubicacion, costo);
+                ent.mover(ubicacion, costo);
+            }
+            catch (Exception e) {
+                throw new UbicacionMuyLejanaException(ent.ubicacion().getNombre(), destino);
+            }
 
             return null;
         });
