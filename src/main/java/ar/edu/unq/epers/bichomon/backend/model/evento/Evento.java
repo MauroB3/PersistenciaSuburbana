@@ -3,6 +3,8 @@ package ar.edu.unq.epers.bichomon.backend.model.evento;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.jongo.marshall.jackson.oid.MongoId;
+import org.jongo.marshall.jackson.oid.MongoObjectId;
+
 import java.time.Instant;
 import java.util.Date;
 
@@ -10,6 +12,7 @@ import java.util.Date;
 public class Evento {
 
     @MongoId
+    @MongoObjectId
     private String id;
 
     private String entrenador;
