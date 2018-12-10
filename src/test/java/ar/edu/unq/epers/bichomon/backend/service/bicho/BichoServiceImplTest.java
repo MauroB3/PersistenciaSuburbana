@@ -277,7 +277,7 @@ public class BichoServiceImplTest {
         assertEquals(1, entrenadorService.recuperar("Spore").cantidadBichos());
         assertEquals(1, ubicacionService.getUbicacion("Una guarderia").getCantidadBichosAbandonados());
         assertEquals(1, especieService.getEspecie("Onix").getPopularidad());
-        verify(feedService, times(1)).guardarAbandono(entrenador.nombre(), bicho1.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
+        verify(feedService, times(1)).guardarAbandono(entrenador, bicho1);
     }
 
     @Test(expected = BichoNoPuedeSerAdoptado.class)
@@ -306,9 +306,9 @@ public class BichoServiceImplTest {
 
         bichoService.buscar(entrenador2.nombre()); /** En este punto se espera la exception */
 
-        verify(feedService, times(1)).guardarAbandono(entrenador2.nombre(), bicho4.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
-        verify(feedService, times(1)).guardarCaptura(entrenador.nombre(), bicho4.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
-        verify(feedService, times(1)).guardarAbandono(entrenador.nombre(), bicho4.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
+        verify(feedService, times(1)).guardarAbandono(entrenador2, bicho4);
+        verify(feedService, times(1)).guardarCaptura(entrenador, bicho4);
+        verify(feedService, times(1)).guardarAbandono(entrenador, bicho4);
     }
 
     @Test
@@ -336,7 +336,7 @@ public class BichoServiceImplTest {
 
         assertEquals(3, entrenadorService.recuperar(entrenador.nombre()).cantidadBichos());
         assertEquals(1, entrenadorService.recuperar(entrenador2.nombre()).cantidadBichos());
-        verify(feedService, times(1)).guardarCaptura(entrenador.nombre(), "Charmander", guarderia.getNombre());
+        verify(feedService, times(1)).guardarCaptura(entrenador, bicho4);
     }
 
     @Test(expected = BichoNoEncontradoException.class)
@@ -396,7 +396,7 @@ public class BichoServiceImplTest {
         assertEquals(20, entrenador.getExperiencia());
         assertEquals(20, entrenador2.getExperiencia());
 
-        verify(feedService, times(1)).guardarCoronacion(entrenador.nombre(), entrenador2.nombre(), dojo.getNombre());
+        verify(feedService, times(1)).guardarCoronacion(entrenador, entrenador2);
     }
 
     @Test(expected = EntrenadorNoPuedeAbandonarException.class)

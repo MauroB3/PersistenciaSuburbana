@@ -58,7 +58,7 @@ public class BichoServiceImpl implements BichoService{
         return Runner.runInSession( () -> {
             Entrenador entrenador1 = entrenadorDAO.recuperar(entrenador);
             Bicho bichoEncontrado = entrenador1.ubicacion().buscar(entrenador1, nivelService.getNivelManager(), experienciaDAO.obtenerExperiencia("Captura"));
-            feedService.guardarCaptura(entrenador1.nombre(), bichoEncontrado.getEspecie().getNombre(), entrenador1.ubicacion().getNombre());
+            feedService.guardarCaptura(entrenador1, bichoEncontrado);
             return bichoEncontrado;
         });
     }
@@ -70,7 +70,7 @@ public class BichoServiceImpl implements BichoService{
             Bicho bicho = this.bichoDAO.recuperar(nroBicho);
             Entrenador entrenador = this.entrenadorDAO.recuperar(nombreEntrenador);
             entrenador.abandonarBicho(bicho);
-            feedService.guardarAbandono(nombreEntrenador, bicho.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
+            feedService.guardarAbandono(entrenador, bicho);
             return null;
         });
 
@@ -82,7 +82,7 @@ public class BichoServiceImpl implements BichoService{
            Entrenador ent = entrenadorDAO.recuperar(entrenador);
            Bicho bichoRetador = bichoDAO.recuperar(bicho);
            ResultadoCombate resultado = ent.duelo(bichoRetador, experienciaDAO.obtenerExperiencia("Combate"));
-           feedService.guardarCoronacion(resultado.getGanador().getEntrenador().nombre(), ent.ubicacion().getCampeon().getBicho().getEntrenador().nombre(), resultado.getGanador().getEntrenador().ubicacion().getNombre());
+           feedService.guardarCoronacion(resultado.getGanador().getEntrenador(), ent.ubicacion().getCampeon().getBicho().getEntrenador());
            ubicacionDAO.actualizarCampeon(ent.ubicacion(), resultado.getGanador());
            return resultado;
         });

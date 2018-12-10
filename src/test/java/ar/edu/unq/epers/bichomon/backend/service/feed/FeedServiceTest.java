@@ -34,6 +34,7 @@ public class FeedServiceTest {
 
     private Entrenador entrenador;
     private Entrenador entrenador2;
+    private Entrenador entrenador3;
     private Ubicacion guarderia;
     private Ubicacion pueblo;
     private Ubicacion dojo;
@@ -63,6 +64,8 @@ public class FeedServiceTest {
         entrenador.setMonedas(100);
         this.entrenador2 = new Entrenador("Gonza", guarderia);
         entrenador2.setMonedas(100);
+        this.entrenador3 = new Entrenador("Ash", dojo);
+        entrenador3.setMonedas(100);
         this.especie = new Especie("Pikachu");
         this.bicho = new Bicho(especie, entrenador);
 
@@ -86,7 +89,7 @@ public class FeedServiceTest {
 
     @Test
     public void guardarYRecuperarArribo() {
-        this.feedService.guardarArribo(entrenador.nombre(), pueblo.getNombre(), guarderia.getNombre());
+        this.feedService.guardarArribo(entrenador, pueblo);
 
         List<Evento> eventoList = this.feedService.feedEntrenador(entrenador.nombre());
         assertEquals(1, eventoList.size());
@@ -96,7 +99,7 @@ public class FeedServiceTest {
 
     @Test
     public void guardarYRecuperarCaptura() {
-        this.feedService.guardarCaptura(entrenador.nombre(), bicho.getEspecie().getNombre(), pueblo.getNombre());
+        this.feedService.guardarCaptura(entrenador, bicho);
 
         List<Evento> eventoList = this.feedService.feedEntrenador(entrenador.nombre());
         assertEquals(1, eventoList.size());
@@ -106,9 +109,9 @@ public class FeedServiceTest {
 
     @Test
     public void guardarYRecuperarCoronacion() {
-        this.feedService.guardarCoronacion(entrenador.nombre(), entrenador2.nombre(), dojo.getNombre());
+        this.feedService.guardarCoronacion(entrenador3, entrenador2);
 
-        List<Evento> eventoList = this.feedService.feedEntrenador(entrenador.nombre());
+        List<Evento> eventoList = this.feedService.feedEntrenador(entrenador3.nombre());
         assertEquals(1, eventoList.size());
         assertEquals("Coronacion", eventoList.get(0).getTipo());
         assertEquals(Coronacion.class, eventoList.get(0).getClass());
@@ -116,7 +119,7 @@ public class FeedServiceTest {
 
     @Test
     public void guardarYRecuperarAbandono(){
-        this.feedService.guardarAbandono(entrenador.nombre(), especie.getNombre(), dojo.getNombre());
+        this.feedService.guardarAbandono(entrenador, bicho);
         List<Evento> ls = this.feedService.feedEntrenador(entrenador.nombre());
         assertEquals(1, ls.size());
         assertEquals("Abandono", ls.get(0).getTipo());
@@ -125,8 +128,8 @@ public class FeedServiceTest {
 
     @Test
     public void guardarVariosEventos() {
-        this.feedService.guardarAbandono(entrenador.nombre(), especie.getNombre(), dojo.getNombre());
-        this.feedService.guardarCoronacion(entrenador.nombre(), entrenador2.nombre(), dojo.getNombre());
+        this.feedService.guardarCaptura(entrenador, bicho);
+        this.feedService.guardarAbandono(entrenador, bicho);
         List<Evento> eventoList = this.feedService.feedEntrenador(entrenador.nombre());
         assertEquals(2, eventoList.size());
     }
@@ -139,11 +142,10 @@ public class FeedServiceTest {
         mapaService.conectar(dojo.getNombre(), pueblo.getNombre(), CostoCamino.tierra);
         mapaService.conectar(pueblo.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
 
-        this.feedService.guardarCaptura(entrenador.nombre(), bicho.getEspecie().getNombre(), pueblo.getNombre());
-        this.feedService.guardarAbandono(entrenador.nombre(), especie.getNombre(), dojo.getNombre());
-        this.feedService.guardarArribo(entrenador.nombre(), pueblo.getNombre(), guarderia.getNombre());
-        this.feedService.guardarAbandono(entrenador.nombre(), especie.getNombre(), dojo2.getNombre());
-        this.feedService.guardarAbandono(entrenador2.nombre(), especie.getNombre(), dojo.getNombre());
+        this.feedService.guardarCaptura(entrenador, bicho);
+        this.feedService.guardarAbandono(entrenador, bicho);
+        this.feedService.guardarArribo(entrenador, pueblo);
+        this.feedService.guardarAbandono(entrenador2, bicho);
 
 
         assertEquals(4, this.feedService.feedUbicacion(entrenador.nombre()).size());
@@ -157,10 +159,9 @@ public class FeedServiceTest {
         mapaService.conectar(dojo.getNombre(), pueblo.getNombre(), CostoCamino.tierra);
         mapaService.conectar(pueblo.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
 
-        this.feedService.guardarCaptura(entrenador.nombre(), bicho.getEspecie().getNombre(), pueblo.getNombre());
-        this.feedService.guardarAbandono(entrenador.nombre(), especie.getNombre(), dojo.getNombre());
-        this.feedService.guardarArribo(entrenador.nombre(), pueblo.getNombre(), guarderia.getNombre());
-        this.feedService.guardarAbandono(entrenador.nombre(), especie.getNombre(), dojo2.getNombre());
+        this.feedService.guardarCaptura(entrenador, bicho);
+        this.feedService.guardarAbandono(entrenador, bicho);
+        this.feedService.guardarArribo(entrenador, pueblo);
 
         assertEquals(3, this.feedService.feedUbicacion(entrenador.nombre()).size());
 

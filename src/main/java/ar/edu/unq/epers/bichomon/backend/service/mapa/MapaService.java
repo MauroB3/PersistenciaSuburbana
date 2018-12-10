@@ -43,7 +43,7 @@ public class MapaService {
             try{
                 int costo = this.ubicacionNeo4JDAO.getCostoEntreUbicaciones(entrenadorR.ubicacion().getNombre(), destino);
 
-                this.feedService.guardarArribo(entrenador, destino, entrenadorR.ubicacion().getNombre());
+                this.feedService.guardarArribo(entrenadorR, ubicacionNueva);
 
                 entrenadorR.mover(ubicacionNueva, costo);
             }
@@ -68,7 +68,7 @@ public class MapaService {
             try {
                 int costo = ubicacionNeo4JDAO.getCostoCaminoMasCorto(ent.ubicacion().getNombre(), ubicacion.getNombre());
 
-                this.feedService.guardarArribo(entrenador, destino, ent.ubicacion().getNombre());
+                this.feedService.guardarArribo(ent, ubicacion);
 
                 ent.mover(ubicacion, costo);
             }

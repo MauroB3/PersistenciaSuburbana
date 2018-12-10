@@ -2,8 +2,10 @@ package ar.edu.unq.epers.bichomon.backend.service.feed;
 
 import ar.edu.unq.epers.bichomon.backend.dao.impl.UbicacionNeo4JDAO;
 import ar.edu.unq.epers.bichomon.backend.dao.mongodb.EventoDAO;
+import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.evento.*;
+import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 
 import java.util.ArrayList;
@@ -21,23 +23,23 @@ public class FeedService {
         this.ubicacionNeo4JDAO = ubicacionNeo4JDAO;
     }
 
-    public void guardarArribo(String entrenador, String ubicacionDestino, String ubicacionOrigen) {
-        Evento eventoAGuardar = new Arribo(entrenador, ubicacionDestino, ubicacionOrigen);
+    public void guardarArribo(Entrenador entrenador, Ubicacion ubicacionDestino) {
+        Evento eventoAGuardar = new Arribo(entrenador.nombre(), ubicacionDestino.getNombre(), entrenador.ubicacion().getNombre());
         this.eventoDAO.save(eventoAGuardar);
     }
 
-    public void guardarCaptura(String nombreEntrenador, String nombreEspecieBicho, String nombreUbicacionOrigen){
-        Evento evento = new Captura(nombreEntrenador, nombreEspecieBicho, nombreUbicacionOrigen);
+    public void guardarCaptura(Entrenador entrenador, Bicho bichoAtrapado){
+        Evento evento = new Captura(entrenador.nombre(), bichoAtrapado.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
         this.eventoDAO.save(evento);
     }
 
-    public void guardarCoronacion(String nombreEntrenadorCoronado, String nombreEntrenadorDescoronado, String nombreUbicacionOrigen){
-        Evento evento = new Coronacion(nombreEntrenadorCoronado, nombreEntrenadorDescoronado, nombreUbicacionOrigen);
+    public void guardarCoronacion(Entrenador entrenadorCoronado, Entrenador entrenadorDescoronado){
+        Evento evento = new Coronacion(entrenadorCoronado.nombre(), entrenadorDescoronado.nombre(), entrenadorCoronado.ubicacion().getNombre());
         this.eventoDAO.save(evento);
     }
 
-    public void guardarAbandono(String nombreEntrenador, String nombreEspecieBichoAbandonado, String nombreUbicacionOrigen){
-        Evento evento = new Abandono(nombreEntrenador, nombreEspecieBichoAbandonado, nombreUbicacionOrigen);
+    public void guardarAbandono(Entrenador entrenador, Bicho bichoAbandonado){
+        Evento evento = new Abandono(entrenador.nombre(), bichoAbandonado.getEspecie().getNombre(), entrenador.ubicacion().getNombre());
         this.eventoDAO.save(evento);
     }
 
