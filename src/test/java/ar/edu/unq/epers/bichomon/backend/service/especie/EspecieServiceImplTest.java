@@ -89,15 +89,15 @@ public class EspecieServiceImplTest {
         dojo.setNombre("Sporeland");
         entrenador = new Entrenador("Spore", dojo);
 
-        pikachu = new Especie("Pikachu", "Raichu", TipoBicho.ELECTRICIDAD, condicion, 55, 99, 100, null);
+        pikachu = new Especie("Pikachu", raichu, TipoBicho.ELECTRICIDAD, condicion, 55, 99, 100, null);
         raichu = new Especie("Raichu", null, TipoBicho.ELECTRICIDAD, condicion, 80, 110, 300, pikachu);
 
-        charmander = new Especie("Charmander", "Charmeleon", TipoBicho.FUEGO, condicion, 55, 75, 110, null);
-        charmeleon = new Especie("Charmeleon", "Charizard", TipoBicho.FUEGO, condicion, 88, 100, 300, charmander);
+        charmander = new Especie("Charmander", charmeleon, TipoBicho.FUEGO, condicion, 55, 75, 110, null);
+        charmeleon = new Especie("Charmeleon", charizard, TipoBicho.FUEGO, condicion, 88, 100, 300, charmander);
         charizard = new Especie("Charizard", null, TipoBicho.FUEGO, condicion, 120, 220, 750,charmander);
 
-        squirtle = new Especie("Squirtle", "Wartortle", TipoBicho.AGUA, condicion, 55, 56, 115,null);
-        wartortle = new Especie("Wartortle", "Blastoise", TipoBicho.AGUA, condicion, 70, 81, 279, squirtle);
+        squirtle = new Especie("Squirtle", wartortle, TipoBicho.AGUA, condicion, 55, 56, 115,null);
+        wartortle = new Especie("Wartortle", blastoise, TipoBicho.AGUA, condicion, 70, 81, 279, squirtle);
         blastoise = new Especie("Blastoise", null, TipoBicho.AGUA, condicion, 101, 110, 554, squirtle);
 
         onix = new Especie("Onix", null, TipoBicho.CHOCOLATE,condicion,257,300,446, null);

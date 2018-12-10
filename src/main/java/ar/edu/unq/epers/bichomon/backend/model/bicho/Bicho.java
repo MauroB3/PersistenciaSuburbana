@@ -99,9 +99,10 @@ public class Bicho {
     public void evolucionar(NivelManager manager, int experiencia){
 		if(puedeEvolucionar(manager)) {
 			this.especie.decrementarPopularidad();
-			this.especie = new Especie(especie.getSiguienteEvolucion());
+			this.especie = especie.getSiguienteEvolucion();
 			this.especie.incrementarPopularidad();
 			this.getEntrenador().agregarExperiencia(experiencia);
+			this.setearNuevaEnergia();
 		}else {
 			throw new BichoNoPuedeEvolucionarException(this.especie.getNombre());
 		}
@@ -146,5 +147,9 @@ public class Bicho {
 
 	public boolean noFueAbandonadoAntesPor(Entrenador entrenador){
 		return !entrenadoresQueMeAbandonaron.contains(entrenador);
+	}
+
+	private void setearNuevaEnergia(){
+		this.energia = this.especie.getEnergiaInicial();
 	}
 }

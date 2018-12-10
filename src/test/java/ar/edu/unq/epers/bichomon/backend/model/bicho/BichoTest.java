@@ -33,7 +33,6 @@ public class BichoTest {
     @Mock
     private Ataque ataque;
 
-
     @Mock
     private NivelServiceImpl nivelService;
 
@@ -44,9 +43,10 @@ public class BichoTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         when(especieAgua.getNombre()).thenReturn("Squirtle");
-        when(especieAgua.getSiguienteEvolucion()).thenReturn("Wartortle");
+        when(especieAgua.getSiguienteEvolucion()).thenReturn(especieAguaEvolucion);
         when(nivelService.getNivelManager()).thenReturn(nivelManager);
         when(nivelManager.capacidadMaximaDeBichos(10)).thenReturn(10);
+        when(especieAguaEvolucion.getNombre()).thenReturn("Wartortle");
         bicho = new Bicho(especieAgua, entrenador);
         otroBicho = new Bicho(especieAgua, entrenador);
 
@@ -94,7 +94,7 @@ public class BichoTest {
 
         bicho.evolucionar(nivelManager, 5);
 
-        assertEquals(especieAgua.getSiguienteEvolucion(), bicho.getEspecie().getNombre());
+        assertEquals(especieAgua.getSiguienteEvolucion().getNombre(), bicho.getEspecie().getNombre());
     }
 
     @Test

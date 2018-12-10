@@ -1,16 +1,19 @@
 package ar.edu.unq.epers.bichomon.backend.model.evento;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
+import javax.persistence.Id;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Evento {
+public abstract class Evento {
 
     @MongoId
-    @MongoObjectId
     private String id;
 
     private String entrenador;

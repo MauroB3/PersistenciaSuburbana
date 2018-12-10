@@ -29,7 +29,8 @@ public class Especie {
 	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	private Especie especieRaiz;
 
-	private String siguienteEvolucion;
+	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	private Especie siguienteEvolucion;
 
 	private int nroEvolucion;
 
@@ -56,9 +57,9 @@ public class Especie {
 	 * @param energiaInicial = la energia inicial de la especie.
 	 * @param especieRaiz = La especie raiz a la que pertenece la especie, de ser una especie base se tiene que setear a si mismo.
 	 */
-	public Especie(String nombre, String siguienteEvolucion, TipoBicho tipo, Condicion condicionDeEvolucion, int altura, int peso, int energiaInicial, Especie especieRaiz){
+	public Especie(String nombre, Especie siguienteEvolucion, TipoBicho tipo, Condicion condicionDeEvolucion, int altura, int peso, int energiaInicial, Especie especieRaiz){
 		this.setNombre(nombre);
-		this.setSiguienteEvolucion(siguienteEvolucion);
+		this.siguienteEvolucion = siguienteEvolucion;
 		this.setTipo(tipo);
 		this.setCondicionDeEvolucion(condicionDeEvolucion);
 		this.setAltura(altura);
@@ -72,7 +73,6 @@ public class Especie {
 		this.setNombre(nombre);
 	}
 
-
 	public Condicion getCondicionDeEvolucion(){
 		return condicionDeEvolucion;
 	}
@@ -81,11 +81,11 @@ public class Especie {
 		this.condicionDeEvolucion = condicionDeEvolucion;
 	}
 
-	public String getSiguienteEvolucion(){
+	public Especie getSiguienteEvolucion(){
 		return siguienteEvolucion;
 	}
 
-	public void setSiguienteEvolucion(String siguienteEvolucion){
+	public void setSiguienteEvolucion(Especie siguienteEvolucion){
 		this.siguienteEvolucion = siguienteEvolucion;
 	}
 
@@ -198,7 +198,7 @@ public class Especie {
 	}
 
 	public boolean esSiguienteEvolucion(Especie especie) {
-		return this.nombre == especie.getSiguienteEvolucion();
+		return this.nombre == especie.getSiguienteEvolucion().getNombre();
 	}
 
 	public void incrementarPopularidad(){

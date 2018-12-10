@@ -9,8 +9,7 @@ import ar.edu.unq.epers.bichomon.backend.dao.mongodb.EventoDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.evento.Arribo;
-import ar.edu.unq.epers.bichomon.backend.model.evento.Evento;
+import ar.edu.unq.epers.bichomon.backend.model.evento.*;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
@@ -92,7 +91,6 @@ public class FeedServiceTest {
         List<Evento> eventoList = this.feedService.feedEntrenador(entrenador.nombre());
         assertEquals(1, eventoList.size());
         assertEquals("Arribo", eventoList.get(0).getTipo());
-
     }
 
     @Test

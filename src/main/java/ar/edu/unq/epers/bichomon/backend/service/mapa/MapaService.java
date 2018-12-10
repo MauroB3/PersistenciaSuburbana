@@ -73,7 +73,11 @@ public class MapaService {
                 ent.mover(ubicacion, costo);
             }
             catch (Exception e) {
-                throw new UbicacionMuyLejanaException(ent.ubicacion().getNombre(), destino);
+                if (e.getClass() != CaminoMuyCostosoException.class) {
+                    throw new UbicacionMuyLejanaException(ent.ubicacion().getNombre(), destino);
+                } else{
+                    throw new CaminoMuyCostosoException(ent.nombre(), destino);
+                }
             }
 
             return null;

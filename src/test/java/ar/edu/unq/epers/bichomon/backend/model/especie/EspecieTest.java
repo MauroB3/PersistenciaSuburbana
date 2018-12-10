@@ -34,9 +34,9 @@ public class EspecieTest {
      @Before
      public void setUp() throws Exception{
         MockitoAnnotations.initMocks(this);
-        especieRaiz = new Especie("Charmander","Charmeleon", TipoBicho.FUEGO, condicionEvolucion1,35,8,100,null);
-        especieEvolucion1 = new Especie("Charmeleon","Charizard",TipoBicho.FUEGO, condicionEvolucion2, 40, 16, 225,  especieRaiz);
         especieEvolucion2 = new Especie ("Charizard",null, TipoBicho.FUEGO, condicionEvolucion3,85,32,550, especieRaiz);
+        especieEvolucion1 = new Especie("Charmeleon", especieEvolucion2,TipoBicho.FUEGO, condicionEvolucion2, 40, 16, 225,  especieRaiz);
+        especieRaiz = new Especie("Charmander", especieEvolucion1, TipoBicho.FUEGO, condicionEvolucion1,35,8,100,null);
 
         Bicho bicho1 = especieRaiz.crearBicho(entrenador);
         Bicho bicho2 = especieEvolucion1.crearBicho(entrenador);
