@@ -210,6 +210,28 @@ public class MapaServiceTest {
         mapaService.moverMasCorto(entrenador.nombre(), dojo3.getNombre());
     }
 
+    @Test(expected = CaminoMuyCostosoException.class)
+    public void moverMasCortoNoAlcanzaLasMonedas(){
+        mapaService.crearUbicacion(dojo);
+        mapaService.crearUbicacion(dojo2);
+        mapaService.crearUbicacion(dojo3);
+        mapaService.crearUbicacion(guarderia);
+        mapaService.crearUbicacion(guarderia2);
+        mapaService.crearUbicacion(guarderia3);
+
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), guarderia2.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(dojo.getNombre(), dojo3.getNombre(), CostoCamino.aire);
+        ubicacionNeo4JDAO.conectar(guarderia2.getNombre(), guarderia3.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(guarderia3.getNombre(), dojo2.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(dojo2.getNombre(), guarderia.getNombre(), CostoCamino.tierra);
+        ubicacionNeo4JDAO.conectar(dojo3.getNombre(), guarderia.getNombre(), CostoCamino.aire);
+
+        entrenador.setMonedas(7);
+        entrenadorService.guardar(entrenador);
+
+        mapaService.moverMasCorto(entrenador.nombre(), guarderia.getNombre());
+    }
+
 
     @Test(expected = UbicacionMuyLejanaException.class)
     public void ubicacionMuyLejana() {

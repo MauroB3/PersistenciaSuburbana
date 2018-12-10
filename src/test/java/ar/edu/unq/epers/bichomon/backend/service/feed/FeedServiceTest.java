@@ -76,14 +76,13 @@ public class FeedServiceTest {
 
     }
 
-    /*
     @After
     public void cleanUp() {
         this.eventoDAO.deleteAll();
         SessionFactoryProvider.destroy();
         ubicacionNeo4JDAO.destroy();
     }
-    */
+
 
     @Test
     public void guardarYRecuperarArribo() {
@@ -93,7 +92,6 @@ public class FeedServiceTest {
         assertEquals(1, eventoList.size());
         assertEquals("Arribo", eventoList.get(0).getTipo());
         assertEquals(Arribo.class, eventoList.get(0).getClass());
-
     }
 
     @Test

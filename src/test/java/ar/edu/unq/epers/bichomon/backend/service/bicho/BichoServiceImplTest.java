@@ -161,8 +161,11 @@ public class BichoServiceImplTest {
 
         condVic = new BasadoEnVictoria(5);
         especie = new Especie("Onix", null,TipoBicho.CHOCOLATE, condVic,257,300,9999999, null);
-        especie2 = new Especie("Charmander", "Charmeleon", TipoBicho.FUEGO, condVic, 55, 75, 110, null);
         especie3 = new Especie("Charmeleon", null, TipoBicho.FUEGO, condVic,88,100,300, especie2);
+        especie2 = new Especie("Charmander", especie3, TipoBicho.FUEGO, condVic, 55, 75, 110, null);
+
+        especieService.crearEspecie(especie);
+        especieService.crearEspecie(especie2);
 
         entrenador = new Entrenador("Spore", guarderia);
         entrenador.agregarExperiencia(10);
@@ -184,6 +187,7 @@ public class BichoServiceImplTest {
         //
         //Al tener hibernate configurado con esto <property name="hibernate.hbm2ddl.auto">create-drop</property>
         //al crearse una nueva session factory todo el schema será destruido y creado desde cero.
+
         SessionFactoryProvider.destroy();
         ubicacionNeo4JDAO.destroy();
     }
@@ -200,7 +204,6 @@ public class BichoServiceImplTest {
 
     @Test
     public void crearBicho() {
-        especieService.crearEspecie(especie);
         Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho1);
 
@@ -208,9 +211,7 @@ public class BichoServiceImplTest {
 
     @Test
     public void puedeEvolucionar(){
-        especieService.crearEspecie(especie2);
-        especieService.crearEspecie(especie3);
-        Bicho bicho3 = especieService.crearBicho("Charmander",entrenador);
+        Bicho bicho3 = especieService.crearBicho(especie2.getNombre(), entrenador);
         bicho3.incrementarVictorias();
         bicho3.incrementarVictorias();
         bicho3.incrementarVictorias();
@@ -219,7 +220,7 @@ public class BichoServiceImplTest {
         bicho3.incrementarVictorias();
         bichoService.crearBicho(bicho3);
         condService.crearCondicion(condVic);
-        Bicho bicho4 = especieService.crearBicho("Charmeleon", entrenador);
+        Bicho bicho4 = especieService.crearBicho(especie3.getNombre(), entrenador);
         bicho4.incrementarVictorias();
         bicho4.incrementarVictorias();
         bicho4.incrementarVictorias();
@@ -230,15 +231,13 @@ public class BichoServiceImplTest {
         bicho4.incrementarVictorias();
         bichoService.crearBicho(bicho4);
 
-        assertFalse(bichoService.puedeEvolucionar("Spore", bicho4.getID()));
-        assertTrue(bichoService.puedeEvolucionar("Spore", bicho3.getID()));
+        assertFalse(bichoService.puedeEvolucionar(entrenador.nombre(), bicho4.getID()));
+        assertTrue(bichoService.puedeEvolucionar(entrenador.nombre(), bicho3.getID()));
     }
 
     @Test
     public void evolucionar(){
-        especieService.crearEspecie(especie2);
-        especieService.crearEspecie(especie3);
-        Bicho bicho3 = especieService.crearBicho("Charmander",entrenador);
+        Bicho bicho3 = especieService.crearBicho(especie2.getNombre(), entrenador);
         bicho3.incrementarVictorias();
         bicho3.incrementarVictorias();
         bicho3.incrementarVictorias();
@@ -247,7 +246,7 @@ public class BichoServiceImplTest {
         bicho3.incrementarVictorias();
         bichoService.crearBicho(bicho3);
         condService.crearCondicion(condVic);
-        Bicho bicho4 = especieService.crearBicho("Charmeleon", entrenador);
+        Bicho bicho4 = especieService.crearBicho(especie3.getNombre(), entrenador);
         bicho4.incrementarVictorias();
         bicho4.incrementarVictorias();
         bicho4.incrementarVictorias();
@@ -265,8 +264,6 @@ public class BichoServiceImplTest {
     public void abandonarBicho() {
 
         entrenadorService.guardar(entrenador);
-        especieService.crearEspecie(especie);
-        especieService.crearEspecie(especie2);
         Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho1);
         Bicho bicho2 = especieService.crearBicho("Onix", entrenador);
@@ -287,8 +284,6 @@ public class BichoServiceImplTest {
     public void noPuedeAdoptarBichoQueYaAbandonoAntes() {
 
         entrenadorService.guardar(entrenador);
-        especieService.crearEspecie(especie);
-        especieService.crearEspecie(especie2);
         Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho1);
         Bicho bicho2 = especieService.crearBicho("Onix", entrenador);
@@ -321,8 +316,6 @@ public class BichoServiceImplTest {
 
         entrenadorService.guardar(entrenador2);
         entrenadorService.guardar(entrenador);
-        especieService.crearEspecie(especie);
-        especieService.crearEspecie(especie2);
         Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho1);
         Bicho bicho2 = especieService.crearBicho("Onix", entrenador);
@@ -351,8 +344,6 @@ public class BichoServiceImplTest {
 
         entrenadorService.guardar(entrenador2);
         entrenadorService.guardar(entrenador);
-        especieService.crearEspecie(especie);
-        especieService.crearEspecie(especie2);
         Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho1);
         Bicho bicho2 = especieService.crearBicho("Onix", entrenador);
@@ -374,8 +365,6 @@ public class BichoServiceImplTest {
     @Test
     public void duelo(){
 
-        especieService.crearEspecie(especie);
-        especieService.crearEspecie(especie3);
         Bicho bichoRetador = especieService.crearBicho("Onix", entrenador);
         Bicho bichoCampeon  = especieService.crearBicho("Charmeleon", entrenador2);
 
@@ -414,7 +403,6 @@ public class BichoServiceImplTest {
     public void entrenadorNoPuedeAbandonarException() {
 
         entrenadorService.guardar(entrenador);
-        especieService.crearEspecie(especie);
         Bicho bicho1 = especieService.crearBicho("Onix", entrenador);
         bichoService.crearBicho(bicho1);
         ubicacionService.actualizarUbicacion(guarderia);

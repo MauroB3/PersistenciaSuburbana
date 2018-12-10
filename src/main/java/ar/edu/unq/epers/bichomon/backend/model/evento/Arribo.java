@@ -1,5 +1,7 @@
 package ar.edu.unq.epers.bichomon.backend.model.evento;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 public class Arribo extends Evento {
 
     private String ubicacionDestino;
