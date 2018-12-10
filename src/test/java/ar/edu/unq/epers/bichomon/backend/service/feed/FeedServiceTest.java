@@ -9,13 +9,11 @@ import ar.edu.unq.epers.bichomon.backend.dao.mongodb.EventoDAO;
 import ar.edu.unq.epers.bichomon.backend.model.bicho.Bicho;
 import ar.edu.unq.epers.bichomon.backend.model.entrenador.Entrenador;
 import ar.edu.unq.epers.bichomon.backend.model.especie.Especie;
-import ar.edu.unq.epers.bichomon.backend.model.evento.Arribo;
-import ar.edu.unq.epers.bichomon.backend.model.evento.Evento;
+import ar.edu.unq.epers.bichomon.backend.model.evento.*;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.*;
 import ar.edu.unq.epers.bichomon.backend.service.entrenador.EntrenadorService;
 import ar.edu.unq.epers.bichomon.backend.service.mapa.MapaService;
 import ar.edu.unq.epers.bichomon.backend.service.runner.SessionFactoryProvider;
-import ar.edu.unq.epers.bichomon.backend.service.ubicacion.UbicacionNeo4JDAOTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -78,12 +76,14 @@ public class FeedServiceTest {
 
     }
 
+    /*
     @After
     public void cleanUp() {
         this.eventoDAO.deleteAll();
         SessionFactoryProvider.destroy();
         ubicacionNeo4JDAO.destroy();
     }
+    */
 
     @Test
     public void guardarYRecuperarArribo() {
@@ -92,6 +92,7 @@ public class FeedServiceTest {
         List<Evento> eventoList = this.feedService.feedEntrenador(entrenador.nombre());
         assertEquals(1, eventoList.size());
         assertEquals("Arribo", eventoList.get(0).getTipo());
+        assertEquals(Arribo.class, eventoList.get(0).getClass());
 
     }
 
@@ -102,6 +103,7 @@ public class FeedServiceTest {
         List<Evento> eventoList = this.feedService.feedEntrenador(entrenador.nombre());
         assertEquals(1, eventoList.size());
         assertEquals("Captura", eventoList.get(0).getTipo());
+        assertEquals(Captura.class, eventoList.get(0).getClass());
     }
 
     @Test
@@ -111,6 +113,7 @@ public class FeedServiceTest {
         List<Evento> eventoList = this.feedService.feedEntrenador(entrenador.nombre());
         assertEquals(1, eventoList.size());
         assertEquals("Coronacion", eventoList.get(0).getTipo());
+        assertEquals(Coronacion.class, eventoList.get(0).getClass());
     }
 
     @Test
@@ -119,6 +122,15 @@ public class FeedServiceTest {
         List<Evento> ls = this.feedService.feedEntrenador(entrenador.nombre());
         assertEquals(1, ls.size());
         assertEquals("Abandono", ls.get(0).getTipo());
+        assertEquals(Abandono.class, ls.get(0).getClass());
+    }
+
+    @Test
+    public void guardarVariosEventos() {
+        this.feedService.guardarAbandono(entrenador.nombre(), especie.getNombre(), dojo.getNombre());
+        this.feedService.guardarCoronacion(entrenador.nombre(), entrenador2.nombre(), dojo.getNombre());
+        List<Evento> eventoList = this.feedService.feedEntrenador(entrenador.nombre());
+        assertEquals(2, eventoList.size());
     }
 
     @Test

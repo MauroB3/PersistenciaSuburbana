@@ -1,12 +1,13 @@
 package ar.edu.unq.epers.bichomon.backend.model.evento;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
 
+@JsonTypeInfo(use= JsonTypeInfo.Id.CLASS,property="_tipoEvento")
 public class Evento {
 
     @MongoId
