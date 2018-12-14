@@ -37,25 +37,17 @@ public class MapaService {
 
     public void mover(String entrenador, String destino) {
         Runner.runInSession( () -> {
+
             Entrenador entrenadorR = entrenadorDAO.recuperar(entrenador);
             Ubicacion ubicacionNueva = ubicacionDAO.recuperar(destino);
 
-            try{
                 int costo = this.ubicacionNeo4JDAO.getCostoEntreUbicaciones(entrenadorR.ubicacion().getNombre(), destino);
 
                 this.feedService.guardarArribo(entrenadorR, ubicacionNueva);
 
                 entrenadorR.mover(ubicacionNueva, costo);
-            }
-            catch (Exception e) {
-                if (e.getClass() != CaminoMuyCostosoException.class) {
-                    throw new UbicacionMuyLejanaException(entrenadorR.ubicacion().getNombre(), destino);
-                } else{
-                    throw new CaminoMuyCostosoException(entrenadorR.nombre(), destino);
-                }
-            }
 
-            return null;
+                return null;
         });
     }
 

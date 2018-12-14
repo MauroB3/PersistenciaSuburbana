@@ -3,9 +3,10 @@ package ar.edu.unq.epers.bichomon.backend.dao.impl;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.CostoCamino;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.UbicacionMuyLejanaException;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.neo4j.driver.v1.*;
 import org.neo4j.driver.v1.exceptions.NoSuchRecordException;
-
+import org.neo4j.driver.v1.exceptions.value.Uncoercible;
 import java.util.Comparator;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class UbicacionNeo4JDAO {
     private Driver driver;
 
     public UbicacionNeo4JDAO() {
-        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "1k3R1") );
+        this.driver = GraphDatabase.driver( "bolt://localhost:7687", AuthTokens.basic( "neo4j", "root") );
     }
 
     public void crearUbicacion(Ubicacion ubicacion) {
@@ -88,18 +89,20 @@ public class UbicacionNeo4JDAO {
         Session session = this.driver.session();
 
         try {
-            String query = 	"MATCH (o:Ubicacion {nombre: {nombreOrigen}}) " +
+            String query = "MATCH (o:Ubicacion {nombre: {nombreOrigen}}) " +
                     "MATCH (d:Ubicacion {nombre: {nombreDestino}}) " +
                     "MATCH p = (o)-[Camino*]->(d)" +
                     "WITH REDUCE(costoTotal = 0, c in rels(p) | costoTotal + toInt(c.costo)) as sumaCosto " +
                     "RETURN min(sumaCosto) ";
 
 
-            StatementResult result = session.run(query, Values.parameters("nombreOrigen",  origen, "nombreDestino", destino));
-
-            System.out.println("Monedas necesarias: " + result.peek().get(0).asInt());
+            StatementResult result = session.run(query, Values.parameters("nombreOrigen", origen, "nombreDestino", destino));
 
             return result.peek().get(0).asInt();
+
+        }
+        catch(Uncoercible e) {
+               throw new UbicacionMuyLejanaException(origen, destino);
         }
         finally {
             session.close();
@@ -121,7 +124,6 @@ public class UbicacionNeo4JDAO {
             StatementResult result = session.run(query, Values.parameters("nombreOrigen", origen, "nombreDestino", destino));
 
             return result.peek().get("sumaCosto").asInt();
-
 
         }
         catch(NoSuchRecordException e) {
