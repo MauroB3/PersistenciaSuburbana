@@ -4,6 +4,7 @@ import ar.edu.unq.epers.bichomon.backend.model.ubicacion.CostoCamino;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.Ubicacion;
 import ar.edu.unq.epers.bichomon.backend.model.ubicacion.UbicacionMuyLejanaException;
 import org.neo4j.driver.v1.*;
+import org.neo4j.driver.v1.exceptions.NoSuchRecordException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -109,6 +110,7 @@ public class UbicacionNeo4JDAO {
         Session session = this.driver.session();
 
         try{
+
             String query = "MATCH (o:Ubicacion {nombre: {nombreOrigen}}) " +
                     "MATCH (d:Ubicacion {nombre: {nombreDestino}}) " +
                     "MATCH p = shortestPath((o)-[Camino*]->(d)) " +
@@ -120,7 +122,12 @@ public class UbicacionNeo4JDAO {
 
             return result.peek().get("sumaCosto").asInt();
 
-        } finally {
+
+        }
+        catch(NoSuchRecordException e) {
+            throw new UbicacionMuyLejanaException(origen, destino);
+        }
+        finally {
             session.close();
         }
     }

@@ -65,20 +65,11 @@ public class MapaService {
             Entrenador ent = entrenadorDAO.recuperar(entrenador);
             Ubicacion ubicacion = ubicacionDAO.recuperar(destino);
 
-            try {
-                int costo = ubicacionNeo4JDAO.getCostoCaminoMasCorto(ent.ubicacion().getNombre(), ubicacion.getNombre());
+            int costo = ubicacionNeo4JDAO.getCostoCaminoMasCorto(ent.ubicacion().getNombre(), ubicacion.getNombre());
 
-                this.feedService.guardarArribo(ent, ubicacion);
+            this.feedService.guardarArribo(ent, ubicacion);
 
-                ent.mover(ubicacion, costo);
-            }
-            catch (Exception e) {
-                if (e.getClass() != CaminoMuyCostosoException.class) {
-                    throw new UbicacionMuyLejanaException(ent.ubicacion().getNombre(), destino);
-                } else{
-                    throw new CaminoMuyCostosoException(ent.nombre(), destino);
-                }
-            }
+            ent.mover(ubicacion, costo);
 
             return null;
         });
